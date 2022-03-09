@@ -1,10 +1,15 @@
-import List from '../components/admin/category/List.vue';
-
 const routes = [
     {
         path: '/admin',
         name: 'admin',
-        component: require('../components/admin').default
+        component: require('../components/admin/Index.vue').default,
+        children: [
+            {
+                path: '',
+                name: 'admin.dashboard',
+                component: require('../components/admin/Dashboard.vue').default,
+            },
+        ]
     },
     {
         path: '/admin/categories',
