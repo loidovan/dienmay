@@ -1,0 +1,26 @@
+import List from '../components/admin/category/List.vue';
+
+const routes = [
+    {
+        path: '/admin',
+        name: 'admin',
+        component: require('../components/admin').default
+    },
+    {
+        path: '/admin/categories',
+        name: 'categories',
+        component: require('../components/admin/category/List.vue').default
+    },
+    {
+        path: '/admin/categories/create',
+        name: 'categories.create',
+        component: require('../components/admin/category/Create.vue').default
+    },
+    {
+        path: '/admin/categories/edit/:id',
+        name: 'categories.edit',
+        component: require('../components/admin/category/Edit.vue').default
+    },
+];
+
+export default routes;
