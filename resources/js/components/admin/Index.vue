@@ -1,8 +1,12 @@
 <template>
     <div>
-        <HeaderAdmin/>
+        <div v-if="$route.name != 'admin.login'">
+            <HeaderAdmin/>
+        </div>
         <router-view></router-view>
-        <FooterAdmin/>
+        <div v-if="$route.name != 'admin.login'">
+            <FooterAdmin/>
+        </div>
     </div>
 </template>
 <script>
