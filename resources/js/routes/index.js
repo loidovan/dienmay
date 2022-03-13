@@ -19,7 +19,11 @@ const router = new VueRouter({
 });
 
 function loggedIn() {
-    return localStorage.getItem('token') !== null;
+    return localStorage.getItem('token') != null || sessionStorage.getItem('token') != null;
+}
+
+function isAdmin() {
+    return localStorage.getItem('role') == 'admin' || localStorage.getItem('role') == 'superadmin' || sessionStorage.getItem('role') == 'admin' || sessionStorage.getItem('role') == 'superadmin';
 }
 
 router.beforeEach((to, from, next) => {
@@ -31,7 +35,22 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (!loggedIn()) {
             next({
-                path: '/login',
+                path: '/admin/login',
+                query: { redirect: to.fullPath }
+            });
+        } else {
+            next();
+        }
+    } else {
+        next();
+    }
+});
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresRole)) {
+        if (!isAdmin()) {
+            next({
+                path: '/admin/login',
                 query: { redirect: to.fullPath }
             });
         } else {

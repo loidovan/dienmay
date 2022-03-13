@@ -12,8 +12,8 @@ class Category extends Model
     protected $table = 'categories';
     protected $primaryKey = 'id';
     protected $casts = [
-        'created_at' => 'datetime d/m/Y H:i:s',
-        'updated_at' => 'datetime d/m/Y H:i:s',
+        'created_at' => 'datetime:d/m/Y H:i:s',
+        'updated_at' => 'datetime:d/m/Y H:i:s',
     ];
 
     public $timestamps = true;

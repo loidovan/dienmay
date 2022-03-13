@@ -34,12 +34,17 @@ php artisan key:generate
 php artisan migrate
 ````
 
-8. Install Node modules
+8. Seeder
+````
+php artisan db:seed
+````
+
+9. Install Node modules
 ````
 npm install
 ````
 
-9. Build
+10. Build
 
 ````
 npm run dev OR npm run watch

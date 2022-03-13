@@ -15,7 +15,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = DB::table('categories')->orderBy('id', 'desc')->get();
+        $category = DB::select('select @n := @n + 1 stt , c.id, c.name, DATE_FORMAT(c.created_at, "%d/%m/%Y %H:%i:%s") as created_at,
+        DATE_FORMAT(c.updated_at, "%d/%m/%Y %H:%i:%s") as updated_at
+        from categories as c, (SELECT @n := 0) as stt 
+        order by c.id desc');
         return response()->json($category);
     }
 
@@ -37,11 +40,26 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $category = new \App\Category;
-        $category->name = $request->name;
-        $category->created_at = date('Y-m-d H:i:s');
-        $category->save();
-        return response()->json($category);
+        if (auth()->user()->can('create-category')) {
+            $request->validate([
+                'name' => 'required|string|max:255|unique:categories',
+            ],
+            [
+                'name.required' => 'Tên không được để trống',
+                'name.max' => 'Tên không được quá 255 ký tự',
+                'name.unique' => 'Tên đã tồn tại',
+            ]);
+            $category = new Category();
+            $category->name = $request->name;
+            $category->created_at = date('Y-m-d H:i:s');
+            $category->save();
+            return response()->json([
+                'message' => 'Thêm thành công',
+            ], 200);
+        }
+        return response()->json([
+            'message' => 'Bạn không có quyền thêm',
+        ], 401);
     }
 
     /**
@@ -76,11 +94,26 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $category = Category::find($id);
-        $category->name = $request->name;
-        $category->updated_at = date('Y-m-d H:i:s');
-        $category->save();
-        return response()->json($category);
+        if(auth()->user()->can('edit-category')) {
+            $request->validate([
+                'name' => 'required|string|max:255|unique:categories'
+            ],
+            [
+                'name.required' => 'Tên không được để trống',
+                'name.max' => 'Tên không được quá 255 ký tự',
+                'name.unique' => 'Tên đã tồn tại',
+            ]);
+            $category = Category::find($id);
+            $category->name = $request->name;
+            $category->updated_at = date('Y-m-d H:i:s');
+            $category->save();
+            return response()->json([
+                'message' => 'Cập nhật thành công',
+            ], 200);
+        }
+        return response()->json([
+            'message' => 'Bạn không có quyền cập nhật',
+        ], 401);
     }
 
     /**
@@ -91,8 +124,15 @@ class CategoryController extends Controller
      */
     public function destroy($ids)
     {
-        $ids = explode(",", $ids);
-        $category = Category::whereIn('id', $ids)->delete();
-        return response()->json($category);
+        if(auth()->user()->can('delete-category')) {
+            $ids = explode(',', $ids);
+            $category = Category::whereIn('id', $ids)->delete();
+            return response()->json([
+                'message' => 'Xóa thành công',
+            ], 200);
+        }
+        return response()->json([
+            'message' => 'Bạn không có quyền xóa',
+        ], 401);
     }
 }

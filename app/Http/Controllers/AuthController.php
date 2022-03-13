@@ -26,7 +26,7 @@ class AuthController extends Controller
                 "name" => Auth::user()->name,
                 "email" => Auth::user()->email,
                 "role" => Auth::user()->getRoleNames()[0],
-                "token" => $token
+                "token" => $token,
             ], 200);
         } 
 

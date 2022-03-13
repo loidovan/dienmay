@@ -3,13 +3,18 @@ const routes = [
         path: "/admin",
         component: require("../components/admin/Index.vue").default,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            requiresRole: 'admin',
+            breadcrumb: 'Tổng Quan'
         },
         children: [
             {
                 path: "",
                 name: "admin.dashboard",
-                component: require("../components/admin/Dashboard.vue").default
+                component: require("../components/admin/Dashboard.vue").default,
+                meta: {
+                    title: "Trang Quản Trị",
+                }
             },
             {
                 path: "categories",
@@ -18,6 +23,7 @@ const routes = [
                     .default,
                 meta: {
                     title: "Danh Mục Sản Phẩm",
+                    breadcrumb: "Sản Phẩm"
                 },
             },
             {
@@ -27,6 +33,12 @@ const routes = [
                     .default,
                 meta: {
                     title: "Thêm Mới Danh Mục Sản Phẩm",
+                    breadcrumb() {
+                        return {
+                            label: this.$route.meta.title,
+                            parent: "categories",
+                        }
+                    },
                 },
             },
             {
@@ -36,17 +48,40 @@ const routes = [
                     .default,
                 meta: {
                     title: "Chỉnh Sửa Danh Mục Sản Phẩm",
+                    breadcrumb() {
+                        return {
+                            label: this.$route.meta.title,
+                            parent: "categories",
+                        }
+                    },
                 },
             },
         ],
     },
     {
-        path: "/login",
+        path: "/admin/login",
         name: "admin.login",
         component: require("../components/admin/login/Login.vue").default,
         meta: {
             title: "Đăng Nhập",
             requiresAuth: false,
+        },
+        beforeEnter: (to, from, next) => {
+            if (localStorage.getItem("token") || sessionStorage.getItem("token")) {
+                if (localStorage.getItem("role") === "admin" || localStorage.getItem("role") === "superadmin" || sessionStorage.getItem("role") === "admin" || sessionStorage.getItem("role") === "superadmin") {
+                    next({
+                        path: "/admin",
+                    });
+                }
+                else {
+                    next({
+                        path: "/",
+                    });
+                }
+            }
+            else {
+                next();
+            }
         },
     },
 ];

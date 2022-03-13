@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Hash;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use DB;
 
 class DatabaseSeeder extends Seeder
@@ -25,7 +26,7 @@ class DatabaseSeeder extends Seeder
 
         // create demo users
         $user = \App\Models\User::factory()->create([
-            'name' => 'Siêu Quản Trị',
+            'name' => 'Đỗ Lợi',
             'email' => 'superadmin@gmail.com',
             'password' => Hash::make('12345678')
         ]);
@@ -44,5 +45,61 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('12345678')
         ]);
         $user->assignRole($role3);
+
+        $permission = Permission::create(['name' => 'create-post']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'edit-post']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'delete-post']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'create-category']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'edit-category']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'delete-category']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'create-product']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'edit-product']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'delete-product']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'create-user']);
+        $role1->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'edit-user']);
+        $role1->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'delete-user']);
+        $role1->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'create-role']);
+        $role1->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'edit-role']);
+        $role1->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'delete-role']);
+        $role1->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'create-permission']);
+        $role1->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'edit-permission']);
+        $role1->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'delete-permission']);
+        $role1->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'create-order']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'edit-order']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'delete-order']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+
     }
 }
