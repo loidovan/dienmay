@@ -16,40 +16,38 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form @submit.prevent="submit">
-                                <div class="card-body">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1"
-                                            >Tên danh mục</label
-                                        >
-                                        <input
-                                            type="text"
-                                            v-model="form.name"
-                                            class="form-control"
-                                            :class="{
-                                                'is-invalid': errors.name,
-                                            }"
-                                            placeholder="Nhập tên danh mục"
-                                            required
-                                        />
-                                        <div
-                                            v-if="errors.name"
-                                            class="invalid-feedback"
-                                        >
-                                            {{ errors.name[0] }}
-                                        </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1"
+                                        >Tên danh mục</label
+                                    >
+                                    <input
+                                        type="text"
+                                        v-model="form.name"
+                                        class="form-control"
+                                        :class="{
+                                            'is-invalid': errors.name,
+                                        }"
+                                        placeholder="Nhập tên danh mục"
+                                        required
+                                    />
+                                    <div
+                                        v-if="errors.name"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ errors.name[0] }}
                                     </div>
                                 </div>
-                                <!-- /.card-body -->
-                                <div class="card-footer">
-                                    <button
-                                        type="submit"
-                                        class="btn btn-primary"
-                                    >
-                                        Submit
-                                    </button>
-                                </div>
-                            </form>
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+                                <button
+                                    @click.prevent="submit()"
+                                    class="btn btn-primary"
+                                >
+                                    Submit
+                                </button>
+                            </div>
                         </div>
                         <!-- /.card -->
                     </div>
@@ -88,7 +86,7 @@ export default {
     methods: {
         submit() {
             axios
-                .post("/api/categories", this.form)
+                .put(`/api/categories/${this.$route.params.id}`, this.form)
                 .then((response) => {
                     this.$swal({
                         title: "Thành công",
@@ -99,7 +97,7 @@ export default {
                         showConfirmButton: false,
                         width: 360,
                     });
-                    this.$router.push({ name: 'categories' });
+                    this.$router.push({ name: "categories" });
                 })
                 .catch((error) => {
                     this.errors = error.response.data.errors;

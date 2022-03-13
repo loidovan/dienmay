@@ -16,6 +16,6 @@ class Category extends Model
         'updated_at' => 'datetime:d/m/Y H:i:s',
     ];
 
-    public $timestamps = true;
+    public $timestamps = false;
 
 }

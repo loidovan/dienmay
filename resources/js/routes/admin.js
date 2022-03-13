@@ -32,7 +32,7 @@ const routes = [
                 component: require("../components/admin/category/Create.vue")
                     .default,
                 meta: {
-                    title: "Thêm Mới Danh Mục Sản Phẩm",
+                    title: "Thêm Mới",
                     breadcrumb() {
                         return {
                             label: this.$route.meta.title,
@@ -47,7 +47,7 @@ const routes = [
                 component: require("../components/admin/category/Edit.vue")
                     .default,
                 meta: {
-                    title: "Chỉnh Sửa Danh Mục Sản Phẩm",
+                    title: "Chỉnh Sửa",
                     breadcrumb() {
                         return {
                             label: this.$route.meta.title,
