@@ -55,6 +55,7 @@ class DatabaseSeeder extends Seeder
         $permission = Permission::create(['name' => 'delete-post']);
         $role1->givePermissionTo($permission);
         $role2->givePermissionTo($permission);
+
         $permission = Permission::create(['name' => 'create-category']);
         $role1->givePermissionTo($permission);
         $role2->givePermissionTo($permission);
@@ -64,6 +65,7 @@ class DatabaseSeeder extends Seeder
         $permission = Permission::create(['name' => 'delete-category']);
         $role1->givePermissionTo($permission);
         $role2->givePermissionTo($permission);
+
         $permission = Permission::create(['name' => 'create-product']);
         $role1->givePermissionTo($permission);
         $role2->givePermissionTo($permission);
@@ -73,24 +75,58 @@ class DatabaseSeeder extends Seeder
         $permission = Permission::create(['name' => 'delete-product']);
         $role1->givePermissionTo($permission);
         $role2->givePermissionTo($permission);
+
+        $permission = Permission::create(['name' => 'create-color']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'edit-color']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'delete-color']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+        
+        $permission = Permission::create(['name' => 'create-type']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'edit-type']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'delete-type']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+        
+        $permission = Permission::create(['name' => 'create-brand']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'edit-brand']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'delete-brand']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+
         $permission = Permission::create(['name' => 'create-user']);
         $role1->givePermissionTo($permission);
         $permission = Permission::create(['name' => 'edit-user']);
         $role1->givePermissionTo($permission);
         $permission = Permission::create(['name' => 'delete-user']);
         $role1->givePermissionTo($permission);
+
         $permission = Permission::create(['name' => 'create-role']);
         $role1->givePermissionTo($permission);
         $permission = Permission::create(['name' => 'edit-role']);
         $role1->givePermissionTo($permission);
         $permission = Permission::create(['name' => 'delete-role']);
         $role1->givePermissionTo($permission);
+
         $permission = Permission::create(['name' => 'create-permission']);
         $role1->givePermissionTo($permission);
         $permission = Permission::create(['name' => 'edit-permission']);
         $role1->givePermissionTo($permission);
         $permission = Permission::create(['name' => 'delete-permission']);
         $role1->givePermissionTo($permission);
+
         $permission = Permission::create(['name' => 'create-order']);
         $role1->givePermissionTo($permission);
         $role2->givePermissionTo($permission);

@@ -256,8 +256,81 @@
             </ul>
           </li>
           
-          <li class="nav-header">EXAMPLES</li>
-         
+          <li class="nav-header">CHI TIẾT</li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <span class="px-2" style="font-size:20px;font-weight:1000;font-family: Times New Roman, Times, serif;">L</span>
+              <p>
+                Loại Sản Phẩm
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <router-link :to="{ name: 'types' }" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Danh Sách</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link :to="{ name: 'types.create' }" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Thêm</p>
+                </router-link>
+              </li>
+            </ul>
+          </li>
+          
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <span class="px-2" style="font-size:20px;font-weight:1000;font-family: Times New Roman, Times, serif;">T</span>
+              <p>
+                Thương Hiệu
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <router-link :to="{ name: 'brands' }" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Danh Sách</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link :to="{ name: 'brands.create' }" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Thêm</p>
+                </router-link>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fab fa-medium-m"></i>
+              <p>
+                Màu Sắc
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <router-link :to="{ name: 'colors' }" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Danh Sách</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link :to="{ name: 'colors.create' }" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Thêm</p>
+                </router-link>
+              </li>
+            </ul>
+          </li>
+
+          
           <li class="nav-item">
             <a @click="logout" class="nav-link">
               <i class="nav-icon fas fa-file"></i>

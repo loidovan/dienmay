@@ -18,4 +18,18 @@ class Category extends Model
 
     public $timestamps = false;
 
+    public function products()
+    {
+        return $this->hasMany('App\Models\Product', 'category_id', 'id');
+    }
+
+    public function types()
+    {
+        return $this->hasMany('App\Models\Type', 'category_id', 'id');
+    }
+
+    public function brands()
+    {
+        return $this->hasMany('App\Models\Brand', 'category_id', 'id');
+    }
 }

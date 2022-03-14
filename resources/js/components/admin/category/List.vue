@@ -15,7 +15,7 @@
                                 </h3>
                             </div>
                             <!-- /.card-header -->
-                            <div class="card-body">
+                            <div class="card-body" style="overflow-x: auto">
                                 <b-row class="mb-3">
                                     <b-col>
                                         <b-form-select
@@ -31,7 +31,7 @@
                                             <export-excel
                                                 :data="json_data"
                                                 class="btn btn-success"
-                                                name="Danh sách danh mục.xls"
+                                                name="Danh sách.xls"
                                                 id="export-excel"
                                                 v-b-tooltip.hover.v-secondary="
                                                     'Xuất Excel các bản ghi đã chọn'
@@ -254,36 +254,46 @@ export default {
                 confirmButtonText: "Đồng ý!",
                 cancelButtonText: "Hủy",
                 width: 480,
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    axios
-                        .delete("/api/categories/" + id)
-                        .then((response) => {
-                            this.getCategorys();
-                        })
-                        .catch((error) => {
-                            console.log(error);
+            })
+                .then(async (result) => {
+                    if (result.isConfirmed) {
+                        axios
+                            .delete("/api/categories/" + id)
+                            .then((response) => {
+                                this.getCategorys();
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            });
+                        this.$swal({
+                            title: "Đã xóa!",
+                            icon: "success",
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 1500,
+                            width: 360,
                         });
-                    this.$swal({
-                        title: "Đã xóa!",
-                        icon: "success",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 1500,
-                        width: 360,
-                    });
-                    this.getCategories();
-                } else {
-                    this.$swal({
-                        title: "Hủy xóa!",
-                        icon: "info",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 1500,
-                        width: 360,
-                    });
-                }
-            });
+                        this.getCategories();
+                    } else {
+                        this.$swal({
+                            title: "Hủy xóa!",
+                            icon: "info",
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 1500,
+                            width: 360,
+                        });
+                    }
+                })
+                .catch((error) => {
+                    if (error.response.status == 401) {
+                        this.$swal({
+                            icon: "error",
+                            title: "Lỗi",
+                            text: "Bạn không có quyền thực hiện hành động này!",
+                        });
+                    }
+                });
         },
         selectAll(checked) {
             this.selected = checked
@@ -346,36 +356,46 @@ export default {
                 confirmButtonText: "Đồng ý!",
                 cancelButtonText: "Hủy",
                 width: 480,
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    axios
-                        .delete("/api/categories/" + this.selected)
-                        .then((response) => {
-                            this.getCategorys();
-                        })
-                        .catch((error) => {
-                            console.log(error);
+            })
+                .then(async (result) => {
+                    if (result.isConfirmed) {
+                        axios
+                            .delete("/api/categories/" + this.selected)
+                            .then((response) => {
+                                this.getCategorys();
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            });
+                        this.$swal({
+                            title: "Đã xóa!",
+                            icon: "success",
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 1500,
+                            width: 360,
                         });
-                    this.$swal({
-                        title: "Đã xóa!",
-                        icon: "success",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 1500,
-                        width: 360,
-                    });
-                    this.getCategories();
-                } else {
-                    this.$swal({
-                        title: "Hủy xóa!",
-                        icon: "info",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 1500,
-                        width: 360,
-                    });
-                }
-            });
+                        this.getCategories();
+                    } else {
+                        this.$swal({
+                            title: "Hủy xóa!",
+                            icon: "info",
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 1500,
+                            width: 360,
+                        });
+                    }
+                })
+                .catch((error) => {
+                    if (error.response.status == 401) {
+                        this.$swal({
+                            icon: "error",
+                            title: "Lỗi",
+                            text: "Bạn không có quyền thực hiện hành động này!",
+                        });
+                    }
+                });
         },
         exportPdf() {
             if (this.pdf_data.length === 0) return;
@@ -425,7 +445,7 @@ export default {
                 ],
             };
             pdfMake.vfs = pdfFonts.pdfMake.vfs;
-            pdfMake.createPdf(docDefinition).download("Danh sách danh mục.pdf");
+            pdfMake.createPdf(docDefinition).download("Danh sách.pdf");
         },
         onFiltered(filteredItems) {
             // Trigger pagination to update the number of buttons/pages due to filtering

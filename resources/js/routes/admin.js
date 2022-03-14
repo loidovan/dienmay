@@ -56,6 +56,166 @@ const routes = [
                     },
                 },
             },
+            {
+                path: "types",
+                name: "types",
+                component: require("../components/admin/type/List.vue")
+                    .default,
+                meta: {
+                    title: "Danh Sách Loại Sản Phẩm",
+                    breadcrumb: "Loại Sản Phẩm"
+                },
+            },
+            {
+                path: "types/create",
+                name: "types.create",
+                component: require("../components/admin/type/Create.vue")
+                    .default,
+                meta: {
+                    title: "Thêm Mới",
+                    breadcrumb() {
+                        return {
+                            label: this.$route.meta.title,
+                            parent: "types",
+                        }
+                    },
+                },
+            },
+            {
+                path: "types/edit/:id",
+                name: "types.edit",
+                component: require("../components/admin/type/Edit.vue")
+                    .default,
+                meta: {
+                    title: "Chỉnh Sửa",
+                    breadcrumb() {
+                        return {
+                            label: this.$route.meta.title,
+                            parent: "types",
+                        }
+                    },
+                },
+            },
+            {
+                path: "brands",
+                name: "brands",
+                component: require("../components/admin/brand/List.vue")
+                    .default,
+                meta: {
+                    title: "Danh Sách Thương Hiệu",
+                    breadcrumb: "Thương Hiệu"
+                },
+            },
+            {
+                path: "brands/create",
+                name: "brands.create",
+                component: require("../components/admin/brand/Create.vue")
+                    .default,
+                meta: {
+                    title: "Thêm Mới",
+                    breadcrumb() {
+                        return {
+                            label: this.$route.meta.title,
+                            parent: "brands",
+                        }
+                    },
+                },
+            },
+            {
+                path: "brands/edit/:id",
+                name: "brands.edit",
+                component: require("../components/admin/brand/Edit.vue")
+                    .default,
+                meta: {
+                    title: "Chỉnh Sửa",
+                    breadcrumb() {
+                        return {
+                            label: this.$route.meta.title,
+                            parent: "brands",
+                        }
+                    },
+                },
+            },
+            {
+                path: "colors",
+                name: "colors",
+                component: require("../components/admin/brand/List.vue")
+                    .default,
+                meta: {
+                    title: "Danh Sách Màu Sắc",
+                    breadcrumb: "Màu Sắc"
+                },
+            },
+            {
+                path: "colors/create",
+                name: "colors.create",
+                component: require("../components/admin/color/Create.vue")
+                    .default,
+                meta: {
+                    title: "Thêm Mới",
+                    breadcrumb() {
+                        return {
+                            label: this.$route.meta.title,
+                            parent: "colors",
+                        }
+                    },
+                },
+            },
+            {
+                path: "colors/edit/:id",
+                name: "colors.edit",
+                component: require("../components/admin/color/Edit.vue")
+                    .default,
+                meta: {
+                    title: "Chỉnh Sửa",
+                    breadcrumb() {
+                        return {
+                            label: this.$route.meta.title,
+                            parent: "colors",
+                        }
+                    },
+                },
+            },
+            {
+                path: "products",
+                name: "products",
+                component: require("../components/admin/product/List.vue")
+                    .default,
+                meta: {
+                    title: "Danh Sách Sản Phẩm",
+                    breadcrumb: "Sản Phẩm"
+                },
+            },
+            {
+                path: "products/create",
+                name: "products.create",
+                component: require("../components/admin/product/Create.vue")
+                    .default,
+                meta: {
+                    title: "Thêm Mới",
+                    breadcrumb() {
+                        return {
+                            label: this.$route.meta.title,
+                            parent: "products",
+                        }
+                    },
+                },
+            },
+            {
+                path: "products/edit/:id",
+                name: "products.edit",
+                component: require("../components/admin/product/Edit.vue")
+                    .default,
+                meta: {
+                    title: "Chỉnh Sửa",
+                    breadcrumb() {
+                        return {
+                            label: this.$route.meta.title,
+                            parent: "products",
+                        }
+                    },
+                },
+            },
         ],
     },
     {

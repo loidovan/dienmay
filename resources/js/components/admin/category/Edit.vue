@@ -77,6 +77,8 @@ export default {
     },
     created() {
         this.getCurrentCategory();
+    },
+    mounted() {
         window.addEventListener("keyup", (e) => {
             if (e.key == "Enter") {
                 this.submit();
@@ -101,6 +103,13 @@ export default {
                 })
                 .catch((error) => {
                     this.errors = error.response.data.errors;
+                    if (error.response.status == 401) {
+                        this.$swal({
+                            icon: "error",
+                            title: "Lỗi",
+                            text: "Bạn không có quyền thực hiện hành động này!",
+                        });
+                    }
                 });
         },
         getCurrentCategory() {
