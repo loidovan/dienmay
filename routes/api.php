@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TypeController;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\ColorController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,5 +28,7 @@ Route::post('register', [AuthController::class, 'register']);
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('types', TypeController::class);
+    Route::resource('brands', BrandController::class);
+    Route::resource('colors', ColorController::class);
     Route::post('logout', [AuthController::class, 'logout']);
 });

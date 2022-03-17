@@ -10,7 +10,7 @@
                     <!-- left column -->
                     <div class="col-md-12">
                         <!-- jquery validation -->
-                        <div class="card card-primary">
+                        <div class="card card-primary" @keyup.enter="submit()">
                             <div class="card-header">
                                 <h3 class="card-title mt-2">Chỉnh Sửa</h3>
                             </div>
@@ -108,13 +108,6 @@ export default {
     created() {
         this.getCurrentType();
         this.getCategories();
-    },
-    mounted() {
-        window.addEventListener("keyup", (e) => {
-            if (e.key == "Enter") {
-                this.submit();
-            }
-        });
     },
     methods: {
         getCategories() {

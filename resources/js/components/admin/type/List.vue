@@ -197,7 +197,7 @@ export default {
                 },
                 {
                     key: "name",
-                    label: "Tên Loại",
+                    label: "Tên loại",
                     class: "text-center align-middle",
                     sortable: true,
                 },

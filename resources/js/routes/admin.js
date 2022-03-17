@@ -139,7 +139,7 @@ const routes = [
             {
                 path: "colors",
                 name: "colors",
-                component: require("../components/admin/brand/List.vue")
+                component: require("../components/admin/color/List.vue")
                     .default,
                 meta: {
                     title: "Danh Sách Màu Sắc",
