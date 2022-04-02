@@ -131,7 +131,7 @@ export default {
                         res.data.role == "admin" ||
                         res.data.role == "superadmin"
                     ) {
-                        this.$router.push("/admin");
+                        location.href = "/admin";
                     } else {
                         this.$router.push("/");
                     }

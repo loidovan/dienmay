@@ -7,6 +7,9 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ColorController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ImageController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -30,5 +33,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('types', TypeController::class);
     Route::resource('brands', BrandController::class);
     Route::resource('colors', ColorController::class);
+    Route::resource('products', ProductController::class);
+    Route::post('/upload', [ImageController::class, 'store'])->name('upload');
+    Route::get('/media/{product}', [ImageController::class, 'getImages'])->name('product.images');
+
     Route::post('logout', [AuthController::class, 'logout']);
 });

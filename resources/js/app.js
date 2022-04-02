@@ -19,7 +19,7 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import excel from 'vue-excel-export';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import VueBreadcrumbs from 'vue-2-breadcrumbs';
-
+import CKEditor from 'ckeditor4-vue';
 
 // If you don't need the styles, do not connect
 import 'sweetalert2/dist/sweetalert2.min.css';
@@ -33,7 +33,6 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
 Vue.use(VueAxios, axios);
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
@@ -63,6 +62,7 @@ Vue.use(VueBreadcrumbs, {
         '    </div>\n' +
         '</section>'
 })
+Vue.use(CKEditor);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

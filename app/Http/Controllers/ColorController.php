@@ -116,7 +116,7 @@ class ColorController extends Controller
             if ($request->file()) {
                 $request->validate(
                     [
-                        'name' => 'required|unique:colors|max:255',
+                        'name' => 'required|unique:colors,name,' . $id . '|max:255',
                         'image' => 'mimes:jpg,jpeg,png,bmp|max:20000'
                     ],
                     [
@@ -130,7 +130,7 @@ class ColorController extends Controller
             } else {
                 $request->validate(
                     [
-                        'name' => 'required|unique:colors|max:255',
+                        'name' => 'required|unique:colors,name,' . $id . '|max:255',
                     ],
                     [
                         'name.required' => 'Tên màu không được để trống',

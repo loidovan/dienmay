@@ -120,7 +120,7 @@
                                     @click.prevent="submit()"
                                     class="btn btn-primary"
                                 >
-                                    Submit
+                                    Xác nhận
                                 </button>
                             </div>
                         </div>

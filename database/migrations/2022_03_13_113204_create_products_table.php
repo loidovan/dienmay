@@ -23,6 +23,7 @@ class CreateProductsTable extends Migration
             $table->string('description',1000);
             $table->string('image');
             $table->decimal('price',10,0);
+            $table->integer('warranty');
             $table->timestamps();
         });
     }
