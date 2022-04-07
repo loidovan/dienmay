@@ -9,6 +9,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\AccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,8 @@ Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('register', [AuthController::class, 'register']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::resource('accounts', AccountController::class);
+    Route::post('change-password', [AuthController::class, 'changePasswordFirstLogin']);
     Route::resource('categories', CategoryController::class);
     Route::resource('types', TypeController::class);
     Route::resource('brands', BrandController::class);

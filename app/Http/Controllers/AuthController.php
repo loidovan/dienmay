@@ -26,6 +26,7 @@ class AuthController extends Controller
                 "name" => Auth::user()->name,
                 "email" => Auth::user()->email,
                 "role" => Auth::user()->getRoleNames()[0],
+                "check_first_login" => Auth::user()->check_first_login,
                 "token" => $token,
             ], 200);
         } 
@@ -73,6 +74,23 @@ class AuthController extends Controller
             "email" => $user->email,
             "role" => $user->getRoleNames()[0],
             "token" => $token
+        ], 200);
+    }
+
+    public function changePasswordFirstLogin(Request $request) {
+        $user = User::where('email', $request->email)->first();
+        if ($user->check_first_login == 1) {
+            return \response()->json([
+                'errors' => [
+                    'Tài khoản đã được tạo mật khẩu mới trước đó',
+                ],
+            ], 403);
+        }
+        $user->password = bcrypt($request->password);
+        $user->check_first_login = 1;
+        $user->save();
+        return \response()->json([
+            "role" => $user->getRoleNames()[0]
         ], 200);
     }
 }

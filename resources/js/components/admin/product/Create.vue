@@ -535,7 +535,6 @@ export default {
             formData.append("price", this.form.price);
             formData.append("warranty", this.form.warranty);
             formData.append("description", this.form.description);
-            formData.append("color_ids", this.form.color_options);
             formData.append(
                 "category_id",
                 this.category_options.id === undefined

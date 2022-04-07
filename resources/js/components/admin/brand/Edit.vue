@@ -97,6 +97,8 @@
                                                     box-shadow: 0px 0px 4px
                                                         rgba(0, 0, 0, 0.1);
                                                     margin-top: 6px;
+                                                    max-width: 200px;
+                                                    max-height: 200px;
                                                 "
                                             />
                                         </b-col>
@@ -166,7 +168,6 @@ export default {
         },
         submit() {
             let formData = new FormData();
-            console.log(this.form);
             formData.append("category_id", this.form.category_id);
             formData.append("name", this.form.name);
             formData.append("image", this.form.image);

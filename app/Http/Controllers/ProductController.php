@@ -140,6 +140,19 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
+
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        return \response()->json($request);
         if (auth()->user()->can('edit-product')) {
             $request->validate(
                 [
@@ -173,18 +186,6 @@ class ProductController extends Controller
 
             $product = Product::find($id);
         }
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     /**

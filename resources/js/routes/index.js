@@ -23,7 +23,7 @@ function loggedIn() {
 }
 
 function isAdmin() {
-    return localStorage.getItem('role') == 'admin' || localStorage.getItem('role') == 'superadmin' || sessionStorage.getItem('role') == 'admin' || sessionStorage.getItem('role') == 'superadmin';
+    return localStorage.getItem('role') != 'user' || sessionStorage.getItem('role') != 'user';
 }
 
 router.beforeEach((to, from, next) => {

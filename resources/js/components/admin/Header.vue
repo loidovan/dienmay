@@ -330,6 +330,35 @@
             </ul>
           </li>
 
+          <li class="nav-item" v-if="currentUser.role == 'superadmin'">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fab fa-medium-m"></i>
+              <p>
+                Tài khoản
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <router-link :to="{ name: 'accounts' }" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Danh Sách</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link :to="{ name: 'roles' }" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Vai trò</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link :to="{ name: 'permissions' }" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Quyền</p>
+                </router-link>
+              </li>
+            </ul>
+          </li>
           
           <li class="nav-item">
             <a @click="logout" class="nav-link">
@@ -354,6 +383,7 @@ export default {
             currentUser: {
               name: '',
               email: '',
+              role: '',
             },
         }
     },
@@ -367,10 +397,13 @@ export default {
               localStorage.removeItem('email');
               localStorage.removeItem('token');
               localStorage.removeItem('role');
+              localStorage.removeItem('first-login');
               sessionStorage.removeItem('name');
               sessionStorage.removeItem('email');
               sessionStorage.removeItem('token');
               sessionStorage.removeItem('role');
+              sessionStorage.removeItem('first-login');
+
               if (window.location.pathname.includes('/admin')) {
                 this.$router.push('/admin/login');
               } else {
@@ -383,6 +416,7 @@ export default {
         getUser(){
             this.currentUser.email = localStorage.getItem('email') || sessionStorage.getItem('email');
             this.currentUser.name = localStorage.getItem('name') || sessionStorage.getItem('name');
+            this.currentUser.role = localStorage.getItem('role') || sessionStorage.getItem('role');
         }
     },
 }

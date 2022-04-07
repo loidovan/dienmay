@@ -1,10 +1,18 @@
 <template>
     <div>
-        <div v-if="$route.name != 'admin.login'">
+        <div v-if="$route.name == 'admin.login'">
+        </div>
+        <div v-else-if="$route.name == 'change-password'">
+        </div>
+        <div v-else>
             <HeaderAdmin/>
         </div>
         <router-view></router-view>
-        <div v-if="$route.name != 'admin.login'">
+        <div v-if="$route.name == 'admin.login'">
+        </div>
+        <div v-else-if="$route.name == 'change-password'">
+        </div>
+        <div v-else>
             <FooterAdmin/>
         </div>
     </div>

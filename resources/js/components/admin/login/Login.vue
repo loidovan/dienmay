@@ -115,6 +115,7 @@ export default {
                         sessionStorage.setItem("role", res.data.role);
                         sessionStorage.setItem("name", res.data.name);
                         sessionStorage.setItem("email", res.data.email);
+                        sessionStorage.setItem("first-login", res.data.check_first_login == null ? true : false);
                         axios
                             .post("/api/logout")
                             .then(() => {})
@@ -126,8 +127,11 @@ export default {
                         localStorage.setItem("role", res.data.role);
                         localStorage.setItem("name", res.data.name);
                         localStorage.setItem("email", res.data.email);
+                        localStorage.setItem("first-login", res.data.check_first_login == null ? true : false);
                     }
-                    if (
+                    if (res.data.check_first_login == null) {
+                        this.$router.push({ name: 'change-password' });
+                    } else if (
                         res.data.role == "admin" ||
                         res.data.role == "superadmin"
                     ) {

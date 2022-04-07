@@ -17,6 +17,41 @@ const routes = [
                 }
             },
             {
+                path: "change-password",
+                name: "change-password",
+                component: require("../components/admin/login/ChangePassword.vue").default,
+                meta: {
+                    title: "Mật Khẩu Mới",
+                },
+            },
+            {
+                path: "accounts",  
+                name: "accounts",
+                component: require("../components/admin/account/List.vue").default,
+                meta: {
+                    title: "Tài Khoản",
+                    breadcrumb: 'Tài Khoản'
+                },
+            },
+            {
+                path: "permissions",  
+                name: "permissions",
+                component: require("../components/admin/account/Permission.vue").default,
+                meta: {
+                    title: "Quyền",
+                    breadcrumb: 'Quyền'
+                },
+            },
+            {
+                path: "roles",  
+                name: "roles",
+                component: require("../components/admin/account/Role.vue").default,
+                meta: {
+                    title: "Vai Trò",
+                    breadcrumb: 'Vai Trò'
+                },
+            },
+            {
                 path: "categories",
                 name: "categories",
                 component: require("../components/admin/category/List.vue")
@@ -228,7 +263,7 @@ const routes = [
         },
         beforeEnter: (to, from, next) => {
             if (localStorage.getItem("token") || sessionStorage.getItem("token")) {
-                if (localStorage.getItem("role") === "admin" || localStorage.getItem("role") === "superadmin" || sessionStorage.getItem("role") === "admin" || sessionStorage.getItem("role") === "superadmin") {
+                if (localStorage.getItem("role") !== "user" || localStorage.getItem("role") !== "user") {
                     next({
                         path: "/admin",
                     });

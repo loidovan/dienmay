@@ -78,7 +78,6 @@
                                         label="name"
                                         track-by="name"
                                         @select="
-                                            setEmptyOptions();
                                             getTypes();
                                             getBrands();
                                             getColors();
@@ -402,6 +401,8 @@
                                         server="/api/upload"
                                         media_file_path="/storage/images/products"
                                         :media_server="'/api/media/' + form.id"
+                                        @added_media="getImagesAdded"
+                                        @deleted_media="getImagesDeleted"
                                     >
                                     </update-media>
                                     <div
@@ -449,7 +450,6 @@ import { UploadMedia, UpdateMedia } from "vue-media-upload";
 export default {
     data() {
         return {
-            index: null,
             form: {
                 id: this.$route.params.id,
                 code: "",
@@ -459,17 +459,16 @@ export default {
                 price: "",
                 warranty: "",
                 description: "",
+                category: {
+                    id: 0,
+                },
             },
             errors: {},
-            category_options: [],
             url: null,
-
+            images_deleted: [],
             categories: [],
-            brand_options: [],
             brands: [],
             types: [],
-            type_options: [],
-            color_options: [],
             colors: [],
             warranty_options: [
                 {
@@ -495,29 +494,21 @@ export default {
             ],
         };
     },
-    created() {
-        this.getCategories();
-        this.getProduct();
+    async created() {
+        await this.getProduct();
+        await this.getCategories();
+        await this.getBrands();
+        await this.getTypes();
+        this.getColors();
     },
     methods: {
-        setEmptyOptions() {
-            this.category_options = [],
-            this.brand_options = [],
-            this.type_options = [],
-            this.color_options = []
-        },
-        getProduct() {
-            axios
+        async getProduct() {
+            await axios
                 .get("/api/products/" + this.$route.params.id)
                 .then((response) => {
-                    console.log(response.data);
                     this.form = response.data;
                     this.url = response.data.image;
                     this.form.image = "";
-                    this.setEmptyOptions();
-                    this.getBrands();
-                    this.getTypes();
-                    this.getColors();
                 });
         },
         getCategories() {
@@ -525,15 +516,15 @@ export default {
                 this.categories = res.data;
             });
         },
-        getBrands() {
-            axios.get("/api/brands").then((res) => {
+        async getBrands() {
+            await axios.get("/api/brands").then((res) => {
                 this.brands = res.data.filter((brand) => {
                     return brand.category_id == this.form.category.id;
                 });
             });
         },
-        getTypes() {
-            axios.get("/api/types").then((res) => {
+        async getTypes() {
+            await axios.get("/api/types").then((res) => {
                 this.types = res.data.filter((type) => {
                     return type.category_id == this.form.type.id;
                 });
@@ -546,36 +537,37 @@ export default {
         },
         submit() {
             let formData = new FormData();
+            console.log(this.form.images);
+            formData.append("id", this.form.id);
             formData.append("code", this.form.code);
             formData.append("name", this.form.name);
             formData.append("price", this.form.price);
             formData.append("warranty", this.form.warranty);
             formData.append("description", this.form.description);
-            formData.append("color_ids", this.form.color_options);
             formData.append(
                 "category_id",
-                this.category_options.id === undefined
-                    ? ""
-                    : this.category_options.id
+                this.form.category === null ? "" : this.form.category.id
             );
             formData.append(
                 "brand_id",
-                this.brand_options.id === undefined ? "" : this.brand_options.id
+                this.form.brand === null ? "" : this.form.brand.id
             );
             formData.append(
                 "type_id",
-                this.type_options.id === undefined ? "" : this.type_options.id
+                this.form.type === null ? "" : this.form.type.id
             );
             formData.append(
                 "color_ids",
-                this.color_options.map((color) => {
+                this.form.colors.map((color) => {
                     return color.id;
                 })
             );
             formData.append("image", this.form.image);
             formData.append("images", this.form.images);
+            formData.append("images_deleted", this.images_deleted);
+            formData.append("_method", "put");
             axios
-                .post("/api/products", formData)
+                .post(`/api/products/${this.$route.params.id}`, formData)
                 .then((response) => {
                     this.$swal({
                         title: "Thành công",
@@ -586,7 +578,6 @@ export default {
                         showConfirmButton: false,
                         width: 360,
                     });
-                    this.$router.go();
                 })
                 .catch((error) => {
                     this.errors = error.response.data.errors;
@@ -604,7 +595,14 @@ export default {
             this.url = URL.createObjectURL(this.form.image);
         },
         getImagesAdded(i) {
+            console.log(i);
             this.form.images = i.map((image) => {
+                return image.name;
+            });
+        },
+        getImagesDeleted(i) {
+            console.log(i);
+            this.images_deleted = i.map((image) => {
                 return image.name;
             });
         },

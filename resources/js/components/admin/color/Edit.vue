@@ -140,7 +140,6 @@ export default {
     methods: {
         submit() {
             let formData = new FormData();
-            console.log(this.form);
             formData.append("category_id", this.form.category_id);
             formData.append("name", this.form.name);
             formData.append("image", this.form.image);
