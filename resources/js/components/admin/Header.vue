@@ -332,7 +332,7 @@
 
           <li class="nav-item" v-if="currentUser.role == 'superadmin'">
             <a href="#" class="nav-link">
-              <i class="nav-icon fab fa-medium-m"></i>
+              <i class="nav-icon fas fa-users"></i>
               <p>
                 Tài khoản
                 <i class="fas fa-angle-left right"></i>

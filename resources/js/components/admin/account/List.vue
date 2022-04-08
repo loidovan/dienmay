@@ -177,6 +177,8 @@
                                             centered
                                             id="showLoading"
                                             body-bg-variant="light"
+                                            header-bg-variant="light"
+                                            footer-bg-variant="light"
                                             size="sm"
                                         >
                                             <div class="text-center">
@@ -249,18 +251,19 @@
                                         </b-form-group>
                                     </template>
                                     <template #cell(action)="row">
-                                        <router-link
-                                            :to="{
-                                                name: 'accounts.edit',
-                                                params: { id: row.item.id },
-                                            }"
+                                        <span
+                                            @click.prevent="
+                                                getCurrentAccount(row.item.id)
+                                            "
+                                            v-b-modal.currentAccount
                                             ><i
-                                                class="fas fa-edit fa-lg"
+                                                class="fas fa-edit fa-lg text-primary"
                                                 v-b-tooltip.hover.v-secondary="
                                                     'Sửa bản ghi'
                                                 "
                                             ></i
-                                        ></router-link>
+                                        ></span>
+
                                         <span
                                             @click="deleteCategory(row.item.id)"
                                         >
@@ -297,6 +300,76 @@
             <!-- /.container-fluid -->
         </section>
         <!-- /.content -->
+        <b-modal id="currentAccount" size="xl" title="Sửa Tài Khoản Quản Trị">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email</label>
+                <input
+                    type="text"
+                    v-model="currentAccount.acc.email"
+                    class="form-control"
+                    placeholder="Nhập email"
+                    required
+                    readonly
+                />
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Tên</label>
+                <input
+                    type="text"
+                    v-model="currentAccount.acc.name"
+                    class="form-control"
+                    :class="{
+                        'is-invalid': errors.name,
+                    }"
+                    placeholder="Nhập tên"
+                    required
+                />
+                <div v-if="errors.name" class="invalid-feedback">
+                    {{ errors.name[0] }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Vai trò</label>
+                <b-form-select
+                    v-model="currentAccount.acc.roles[0].name"
+                    :options="roles"
+                >
+                    <template #first>
+                        <b-form-select-option :value="null" disabled
+                            >-- Chọn vai trò --</b-form-select-option
+                        >
+                    </template>
+                </b-form-select>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Các quyền</label>
+                <div class="row">
+                    <ul>
+                        <li
+                            v-for="item in currentAccount.permissions"
+                            :key="item.name"
+                        >
+                            {{ item.name }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <template #modal-footer="{ cancel }">
+                <div>
+                    <b-button
+                        variant="primary"
+                        @click.prevent="
+                            submitEditAccount(currentAccount.acc.id)
+                        "
+                    >
+                        Xác nhận
+                    </b-button>
+                    <b-button variant="secondary" @click="cancel()">
+                        Hủy
+                    </b-button>
+                </div>
+            </template>
+        </b-modal>
     </div>
     <!-- /.content-wrapper -->
 </template>
@@ -312,6 +385,17 @@ export default {
                 name: "",
                 email: "",
                 role_selected: null,
+            },
+            currentAccount: {
+                acc: {
+                    email: "",
+                    name: "",
+                    roles: [
+                        {
+                            name: "",
+                        },
+                    ],
+                },
             },
             errors: {},
             accounts: [],
@@ -383,12 +467,22 @@ export default {
                 .get("/api/accounts")
                 .then((response) => {
                     this.accounts = response.data.users;
-                    this.roles = response.data.roles;
+                    this.roles = [
+                        {
+                            value: response.data.roles[0],
+                            text: response.data.roles[0],
+                        },
+                    ];
                     this.totalRows = this.accounts.length;
                 })
                 .catch((error) => {
                     console.log(error);
                 });
+        },
+        getCurrentAccount(id) {
+            axios.get("/api/accounts/" + id).then((response) => {
+                this.currentAccount = response.data;
+            });
         },
         deleteCategory(id) {
             this.$swal({
@@ -448,9 +542,9 @@ export default {
                 ? this.accounts.map((item, index) => {
                       return {
                           STT: index + 1,
-                          "Tên danh mục": item.name,
+                          "Tên tài khoản": item.name,
+                          "Email đăng nhập": item.email,
                           "Ngày tạo": item.created_at,
-                          "Ngày sửa": item.updated_at,
                       };
                   })
                 : [];
@@ -459,8 +553,8 @@ export default {
                       return [
                           index + 1,
                           item.name,
+                          item.email,
                           item.created_at,
-                          item.updated_at,
                       ];
                   })
                 : [];
@@ -472,9 +566,9 @@ export default {
                     .map((item, index) => {
                         return {
                             STT: index + 1,
-                            "Tên danh mục": item.name,
+                            "Tên tài khoản": item.name,
+                            "Email đăng nhập": item.email,
                             "Ngày tạo": item.created_at,
-                            "Ngày sửa": item.updated_at,
                         };
                     });
                 this.pdf_data = this.accounts
@@ -483,8 +577,8 @@ export default {
                         return [
                             index + 1,
                             item.name,
+                            item.email,
                             item.created_at,
-                            item.updated_at,
                         ];
                     });
             }
@@ -553,7 +647,13 @@ export default {
                         alignment: "center",
                     },
                     {
-                        text: "Tên danh mục",
+                        text: "Tên tài khoản",
+                        fillColor: "#6c7ae0",
+                        color: "white",
+                        alignment: "center",
+                    },
+                    {
+                        text: "Email đăng nhập",
                         fillColor: "#6c7ae0",
                         color: "white",
                         alignment: "center",
@@ -564,17 +664,11 @@ export default {
                         color: "white",
                         alignment: "center",
                     },
-                    {
-                        text: "Ngày sửa",
-                        fillColor: "#6c7ae0",
-                        color: "white",
-                        alignment: "center",
-                    },
                 ]);
             }
             var docDefinition = {
                 header: {
-                    text: "DANH SÁCH DANH MỤC",
+                    text: "DANH SÁCH TÀI KHOẢN",
                     alignment: "center",
                     bold: "true",
                     fontSize: 20,
@@ -620,6 +714,7 @@ export default {
                         timer: 1500,
                         width: 360,
                     });
+                    this.getAccounts();
                 })
                 .catch((e) => {
                     this.$nextTick(() => {
@@ -628,8 +723,52 @@ export default {
                     this.errors = e.response.data.errors;
                 });
         },
+        submitEditAccount(id) {
+            axios
+                .put("/api/accounts/" + id, {
+                    name: this.currentAccount.acc.name,
+                    role: this.currentAccount.acc.roles[0].name,
+                })
+                .then((response) => {
+                    this.$nextTick(() => {
+                        this.$bvModal.hide("currentAccount");
+                    });
+                    this.$swal({
+                        title: "Sửa thành công!",
+                        icon: "success",
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 1500,
+                        width: 360,
+                    });
+                    this.getAccounts();
+                })
+                .catch((e) => {
+                    this.errors = e.response.data.errors;
+                });
+        },
     },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+ul {
+    display: flex; /* Magic begins */
+    flex-wrap: wrap; /* Multiline */
+}
+ul li {
+    flex-grow: 1; /* Grow to fill available space */
+}
+
+ul li {
+    background: #f5f5f5;
+    display: inline-block;
+    padding: 15px;
+    margin-left: -3px;
+    margin-bottom: 1px;
+}
+
+ul li:hover {
+    background: #ddd;
+}
+</style>

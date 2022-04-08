@@ -96,7 +96,7 @@ class AccountController extends Controller
      */
     public function show($id)
     {
-        $acc = User::with('roles')->find($id);
+        $acc = User::find($id);
         $permissions = $acc->getPermissionsViaRoles();
         return \response()->json([
             'acc' => $acc,
@@ -124,7 +124,27 @@ class AccountController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if (auth()->user()->can('edit-user')) {
+            $request->validate([
+                'name' => 'required|string|max:255',
+            ],
+            [
+                'name.required' => 'Tên không được để trống',
+                'name.max' => 'Tên không được quá 255 ký tự',
+            ]);
+            $acc = User::find($id);
+            $acc->name = $request->name;
+            $acc->updated_at = date('Y-m-d H:i:s');
+            $acc->removeRole($acc->roles->first()->name);
+            $acc->assignRole($request->role);
+            $acc->save();
+            return response()->json([
+                'message' => 'Sửa thành công',
+            ], 200);
+        }
+        return response()->json([
+            'message' => 'Bạn không có quyền sửa tài khoản',
+        ], 401);
     }
 
     /**
