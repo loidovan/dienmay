@@ -10,6 +10,7 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,7 @@ Route::post('register', [AuthController::class, 'register']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('accounts', AccountController::class);
+    Route::resource('roles', RoleController::class);
     Route::post('change-password', [AuthController::class, 'changePasswordFirstLogin']);
     Route::resource('categories', CategoryController::class);
     Route::resource('types', TypeController::class);

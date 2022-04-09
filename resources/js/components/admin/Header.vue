@@ -351,12 +351,6 @@
                   <p>Vai trò</p>
                 </router-link>
               </li>
-              <li class="nav-item">
-                <router-link :to="{ name: 'permissions' }" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Quyền</p>
-                </router-link>
-              </li>
             </ul>
           </li>
           

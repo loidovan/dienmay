@@ -132,8 +132,7 @@ export default {
                     if (res.data.check_first_login == null) {
                         this.$router.push({ name: 'change-password' });
                     } else if (
-                        res.data.role == "admin" ||
-                        res.data.role == "superadmin"
+                        res.data.role != "user"
                     ) {
                         location.href = "/admin";
                     } else {

@@ -34,15 +34,6 @@ const routes = [
                 },
             },
             {
-                path: "permissions",  
-                name: "permissions",
-                component: require("../components/admin/account/Permission.vue").default,
-                meta: {
-                    title: "Quyền",
-                    breadcrumb: 'Quyền'
-                },
-            },
-            {
                 path: "roles",  
                 name: "roles",
                 component: require("../components/admin/account/Role.vue").default,

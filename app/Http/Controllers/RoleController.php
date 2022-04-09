@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
-use App\Models\Category;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
-class CategoryController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +15,14 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = DB::select('select @n := @n + 1 stt , c.id, c.name, DATE_FORMAT(c.created_at, "%d/%m/%Y %H:%i:%s") as created_at,
-        DATE_FORMAT(c.updated_at, "%d/%m/%Y %H:%i:%s") as updated_at
-        from categories as c, (SELECT @n := 0) as stt 
-        order by c.id desc');
-        return response()->json($category);
+        $roles = Role::orderBy('id', 'desc')->where('name', '!=', 'superadmin')->where('name', '!=', 'user')->get();
+        $i = 1;
+        foreach ($roles as $role) {
+            $role['stt'] = $i;
+            $role['format_created_at'] = date('d/m/Y H:i:s', strtotime($role->created_at));
+            $i++;
+        }
+        return \response()->json($roles);
     }
 
     /**
@@ -40,19 +43,20 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        if (auth()->user()->can('create-category')) {
+        if (auth()->user()->can('create-role')) {
             $request->validate([
                 'name' => 'required|string|max:255|unique:categories',
+                'permissions' => 'required',
             ],
             [
                 'name.required' => 'Tên không được để trống',
                 'name.max' => 'Tên không được quá 255 ký tự',
                 'name.unique' => 'Tên đã tồn tại',
+                'permissions.required' => 'Quyền không được để trống',
             ]);
-            $category = new Category();
-            $category->name = $request->name;
-            $category->created_at = date('Y-m-d H:i:s');
-            $category->save();
+            $role = Role::create(['name' => $request->name, 'guard_name' => 'web']);
+            $role->syncPermissions($request->permissions);
+        
             return response()->json([
                 'message' => 'Thêm thành công',
             ], 200);
@@ -70,8 +74,8 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $category = DB::table('categories')->where('id', $id)->first();
-        return response()->json($category);
+        $role = Role::with('permissions')->find($id);
+        return response()->json($role);
     }
 
     /**
@@ -94,26 +98,25 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if(auth()->user()->can('edit-category')) {
+        if(auth()->user()->can('edit-role')) {
             $request->validate([
-                'name' => 'required|string|max:255|unique:categories,name,' . $id,
+                'name' => 'required|string|max:255|unique:categories',
+                'permissions' => 'required',
             ],
             [
                 'name.required' => 'Tên không được để trống',
                 'name.max' => 'Tên không được quá 255 ký tự',
                 'name.unique' => 'Tên đã tồn tại',
+                'permissions.required' => 'Quyền không được để trống',
             ]);
-            $category = Category::find($id);
-            $category->name = $request->name;
-            $category->updated_at = date('Y-m-d H:i:s');
-            $category->save();
+            $role = Role::find($id);
+            $role->name = $request->name;
+            $role->save();
+            $role->syncPermissions($request->permissions);
             return response()->json([
                 'message' => 'Cập nhật thành công',
             ], 200);
         }
-        return response()->json([
-            'message' => 'Bạn không có quyền cập nhật',
-        ], 401);
     }
 
     /**
@@ -124,9 +127,12 @@ class CategoryController extends Controller
      */
     public function destroy($ids)
     {
-        if(auth()->user()->can('delete-category')) {
+        if (auth()->user()->can('delete-role')) {
             $ids = explode(',', $ids);
-            $category = Category::whereIn('id', $ids)->delete();
+            foreach ($ids as $id) {
+                $role = Role::find($id);
+                $role->delete();
+            }
             return response()->json([
                 'message' => 'Xóa thành công',
             ], 200);

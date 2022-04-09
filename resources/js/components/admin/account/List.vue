@@ -433,6 +433,12 @@ export default {
                     sortable: true,
                 },
                 {
+                    key: "roles[0].name",
+                    label: "Vai trò",
+                    class: "text-center align-middle",
+                    sortable: true,
+                },
+                {
                     key: "created_at",
                     label: "Ngày tạo",
                     class: "text-center align-middle",
@@ -467,12 +473,12 @@ export default {
                 .get("/api/accounts")
                 .then((response) => {
                     this.accounts = response.data.users;
-                    this.roles = [
-                        {
-                            value: response.data.roles[0],
-                            text: response.data.roles[0],
-                        },
-                    ];
+                    this.roles = response.data.roles.map((item) => {
+                        return {
+                            value: item,
+                            text: item,
+                        };
+                    });
                     this.totalRows = this.accounts.length;
                 })
                 .catch((error) => {

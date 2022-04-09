@@ -98,8 +98,10 @@ class AccountController extends Controller
     {
         $acc = User::find($id);
         $permissions = $acc->getPermissionsViaRoles();
+        $roles = Role::where('name', '!=', 'superadmin')->where('name', '!=', 'user')->get();
         return \response()->json([
             'acc' => $acc,
+            'roles' => $roles,
             'permissions' => $permissions,
         ]);
     }
