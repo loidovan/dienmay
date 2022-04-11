@@ -17,7 +17,14 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::with('brand', 'category', 'type', 'colors', 'images')->orderBy('id', 'desc')->get();
+        $i = 1;
+        foreach ($products as $product) {
+            $product['stt'] = $i;
+            $i++;
+        }
+        
+        return response()->json($products);
     }
 
     /**
@@ -152,40 +159,109 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return \response()->json($request);
         if (auth()->user()->can('edit-product')) {
-            $request->validate(
-                [
-                    'code' => 'required|max:255',
-                    'name' => 'required|max:255',
-                    'category_id' => 'required',
-                    'brand_id' => 'required',
-                    'type_id' => 'required',
-                    'image' => 'required|mimes:jpg,jpeg,png,bmp|max:20000',
-                    'description' => 'required',
-                    'price' => 'required',
-                    'warranty' => 'required',
-                    'images' => 'required'
-                ],
-                [
-                    'code.required' => 'Mã sản phẩm không được để trống',
-                    'code.max' => 'Mã sản phẩm không được quá 255 ký tự',
-                    'name.required' => 'Tên màu không được để trống',
-                    'name.max' => 'Tên màu không được quá 255 ký tự',
-                    'image.required' => 'Ảnh sản phẩm không được để trống',
-                    'image.mimes' => 'File không đúng định dạng (định dạng yêu cầu là jpg, jpeg, png, bmp)',
-                    'image.max' => 'Kích thước file vượt quá 20MB',
-                    'category_id.required' => 'Danh mục sản phẩm không được để trống',
-                    'brand_id.required' => 'Thương hiệu sản phẩm không được để trống',
-                    'type_id.required' => 'Loại sản phẩm không được để trống',
-                    'description.required' => 'Mô tả sản phẩm không được để trống',
-                    'price.required' => 'Giá sản phẩm không được để trống',
-                    'warranty.required' => 'Bảo hành sản phẩm không được để trống',
-                    'images.required' => 'Ảnh sản phẩm không được để trống'
-                ]);
+            if ($request->file()) {
+                $request->validate(
+                    [
+                        'code' => 'required|max:255',
+                        'name' => 'required|max:255',
+                        'category_id' => 'required',
+                        'brand_id' => 'required',
+                        'type_id' => 'required',
+                        'image' => 'mimes:jpg,jpeg,png,bmp|max:20000',
+                        'description' => 'required',
+                        'price' => 'required',
+                        'warranty' => 'required',
+                    ],
+                    [
+                        'code.required' => 'Mã sản phẩm không được để trống',
+                        'code.max' => 'Mã sản phẩm không được quá 255 ký tự',
+                        'name.required' => 'Tên màu không được để trống',
+                        'name.max' => 'Tên màu không được quá 255 ký tự',
+                        'image.mimes' => 'File không đúng định dạng (định dạng yêu cầu là jpg, jpeg, png, bmp)',
+                        'image.max' => 'Kích thước file vượt quá 20MB',
+                        'category_id.required' => 'Danh mục sản phẩm không được để trống',
+                        'brand_id.required' => 'Thương hiệu sản phẩm không được để trống',
+                        'type_id.required' => 'Loại sản phẩm không được để trống',
+                        'description.required' => 'Mô tả sản phẩm không được để trống',
+                        'price.required' => 'Giá sản phẩm không được để trống',
+                        'warranty.required' => 'Bảo hành sản phẩm không được để trống',
+                    ]);
+            } else {
+                $request->validate(
+                    [
+                        'code' => 'required|max:255',
+                        'name' => 'required|max:255',
+                        'category_id' => 'required',
+                        'brand_id' => 'required',
+                        'type_id' => 'required',
+                        'description' => 'required',
+                        'price' => 'required',
+                        'warranty' => 'required',
+                    ],
+                    [
+                        'code.required' => 'Mã sản phẩm không được để trống',
+                        'code.max' => 'Mã sản phẩm không được quá 255 ký tự',
+                        'name.required' => 'Tên màu không được để trống',
+                        'name.max' => 'Tên màu không được quá 255 ký tự',
+                        'category_id.required' => 'Danh mục sản phẩm không được để trống',
+                        'brand_id.required' => 'Thương hiệu sản phẩm không được để trống',
+                        'type_id.required' => 'Loại sản phẩm không được để trống',
+                        'description.required' => 'Mô tả sản phẩm không được để trống',
+                        'price.required' => 'Giá sản phẩm không được để trống',
+                        'warranty.required' => 'Bảo hành sản phẩm không được để trống',
+                    ]);
+            }
 
             $product = Product::find($id);
+
+            if ($request->file()) {
+                $file_name = time() . '_' . $request->image->getClientOriginalName();
+                $file_path = $request->file('image')->storeAs('images/products', $file_name, 'public');
+
+                $product->code = $request->code;
+                $product->name = $request->name;
+                $product->price = $request->price;
+                $product->warranty = $request->warranty;
+                $product->description = $request->description;
+                $product->category_id = $request->category_id;
+                $product->brand_id = $request->brand_id;
+                $product->type_id = $request->type_id;
+                $product->colors()->sync(explode(',', $request->color_ids));
+
+                if ($product->image) {
+                    unlink(storage_path($this->removeChar($product->image)));
+                }
+                $product->image = '/storage/' . $file_path;
+                $product->updated_at = date('Y-m-d H:i:s');
+
+                $product->save();
+
+                return response()->json([
+                    'message' => 'Cập nhật thành công',
+                ], 200);
+            } else {
+                $product->code = $request->code;
+                $product->name = $request->name;
+                $product->price = $request->price;
+                $product->warranty = $request->warranty;
+                $product->description = $request->description;
+                $product->category_id = $request->category_id;
+                $product->brand_id = $request->brand_id;
+                $product->type_id = $request->type_id;
+                $product->colors()->sync(explode(',', $request->color_ids));
+                $product->updated_at = date('Y-m-d H:i:s');
+
+                $product->save();
+
+                return response()->json([
+                    'message' => 'Cập nhật thành công',
+                ], 200);
+            }
         }
+        return response()->json([
+            'message' => 'Bạn không có quyền cập nhật sản phẩm'
+        ], 401);
     }
 
     /**
@@ -194,8 +270,34 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($ids)
     {
-        //
+        if (auth()->user()->can('delete-product')) {
+            $ids = explode(',', $ids);
+            foreach ($ids as $id) {
+                $product = Product::find($id);
+                if ($product->image) {
+                    unlink(storage_path($this->removeChar($product->image)));
+                }
+                $images = $product->images;
+                foreach ($images as $image) {
+                    unlink(storage_path('app/public/images/products/' . $image->name));
+                }
+                $product->delete();
+            }
+            return response()->json([
+                'message' => 'Xóa thành công'
+            ], 200);
+        }
+        return response()->json([
+            'message' => 'Bạn không có quyền xóa sản phẩm'
+        ], 401);
+    }
+
+    public function removeChar($str) {
+        $res = str_ireplace('/storage', 'app/public', $str);
+  
+        // returning the result 
+        return $res;
     }
 }

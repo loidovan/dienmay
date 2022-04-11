@@ -21,7 +21,6 @@
                             <!-- /.card-header -->
                             <!-- form start -->
                             <div class="card-body">
-                                {{ form }}
                                 <div class="form-group">
                                     <label for="exampleInputEmail1"
                                         >Mã sản phẩm</label
@@ -397,14 +396,85 @@
                                     <label for="exampleInputEmail1"
                                         >Ảnh bổ sung</label
                                     >
-                                    <update-media
-                                        server="/api/upload"
-                                        media_file_path="/storage/images/products"
-                                        :media_server="'/api/media/' + form.id"
-                                        @added_media="getImagesAdded"
-                                        @deleted_media="getImagesDeleted"
+                                    <div
+                                        class="row border rounded mx-1"
+                                        style="
+                                            border-color: #bbbbbb !important;
+                                            background-color: #fbfbfb;
+                                        "
                                     >
-                                    </update-media>
+                                        <div
+                                            class="col md-3 p-3 mx-2 position-relative"
+                                            style="max-width: 166px"
+                                        >
+                                            <label
+                                                id="label-upload-photo"
+                                                for="upload-photo"
+                                                ><div
+                                                    style="
+                                                        background-color: #ffffff;
+                                                        border-radius: 5px !important;
+                                                        border: 1px dashed #ccc !important;
+                                                        cursor: pointer !important;
+                                                        width: 160px;
+                                                        height: 100px;
+                                                    "
+                                                    class="rounded text-center align-items-center"
+                                                >
+                                                    <div
+                                                        style="
+                                                            border-radius: 50%;
+                                                            width: 48px;
+                                                            height: 48px;
+                                                            margin-left: auto;
+                                                            margin-right: auto;
+                                                            margin-top: 24px;
+                                                        "
+                                                        class="bg-info text-center align-items-center"
+                                                    >
+                                                        <h1
+                                                            style="
+                                                                font-weight: bold;
+                                                            "
+                                                        >
+                                                            +
+                                                        </h1>
+                                                    </div>
+                                                </div></label
+                                            >
+                                            <input
+                                                type="file"
+                                                @change="upload_images"
+                                                id="upload-photo"
+                                                accept="image/*"
+                                            />
+                                        </div>
+                                        <div
+                                            class="col md-3 p-3 mx-2 position-relative"
+                                            style="max-width: 166px"
+                                            v-for="item in form.images"
+                                            :key="item.id"
+                                        >
+                                            <img
+                                                class="rounded"
+                                                :src="
+                                                    '/storage/images/products/' +
+                                                    item.name
+                                                "
+                                            />
+                                            <div
+                                                style="top: 16px; right: -3px"
+                                                class="position-absolute"
+                                            >
+                                                <span
+                                                    @click="
+                                                        deleteImages(item.id)
+                                                    "
+                                                    >X</span
+                                                >
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div
                                         v-if="errors.images"
                                         style="
@@ -446,7 +516,6 @@
 
 <script>
 import Multiselect from "vue-multiselect";
-import { UploadMedia, UpdateMedia } from "vue-media-upload";
 export default {
     data() {
         return {
@@ -455,7 +524,7 @@ export default {
                 code: "",
                 name: "",
                 image: "",
-                images: [],
+                images: "",
                 price: "",
                 warranty: "",
                 description: "",
@@ -526,7 +595,7 @@ export default {
         async getTypes() {
             await axios.get("/api/types").then((res) => {
                 this.types = res.data.filter((type) => {
-                    return type.category_id == this.form.type.id;
+                    return type.category_id == this.form.category.id;
                 });
             });
         },
@@ -537,7 +606,6 @@ export default {
         },
         submit() {
             let formData = new FormData();
-            console.log(this.form.images);
             formData.append("id", this.form.id);
             formData.append("code", this.form.code);
             formData.append("name", this.form.name);
@@ -563,8 +631,6 @@ export default {
                 })
             );
             formData.append("image", this.form.image);
-            formData.append("images", this.form.images);
-            formData.append("images_deleted", this.images_deleted);
             formData.append("_method", "put");
             axios
                 .post(`/api/products/${this.$route.params.id}`, formData)
@@ -572,12 +638,13 @@ export default {
                     this.$swal({
                         title: "Thành công",
                         icon: "success",
-                        text: "Thêm mới thành công",
+                        text: "Cập nhật thành công",
                         position: "top-end",
                         timer: 1500,
                         showConfirmButton: false,
                         width: 360,
                     });
+                    this.$router.push("/admin/products");
                 })
                 .catch((error) => {
                     this.errors = error.response.data.errors;
@@ -594,23 +661,54 @@ export default {
             this.form.image = e.target.files[0];
             this.url = URL.createObjectURL(this.form.image);
         },
-        getImagesAdded(i) {
-            console.log(i);
-            this.form.images = i.map((image) => {
-                return image.name;
-            });
+        upload_images(e) {
+            this.form.images = e.target.files[0];
+            let formData = new FormData();
+            formData.append("product_id", this.$route.params.id);
+            formData.append("images", this.form.images);
+            axios
+                .post(`/api/products/upload_images`, formData)
+                .then((response) => {
+                    axios
+                        .get("/api/products/" + this.$route.params.id)
+                        .then((response) => {
+                            this.form.images = response.data.images;
+                        });
+                })
+                .catch((error) => {
+                    this.errors = error.response.data.errors;
+                });
         },
-        getImagesDeleted(i) {
-            console.log(i);
-            this.images_deleted = i.map((image) => {
-                return image.name;
+        deleteImages(id) {
+            this.$swal({
+                title: "Bạn có chắc chắn muốn xóa?",
+                text: "Sau khi xóa, bạn sẽ không thể khôi phục lại!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Đồng ý",
+                cancelButtonText: "Hủy",
+            }).then((willDelete) => {
+                if (willDelete.isConfirmed) {
+                    axios
+                        .post(`/api/products/delete_images`, { id: id })
+                        .then((response) => {
+                            axios
+                                .get("/api/products/" + this.$route.params.id)
+                                .then((response) => {
+                                    this.form.images = response.data.images;
+                                });
+                        })
+                        .catch((error) => {
+                            this.errors = error.response.data.errors;
+                        });
+                }
             });
         },
     },
     components: {
         Multiselect,
-        UploadMedia,
-        UpdateMedia,
     },
 };
 </script>
@@ -620,5 +718,35 @@ export default {
 .input-error {
     border: 1px solid #dc3545;
     border-radius: 4px;
+}
+img.rounded {
+    height: 100px;
+    width: 160px;
+    border: 1px solid #dddddd;
+}
+.position-absolute > span {
+    font-weight: bold;
+    font-size: 24px;
+    color: gray;
+}
+.position-absolute:hover > span {
+    cursor: pointer;
+    color: rgb(252, 43, 36);
+}
+#label-upload-photo {
+    cursor: pointer;
+    /* Style as you please, it will become the visible UI component. */
+}
+
+#upload-photo {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+.rounded.text-center.align-items-center:hover {
+    background-color: #f1f1f1 !important;
+}
+.bg-info.text-center.align-items-center:hover {
+    background-color: #17a2b8 !important;
 }
 </style>

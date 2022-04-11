@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
@@ -29,5 +30,23 @@ class ImageController extends Controller
   {
     $images = $product->images;
     return ['media' => $images];
+  }
+
+  public function uploadImages(Request $request) {
+    if ($request->file()) {
+      $file_name = uniqid() . '_' . trim($request->images->getClientOriginalName());
+      $file_path = $request->file('images')->storeAs('images/products', $file_name, 'public');
+
+      $image = new Image();
+      $image->product_id = $request->product_id;
+      $image->name = $file_name;
+      $image->save();
+    }
+  }
+
+  public function deleteImages(Request $request) {
+    $image = Image::find($request->id);
+    unlink(storage_path('app/public/images/products/' . $image->name));
+    $image->delete();
   }
 }

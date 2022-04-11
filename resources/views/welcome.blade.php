@@ -26,10 +26,10 @@
             label.custom-control-label {
                 cursor: pointer;
             }
-            /* Độ rộng của cột hành động  */
+            /* Độ rộng của cột hành động ở bảng product */
             .width-actions {
-                min-width: 100px;
-                max-width: 100px;
+                min-width: 110px;
+                max-width: 110px;
             }
             /* Đổi màu cho hành động xóa */
             .fa-trash-alt {
