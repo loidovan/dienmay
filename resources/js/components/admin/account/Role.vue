@@ -393,7 +393,7 @@
                                                     <b-button
                                                         variant="primary"
                                                         @click.prevent=" form.id ? submitEditRole(form.id) :
-                                                            submitAddRole
+                                                            submitAddRole()
                                                         "
                                                     >
                                                         Xác nhận

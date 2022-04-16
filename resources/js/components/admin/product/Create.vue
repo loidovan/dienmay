@@ -12,7 +12,6 @@
                         <!-- jquery validation -->
                         <div
                             class="card card-primary"
-                            @keyup.enter="submit()"
                             style="overflow-x: auto"
                         >
                             <div class="card-header">
@@ -279,6 +278,8 @@
                                     <label>Thông số kỹ thuật</label>
 
                                     <ckeditor
+                                    :editor="editor"
+                                    :config="editorConfig"
                                         v-model="form.description"
                                         :class="{
                                             'input-error': errors.description,
@@ -416,6 +417,56 @@
                                         {{ errors.images[0] }}
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1"
+                                        >Thông tin sản phẩm</label
+                                    >
+                                    <vue-editor v-model="info_product"
+                                        :editorOptions="info_product_option"
+                                        :class="{
+                                            'input-error': errors.info_product,
+                                        }"
+                                        useCustomImageHandler
+                                        @image-added="handleImageAdded"
+                                        @image-removed="handleImageRemoved"
+                                    >
+                                    </vue-editor>
+                                   <div
+                                        v-if="errors.info_product"
+                                        style="
+                                            color: #dc3545;
+                                            font-size: 12.6px;
+                                            margin-top: 3px;
+                                        "
+                                    >
+                                        {{ errors.info_product[0] }}
+                                    </div>
+                                </div>
+                                 <div class="form-group">
+                                    <label for="exampleInputEmail1"
+                                        >Clip đánh giá</label
+                                    >
+                                    <input type="text" 
+                                        :class="{
+                                            'input-error': errors.clip,
+                                        }" 
+                                        v-model="clip" 
+                                        placeholder="Nhập đường dẫn" 
+                                        class="form-control mb-3">
+                                    <div
+                                        v-if="errors.clip"
+                                        style="
+                                            color: #dc3545;
+                                            font-size: 12.6px;
+                                        "
+                                    >
+                                        {{ errors.clip[0] }}
+                                    </div>
+                                    <div v-if="clip">
+                                        <LazyYoutube :src="clip" />
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- /.card-body -->
@@ -447,6 +498,11 @@
 <script>
 import Multiselect from "vue-multiselect";
 import { UploadMedia, UpdateMedia } from "vue-media-upload";
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { VueEditor,Quill } from 'vue2-editor'
+import  ImageResize  from 'quill-image-resize-vue'
+Quill.register('modules/imageResize', ImageResize)
+import { LazyYoutube } from "vue-lazytube";
 export default {
     data() {
         return {
@@ -492,10 +548,21 @@ export default {
                     name: "5 năm",
                 },
             ],
+            editor: ClassicEditor,
+            editorConfig: {
+                
+            },
+            info_product: '',
+            info_product_option: {
+                modules: {
+                    imageResize: {}, 
+                },
+            },
+            clip: '',
         };
     },
-    created() {
-        this.getCategories();
+    async created() {
+        await this.getCategories();
     },
     methods: {
         setEmptyOptions() {
@@ -557,6 +624,8 @@ export default {
             );
             formData.append("image", this.form.image);
             formData.append("images", this.form.images);
+            formData.append("info_product", this.info_product);
+            formData.append("clip", this.clip);
             axios
                 .post("/api/products", formData)
                 .then((response) => {
@@ -591,11 +660,38 @@ export default {
                 return image.name;
             });
         },
+        onEditorChange(e) {
+            console.log(this.content);
+        },
+        handleImageAdded: function(file, Editor, cursorLocation, resetUploader) {
+            var formData = new FormData();
+            formData.append("image", file);
+
+            axios.post('/api/posts', formData)
+                .then(result => {
+                const url = result.data.url; // Get url from response
+                Editor.insertEmbed(cursorLocation, "image", url);
+                resetUploader();
+                })
+                .catch(err => {
+                console.log(err);
+                });
+        },
+        handleImageRemoved: function(file, Editor, cursorLocation, resetUploader) {
+            axios.post('/api/posts/deleteImage', {image: file})
+                .then(result => {
+                })
+                .catch(err => {
+                console.log(err);
+                });
+            }
     },
     components: {
         Multiselect,
         UploadMedia,
         UpdateMedia,
+        VueEditor,
+        LazyYoutube,
     },
 };
 </script>

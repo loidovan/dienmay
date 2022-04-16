@@ -107,8 +107,7 @@ export default {
                         button: "OK",
                     }).then(() => {
                         if (
-                            res.data.role == "admin" ||
-                            res.data.role == "superadmin"
+                            res.data.role != "user"
                         ) {
                             location.href = "/admin";
                         } else {

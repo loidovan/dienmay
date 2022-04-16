@@ -507,20 +507,19 @@ export default {
                         axios
                             .delete("/api/accounts/" + id)
                             .then((response) => {
-                                this.getCategorys();
+                                this.$swal({
+                                    title: "Đã xóa!",
+                                    icon: "success",
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                    width: 360,
+                                });
+                                this.getAccounts();
                             })
                             .catch((error) => {
                                 console.log(error);
                             });
-                        this.$swal({
-                            title: "Đã xóa!",
-                            icon: "success",
-                            position: "top-end",
-                            showConfirmButton: false,
-                            timer: 1500,
-                            width: 360,
-                        });
-                        this.getAccounts();
                     } else {
                         this.$swal({
                             title: "Hủy xóa!",
@@ -607,20 +606,19 @@ export default {
                         axios
                             .delete("/api/accounts/" + this.selected)
                             .then((response) => {
-                                this.getCategorys();
+                                this.$swal({
+                                    title: "Đã xóa!",
+                                    icon: "success",
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                    width: 360,
+                                });
+                                this.getAccounts();
                             })
                             .catch((error) => {
                                 console.log(error);
                             });
-                        this.$swal({
-                            title: "Đã xóa!",
-                            icon: "success",
-                            position: "top-end",
-                            showConfirmButton: false,
-                            timer: 1500,
-                            width: 360,
-                        });
-                        this.getAccounts();
                     } else {
                         this.$swal({
                             title: "Hủy xóa!",

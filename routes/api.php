@@ -11,6 +11,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,10 +40,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('brands', BrandController::class);
     Route::resource('colors', ColorController::class);
     Route::resource('products', ProductController::class);
+    Route::resource('posts', PostController::class);
     Route::post('/upload', [ImageController::class, 'store'])->name('upload');
     Route::get('/media/{product}', [ImageController::class, 'getImages'])->name('product.images');
     Route::post('/products/upload_images', [ImageController::class, 'uploadImages'])->name('products.upload_images');
     Route::post('/products/delete_images', [ImageController::class, 'deleteImages'])->name('products.delete_images');
+    Route::post('/posts/deleteImage', [PostController::class, 'deleteImage']);
 
     Route::post('logout', [AuthController::class, 'logout']);
 });

@@ -19,10 +19,11 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import excel from 'vue-excel-export';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import VueBreadcrumbs from 'vue-2-breadcrumbs';
-import CKEditor from 'ckeditor4-vue';
-
+import CKEditor from '@ckeditor/ckeditor5-vue2';
+import StarRating from 'vue-star-rating';
 // If you don't need the styles, do not connect
 import 'sweetalert2/dist/sweetalert2.min.css';
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -62,11 +63,9 @@ Vue.use(VueBreadcrumbs, {
         '    </div>\n' +
         '</section>'
 })
-Vue.use(CKEditor);
+Vue.use( CKEditor );
 
-// Vue.config.warnHandler = function(msg, vm, trace) {
-
-// }
+Vue.component('star-rating', StarRating);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

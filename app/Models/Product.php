@@ -42,4 +42,9 @@ class Product extends Model
     {
         return $this->hasMany('App\Models\Image', 'product_id', 'id');
     }
+
+    public function post() 
+    {
+        return $this->hasOne('App\Models\Post');
+    }
 }

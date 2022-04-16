@@ -20,7 +20,7 @@ class CreateProductsTable extends Migration
             $table->bigInteger("category_id")->unsigned();
             $table->bigInteger("brand_id")->unsigned();
             $table->bigInteger("type_id")->unsigned();
-            $table->string('description',1000);
+            $table->text('description');
             $table->string('image');
             $table->decimal('price',10,0);
             $table->integer('warranty');

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Color;
 use Illuminate\Support\Facades\File;
-use Illuminate\Filesystem\Filesystem;
+use App\Models\Post;
 
 class ProductController extends Controller
 {
@@ -58,7 +58,9 @@ class ProductController extends Controller
                     'color_ids' => 'required',
                     'price' => 'required',
                     'warranty' => 'required',
-                    'images' => 'required'
+                    'images' => 'required',
+                    'info_product' => 'required|max:65535',
+                    'clip' => 'required',
                 ],
                 [
                     'code.required' => 'Mã sản phẩm không được để trống',
@@ -77,7 +79,9 @@ class ProductController extends Controller
                     'description.required' => 'Mô tả sản phẩm không được để trống',
                     'price.required' => 'Giá sản phẩm không được để trống',
                     'warranty.required' => 'Bảo hành sản phẩm không được để trống',
-                    'images.required' => 'Ảnh sản phẩm không được để trống'
+                    'images.required' => 'Ảnh sản phẩm không được để trống',
+                    'info_product.required' => 'Thông tin sản phẩm không được để trống',
+                    'clip.required' => 'Link clip sản phẩm không được để trống',
                 ]
             );
 
@@ -116,6 +120,13 @@ class ProductController extends Controller
                 }
             
                 File::cleanDirectory(public_path('/tmp/uploads'));
+
+                $post = new Post();
+                $post->product_id = $product->id;
+                $post->info_product = $request->info_product;
+                $post->path = $request->clip;
+                $post->created_at = date('Y-m-d H:i:s');
+                $post->save();
 
                 return response()->json([
                     'message' => 'Thêm thành công',
@@ -172,6 +183,8 @@ class ProductController extends Controller
                         'description' => 'required',
                         'price' => 'required',
                         'warranty' => 'required',
+                        'info_product' => 'required',
+                        'clip' => 'required',
                     ],
                     [
                         'code.required' => 'Mã sản phẩm không được để trống',
@@ -186,6 +199,8 @@ class ProductController extends Controller
                         'description.required' => 'Mô tả sản phẩm không được để trống',
                         'price.required' => 'Giá sản phẩm không được để trống',
                         'warranty.required' => 'Bảo hành sản phẩm không được để trống',
+                        'info_product.required' => 'Thông tin sản phẩm không được để trống',
+                        'clip.required' => 'Clip không được để trống',
                     ]);
             } else {
                 $request->validate(
@@ -198,6 +213,8 @@ class ProductController extends Controller
                         'description' => 'required',
                         'price' => 'required',
                         'warranty' => 'required',
+                        'info_product' => 'required',
+                        'clip' => 'required',
                     ],
                     [
                         'code.required' => 'Mã sản phẩm không được để trống',
@@ -210,6 +227,8 @@ class ProductController extends Controller
                         'description.required' => 'Mô tả sản phẩm không được để trống',
                         'price.required' => 'Giá sản phẩm không được để trống',
                         'warranty.required' => 'Bảo hành sản phẩm không được để trống',
+                        'info_product.required' => 'Thông tin sản phẩm không được để trống',
+                        'clip.required' => 'Clip không được để trống',
                     ]);
             }
 
@@ -237,6 +256,12 @@ class ProductController extends Controller
 
                 $product->save();
 
+                $post = $product->post()->first();
+                $post->info_product = $request->info_product;
+                $post->path = $request->clip;
+                $post->updated_at = date('Y-m-d H:i:s');
+                $post->save();
+
                 return response()->json([
                     'message' => 'Cập nhật thành công',
                 ], 200);
@@ -253,6 +278,12 @@ class ProductController extends Controller
                 $product->updated_at = date('Y-m-d H:i:s');
 
                 $product->save();
+
+                $post = $product->post()->first();
+                $post->info_product = $request->info_product;
+                $post->path = $request->clip;
+                $post->updated_at = date('Y-m-d H:i:s');
+                $post->save();
 
                 return response()->json([
                     'message' => 'Cập nhật thành công',
