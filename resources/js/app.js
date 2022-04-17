@@ -23,7 +23,9 @@ import CKEditor from '@ckeditor/ckeditor5-vue2';
 import StarRating from 'vue-star-rating';
 // If you don't need the styles, do not connect
 import 'sweetalert2/dist/sweetalert2.min.css';
+import VueTreeNavigation from 'vue-tree-navigation';
 
+Vue.use(VueTreeNavigation);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

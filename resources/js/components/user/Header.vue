@@ -18,7 +18,7 @@
         <div class="header-mid container">
             <div class="row">
                 <div class="col-md-6">
-                    <router-link to="">
+                    <router-link :to="{name: 'user.home'}">
                         <img src="/storage/images/logo.png" alt="Logo" width="60px" height="60px"> <span style="font-size:21px;font-weight:700;color:#ed1c24">Điện Máy Như Ý</span>
                     </router-link>
                 </div>
@@ -41,15 +41,11 @@
             <div class="container">
                 <ul>
                     <li v-b-toggle.sidebar-category><a style="pointer-events: none;" href="">Tất cả danh mục | </a></li>
-                    <b-sidebar id="sidebar-category" title="Danh Mục Sản Phẩm" shadow>
-      <div class="px-3 py-2">
-        <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
-          in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-        </p>
-        <b-img src="https://picsum.photos/500/500/?image=54" fluid thumbnail></b-img>
-      </div>
-    </b-sidebar>
+                    <b-sidebar id="sidebar-category" title="Danh Mục Sản Phẩm" backdrop shadow>
+                        <div class="px-3 py-2">
+                            <vue-tree-navigation :items="tree" />
+                        </div>
+                    </b-sidebar>
                     <li><a href="">Ti vi</a></li>
                     <li><a href="">Tủ lạnh</a></li>
                     <li><a href="">Máy lạnh</a></li>
@@ -60,40 +56,71 @@
                 </ul>
             </div>
         </div>
-
-        <!-- Slider -->
-        <b-carousel
-            id="carousel-fade"
-            style="text-shadow: 0px 0px 2px #000"
-            fade
-            :interval="4000"
-            indicators
-            controls
-            img-width="1024"
-            img-height="480"
-        >
-            <b-carousel-slide
-                img-src="/storage/images/banner/banner_dienmay2.png"
-            ></b-carousel-slide>
-            <b-carousel-slide
-                img-src="/storage/images/banner/banner_dienmay1.png"
-            ></b-carousel-slide>
-            <b-carousel-slide
-                img-src="/storage/images/banner/banner_dienmay3.png"
-            ></b-carousel-slide>
-            
-        </b-carousel>
-        <!-- END Slider -->
-        
     </div>
 </template>
 <script>
 export default {
     data() {
         return {
-
+            categories: [],
+            brands: [],
+            types: [],
+            tree: [],
         }
-    }
+    },
+    async created() {
+        await this.getCategories();
+        await this.getBrands();
+        await this.getTypes();
+        await this.getTree();
+    },
+    methods: {
+        getCategories() {
+            axios.get('/api/categories').then(res => {
+                this.categories = res.data;
+                this.tree = this.categories.map(category => {
+                return {
+                    id: category.id,
+                    name: category.name,
+                    children: [{
+                        name: 'Thương hiệu',
+                        children: category.brands.map(brand => {
+                            return {
+                                id: brand.id,
+                                name: brand.name,
+                                path: `/products?category_id=${category.id}&brand_id=${brand.id}`
+                            }
+                        })
+                    },
+                    {
+                        name: 'Loại',
+                        children: category.types.map(type => {
+                            return {
+                                id: type.id,
+                                name: type.name,
+                                path: `/products?category_id=${category.id}&type_id=${type.id}`
+                            }
+                        })
+                    }]
+                }
+            });
+            });
+        },
+        getBrands() {
+            axios.get('/api/brands').then(res => {
+                this.brands = res.data;
+            });
+        },
+        getTypes() {
+            axios.get('/api/types').then(res => {
+                this.types = res.data;
+            });
+        },
+        getTree() {
+            
+        }
+    },
+    
 }
 </script>
 <style scoped>
@@ -154,5 +181,5 @@ export default {
     .header-bottom .container li>a:hover {
         background-color: rgba(0, 0, 0, .07)
     }
-    
+   
 </style>

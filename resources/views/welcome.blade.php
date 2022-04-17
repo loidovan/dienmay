@@ -13,6 +13,9 @@
         <link href="{{ mix('css/app.css') }}" type="text/css" rel="stylesheet" />
 
         <style>
+            a {
+                text-decoration: none !important;
+            }
             body {
                 font-family: 'Nunito', sans-serif;
             }
@@ -51,7 +54,7 @@
             }
         </style>
     </head>
-    <body class="hold-transition sidebar-mini layout-fixed">
+    <body style="background-color: white" class="hold-transition sidebar-mini layout-fixed">
         <div id="app">
 
         </div>

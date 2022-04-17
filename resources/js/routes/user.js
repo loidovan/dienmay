@@ -11,6 +11,11 @@ const routes = [
                 name: "user.home",
                 component: require("../components/user/Home.vue").default,
             },
+            {
+                path: "products",
+                name: "user.products",
+                component: require("../components/user/products/List.vue").default,
+            }
         ],
     },
 ];

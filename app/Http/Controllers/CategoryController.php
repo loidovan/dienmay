@@ -15,11 +15,13 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = DB::select('select @n := @n + 1 stt , c.id, c.name, DATE_FORMAT(c.created_at, "%d/%m/%Y %H:%i:%s") as created_at,
-        DATE_FORMAT(c.updated_at, "%d/%m/%Y %H:%i:%s") as updated_at
-        from categories as c, (SELECT @n := 0) as stt 
-        order by c.id desc');
-        return response()->json($category);
+        $categories = Category::with('brands', 'types')->get();
+        $i = 1;
+        foreach($categories as $category) {
+            $category['stt'] = $i;
+            $i++;
+        }
+        return response()->json($categories);
     }
 
     /**
