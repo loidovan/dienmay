@@ -146,7 +146,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::with('brand', 'category', 'type', 'colors', 'images')->find($id);
+        $product = Product::with('brand', 'category', 'type', 'colors', 'images', 'post')->find($id);
         return response()->json($product);
     }
 
@@ -323,6 +323,25 @@ class ProductController extends Controller
         return response()->json([
             'message' => 'Bạn không có quyền xóa sản phẩm'
         ], 401);
+    }
+
+    public function filterProducts(Request $request) {
+        if ($request->category_id) {
+            $products = Product::with('category')->where('category_id', $request->category_id)->orderBy('id', 'desc');
+            if ($request->brand_id) {
+                $products = $products->whereIn('brand_id', explode(',', $request->brand_id));
+            }
+            if ($request->type_id) {
+                $products = $products->whereIn('type_id', explode(',', $request->type_id));
+            }
+            if ($request->rangeprice) {
+                $products = $products->whereBetween('price', explode(',', $request->rangeprice));
+            }
+            if ($request->warranty) {
+                $products = $products->whereIn('warranty', explode(',', $request->warranty));
+            }
+        }
+        return \response()->json($products->get());
     }
 
     public function removeChar($str) {

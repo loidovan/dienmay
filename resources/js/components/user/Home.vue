@@ -70,8 +70,8 @@
                 </div>
                 <div class="col-md-6"></div>
                 <div class="col-md-3 text-danger text-right font-weight-bolder">
-                    <span class="viewAll">Xem tất cả {{lengthTV}} Ti vi >
-                    </span>
+                    <router-link :to="{ name: 'user.products', query: { category_id: this.slidesTV[0].category_id } }" tag="span" class="viewAll">Xem tất cả {{lengthTV}} Ti vi >
+                    </router-link>
                 </div>
             </div>
             <vueper-slides
@@ -85,43 +85,45 @@
             >
                 <vueper-slide v-for="(slide, i) in slidesTV" :key="slide.id">
                     <template v-slot:content>
-                        <div
-                            v-if="[1, 3, 6, 8].includes(i)"
-                            class="h-100 border-top border-bottom cate"
-                        >
-                            <div class="item-img py-3">
-                                <img :src="slide.image" width="100%" />
+                        <router-link tag="span" :to="`/products/${slide.id}`">
+                            <div
+                                v-if="[1, 3, 6, 8].includes(i)"
+                                class="h-100 border-top border-bottom cate"
+                            >
+                                <div class="item-img py-3">
+                                    <img :src="slide.image" width="100%" />
+                                </div>
+                                <div>
+                                    <h6 style="font-weight: 500">{{ slide.name }} {{ slide.code }}</h6>
+                                    <h5 style="font-weight: bolder">{{ formatPrice(slide.price) }}₫</h5>
+                                    <star-rating
+                                        :read-only="true"
+                                        :increment="0.01"
+                                        :star-size="13"
+                                        active-color="#FF8C00"
+                                        :show-rating="false"
+                                        v-model="rating"
+                                    ></star-rating>
+                                </div>
                             </div>
-                            <div>
-                                <h6 style="font-weight: 500">{{ slide.name }} {{ slide.code }}</h6>
-                                <h5 style="font-weight: bolder">{{ formatPrice(slide.price) }}₫</h5>
-                                <star-rating
-                                    :read-only="true"
-                                    :increment="0.01"
-                                    :star-size="13"
-                                    active-color="#FF8C00"
-                                    :show-rating="false"
-                                    v-model="rating"
-                                ></star-rating>
+                            <div v-else class="h-100 border cate">
+                                <div class="item-img py-3">
+                                    <img :src="slide.image" width="100%" />
+                                </div>
+                                <div>
+                                    <h6 style="font-weight: 500">{{ slide.name }} {{ slide.code }}</h6>
+                                    <h5 style="font-weight: bolder">{{ formatPrice(slide.price) }}₫</h5>
+                                    <star-rating
+                                        :read-only="true"
+                                        :increment="0.01"
+                                        :star-size="13"
+                                        active-color="#FF8C00"
+                                        :show-rating="false"
+                                        v-model="rating"
+                                    ></star-rating>
+                                </div>
                             </div>
-                        </div>
-                        <div v-else class="h-100 border cate">
-                            <div class="item-img py-3">
-                                <img :src="slide.image" width="100%" />
-                            </div>
-                            <div>
-                                <h6 style="font-weight: 500">{{ slide.name }} {{ slide.code }}</h6>
-                                <h5 style="font-weight: bolder">{{ formatPrice(slide.price) }}₫</h5>
-                                <star-rating
-                                    :read-only="true"
-                                    :increment="0.01"
-                                    :star-size="13"
-                                    active-color="#FF8C00"
-                                    :show-rating="false"
-                                    v-model="rating"
-                                ></star-rating>
-                            </div>
-                        </div>
+                        </router-link>
                     </template>
                 </vueper-slide>
             </vueper-slides>
@@ -134,8 +136,8 @@
                 </div>
                 <div class="col-md-6"></div>
                 <div class="col-md-3 text-danger text-right font-weight-bolder">
-                    <span class="viewAll">Xem tất cả {{lengthTuLanh}} Tủ lạnh >
-                    </span>
+                    <router-link :to="{ name: 'user.products', query: { category_id: this.slidesTuLanh[0].category_id } }" tag="span" class="viewAll">Xem tất cả {{lengthTuLanh}} Tủ lạnh >
+                    </router-link>
                 </div>
             </div>
             <vueper-slides
@@ -149,43 +151,45 @@
             >
                 <vueper-slide v-for="(slide, i) in slidesTuLanh" :key="slide.id">
                     <template v-slot:content>
-                        <div
-                            v-if="[1, 3, 6, 8].includes(i)"
-                            class="h-100 border-top border-bottom cate"
-                        >
-                            <div class="item-img py-3">
-                                <img :src="slide.image" width="100%" />
+                        <router-link tag="span" :to="`/products/${slide.id}`">
+                            <div
+                                v-if="[1, 3, 6, 8].includes(i)"
+                                class="h-100 border-top border-bottom cate"
+                            >
+                                <div class="item-img py-3">
+                                    <img :src="slide.image" width="100%" />
+                                </div>
+                                <div>
+                                    <h6 style="font-weight: 500">{{ slide.name }} {{ slide.code }}</h6>
+                                    <h5 style="font-weight: bolder">{{ formatPrice(slide.price) }}₫</h5>
+                                    <star-rating
+                                        :read-only="true"
+                                        :increment="0.01"
+                                        :star-size="13"
+                                        active-color="#FF8C00"
+                                        :show-rating="false"
+                                        v-model="rating"
+                                    ></star-rating>
+                                </div>
                             </div>
-                            <div>
-                                <h6 style="font-weight: 500">{{ slide.name }} {{ slide.code }}</h6>
-                                <h5 style="font-weight: bolder">{{ formatPrice(slide.price) }}₫</h5>
-                                <star-rating
-                                    :read-only="true"
-                                    :increment="0.01"
-                                    :star-size="13"
-                                    active-color="#FF8C00"
-                                    :show-rating="false"
-                                    v-model="rating"
-                                ></star-rating>
+                            <div v-else class="h-100 border cate">
+                                <div class="item-img py-3">
+                                    <img :src="slide.image" width="100%" />
+                                </div>
+                                <div>
+                                    <h6 style="font-weight: 500">{{ slide.name }} {{ slide.code }}</h6>
+                                    <h5 style="font-weight: bolder">{{ formatPrice(slide.price) }}₫</h5>
+                                    <star-rating
+                                        :read-only="true"
+                                        :increment="0.01"
+                                        :star-size="13"
+                                        active-color="#FF8C00"
+                                        :show-rating="false"
+                                        v-model="rating"
+                                    ></star-rating>
+                                </div>
                             </div>
-                        </div>
-                        <div v-else class="h-100 border cate">
-                            <div class="item-img py-3">
-                                <img :src="slide.image" width="100%" />
-                            </div>
-                            <div>
-                                <h6 style="font-weight: 500">{{ slide.name }} {{ slide.code }}</h6>
-                                <h5 style="font-weight: bolder">{{ formatPrice(slide.price) }}₫</h5>
-                                <star-rating
-                                    :read-only="true"
-                                    :increment="0.01"
-                                    :star-size="13"
-                                    active-color="#FF8C00"
-                                    :show-rating="false"
-                                    v-model="rating"
-                                ></star-rating>
-                            </div>
-                        </div>
+                        </router-link>
                     </template>
                 </vueper-slide>
             </vueper-slides>
@@ -198,8 +202,8 @@
                 </div>
                 <div class="col-md-6"></div>
                 <div class="col-md-3 text-danger text-right font-weight-bolder">
-                    <span class="viewAll">Xem tất cả {{lengthMayGiat}} Máy giặt >
-                    </span>
+                    <router-link :to="{ name: 'user.products', query: { category_id: this.slidesMayGiat[0].category_id } }" tag="span" class="viewAll">Xem tất cả {{lengthMayGiat}} Máy giặt >
+                    </router-link>
                 </div>
             </div>
             <vueper-slides
@@ -213,43 +217,45 @@
             >
                 <vueper-slide v-for="(slide, i) in slidesMayGiat" :key="slide.id">
                     <template v-slot:content>
-                        <div
-                            v-if="[1, 3, 6, 8].includes(i)"
-                            class="h-100 border-top border-bottom cate"
-                        >
-                            <div class="item-img py-3">
-                                <img :src="slide.image" width="100%" />
+                        <router-link tag="span" :to="`/products/${slide.id}`">
+                            <div
+                                v-if="[1, 3, 6, 8].includes(i)"
+                                class="h-100 border-top border-bottom cate"
+                            >
+                                <div class="item-img py-3">
+                                    <img :src="slide.image" width="100%" />
+                                </div>
+                                <div>
+                                    <h6 style="font-weight: 500">{{ slide.name }} {{ slide.code }}</h6>
+                                    <h5 style="font-weight: bolder">{{ formatPrice(slide.price) }}₫</h5>
+                                    <star-rating
+                                        :read-only="true"
+                                        :increment="0.01"
+                                        :star-size="13"
+                                        active-color="#FF8C00"
+                                        :show-rating="false"
+                                        v-model="rating"
+                                    ></star-rating>
+                                </div>
                             </div>
-                            <div>
-                                <h6 style="font-weight: 500">{{ slide.name }} {{ slide.code }}</h6>
-                                <h5 style="font-weight: bolder">{{ formatPrice(slide.price) }}₫</h5>
-                                <star-rating
-                                    :read-only="true"
-                                    :increment="0.01"
-                                    :star-size="13"
-                                    active-color="#FF8C00"
-                                    :show-rating="false"
-                                    v-model="rating"
-                                ></star-rating>
+                            <div v-else class="h-100 border cate">
+                                <div class="item-img py-3">
+                                    <img :src="slide.image" width="100%" />
+                                </div>
+                                <div>
+                                    <h6 style="font-weight: 500">{{ slide.name }} {{ slide.code }}</h6>
+                                    <h5 style="font-weight: bolder">{{ formatPrice(slide.price) }}₫</h5>
+                                    <star-rating
+                                        :read-only="true"
+                                        :increment="0.01"
+                                        :star-size="13"
+                                        active-color="#FF8C00"
+                                        :show-rating="false"
+                                        v-model="rating"
+                                    ></star-rating>
+                                </div>
                             </div>
-                        </div>
-                        <div v-else class="h-100 border cate">
-                            <div class="item-img py-3">
-                                <img :src="slide.image" width="100%" />
-                            </div>
-                            <div>
-                                <h6 style="font-weight: 500">{{ slide.name }} {{ slide.code }}</h6>
-                                <h5 style="font-weight: bolder">{{ formatPrice(slide.price) }}₫</h5>
-                                <star-rating
-                                    :read-only="true"
-                                    :increment="0.01"
-                                    :star-size="13"
-                                    active-color="#FF8C00"
-                                    :show-rating="false"
-                                    v-model="rating"
-                                ></star-rating>
-                            </div>
-                        </div>
+                        </router-link>
                     </template>
                 </vueper-slide>
             </vueper-slides>
@@ -262,8 +268,8 @@
                 </div>
                 <div class="col-md-6"></div>
                 <div class="col-md-3 text-danger text-right font-weight-bolder">
-                    <span class="viewAll">Xem tất cả {{lengthMayLocNuoc}} Máy lọc nước >
-                    </span>
+                    <router-link :to="{ name: 'user.products', query: { category_id: this.slidesMayLocNuoc[0].category_id } }" tag="span" class="viewAll">Xem tất cả {{lengthMayLocNuoc}} Máy lọc nước >
+                    </router-link>
                 </div>
             </div>
             <vueper-slides
@@ -277,43 +283,45 @@
             >
                 <vueper-slide v-for="(slide, i) in slidesMayLocNuoc" :key="slide.id">
                     <template v-slot:content>
-                        <div
-                            v-if="[1, 3, 6, 8].includes(i)"
-                            class="h-100 border-top border-bottom cate"
-                        >
-                            <div class="item-img py-3">
-                                <img :src="slide.image" width="100%" />
+                        <router-link tag="span" :to="`/products/${slide.id}`">
+                            <div
+                                v-if="[1, 3, 6, 8].includes(i)"
+                                class="h-100 border-top border-bottom cate"
+                            >
+                                <div class="item-img py-3">
+                                    <img :src="slide.image" width="100%" />
+                                </div>
+                                <div>
+                                    <h6 style="font-weight: 500">{{ slide.name }} {{ slide.code }}</h6>
+                                    <h5 style="font-weight: bolder">{{ formatPrice(slide.price) }}₫</h5>
+                                    <star-rating
+                                        :read-only="true"
+                                        :increment="0.01"
+                                        :star-size="13"
+                                        active-color="#FF8C00"
+                                        :show-rating="false"
+                                        v-model="rating"
+                                    ></star-rating>
+                                </div>
                             </div>
-                            <div>
-                                <h6 style="font-weight: 500">{{ slide.name }} {{ slide.code }}</h6>
-                                <h5 style="font-weight: bolder">{{ formatPrice(slide.price) }}₫</h5>
-                                <star-rating
-                                    :read-only="true"
-                                    :increment="0.01"
-                                    :star-size="13"
-                                    active-color="#FF8C00"
-                                    :show-rating="false"
-                                    v-model="rating"
-                                ></star-rating>
+                            <div v-else class="h-100 border cate">
+                                <div class="item-img py-3">
+                                    <img :src="slide.image" width="100%" />
+                                </div>
+                                <div>
+                                    <h6 style="font-weight: 500">{{ slide.name }} {{ slide.code }}</h6>
+                                    <h5 style="font-weight: bolder">{{ formatPrice(slide.price) }}₫</h5>
+                                    <star-rating
+                                        :read-only="true"
+                                        :increment="0.01"
+                                        :star-size="13"
+                                        active-color="#FF8C00"
+                                        :show-rating="false"
+                                        v-model="rating"
+                                    ></star-rating>
+                                </div>
                             </div>
-                        </div>
-                        <div v-else class="h-100 border cate">
-                            <div class="item-img py-3">
-                                <img :src="slide.image" width="100%" />
-                            </div>
-                            <div>
-                                <h6 style="font-weight: 500">{{ slide.name }} {{ slide.code }}</h6>
-                                <h5 style="font-weight: bolder">{{ formatPrice(slide.price) }}₫</h5>
-                                <star-rating
-                                    :read-only="true"
-                                    :increment="0.01"
-                                    :star-size="13"
-                                    active-color="#FF8C00"
-                                    :show-rating="false"
-                                    v-model="rating"
-                                ></star-rating>
-                            </div>
-                        </div>
+                        </router-link>
                     </template>
                 </vueper-slide>
             </vueper-slides>
@@ -350,10 +358,34 @@ export default {
     data() {
         return {
             rating: 3.5,
-            slidesTV: [],
-            slidesTuLanh: [],
-            slidesMayGiat: [],
-            slidesMayLocNuoc: [],
+            slidesTV: [
+                {
+                    name: 'Tivi',
+                    price: '0',
+                    category_id: 0
+                }
+            ],
+            slidesTuLanh: [
+                {
+                    name: 'Tủ lạnh',
+                    price: '0',
+                    category_id: 0
+                }
+            ],
+            slidesMayGiat: [
+                {
+                    name: 'Máy giặt',
+                    price: '0',
+                    category_id: 0
+                }
+            ],
+            slidesMayLocNuoc: [
+                {
+                    name: 'Máy lọc nước',
+                    price: '0',
+                    category_id: 0
+                }
+            ],
             lengthTV: 0,
             lengthTuLanh: 0,
             lengthMayGiat: 0,
@@ -425,18 +457,14 @@ export default {
     transition-duration: 0.2s;
 }
 .h-100.cate:hover .item-img {
-    padding-top: 0.6rem !important;
-    transition-duration: 0.4s;
-}
-.h-100.cate:hover .item-img {
-    padding-top: 0.6rem !important;
-    transition-duration: 0.4s;
+    padding-top: 0.5rem !important;
 }
 .h-100.cate:hover h6 {
     color: #288ad6;
 }
 .item-img {
     height: 189px;
+    transition: 0.3s ease-in-out;
 }
 .title-cate {
     color: #ed1c24;

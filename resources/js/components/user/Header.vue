@@ -40,19 +40,19 @@
         <div class="header-bottom">
             <div class="container">
                 <ul>
-                    <li v-b-toggle.sidebar-category><a style="pointer-events: none;" href="">Tất cả danh mục | </a></li>
+                    <li v-b-toggle.sidebar-category><a style="" href="javascript:void(0)">Tất cả danh mục | </a></li>
                     <b-sidebar id="sidebar-category" title="Danh Mục Sản Phẩm" backdrop shadow>
                         <div class="px-3 py-2">
-                            <vue-tree-navigation :items="tree" />
+                            <div style="padding-left: 24px;font-size: 18px" v-for="category in categories" :key="category.id">
+                                <router-link :to="{name: 'user.products', query: {category_id: category.id}}">
+                                    {{ category.name }}
+                                </router-link>
+                            </div>
+                            <h5 class="show-menu mt-3" @click="showMenuCate = !showMenuCate">Phân Loại</h5>
+                            <vue-tree-navigation v-if="showMenuCate" :items="tree" />
                         </div>
                     </b-sidebar>
-                    <li><a href="">Ti vi</a></li>
-                    <li><a href="">Tủ lạnh</a></li>
-                    <li><a href="">Máy lạnh</a></li>
-                    <li><a href="">Máy giặt</a></li>
-                    <li><a href="">Gia dụng</a></li>
-                    <li><a href="">Máy nước nóng</a></li>
-                    <li><a href="">Máy lọc nước</a></li>
+                    <li v-for="item in categories.slice(0,7)" :key="item.id"><router-link :to="{ name: 'user.products', query: {category_id: item.id} }">{{item.name}}</router-link></li>
                 </ul>
             </div>
         </div>
@@ -63,16 +63,12 @@ export default {
     data() {
         return {
             categories: [],
-            brands: [],
-            types: [],
             tree: [],
+            showMenuCate: false,
         }
     },
     async created() {
         await this.getCategories();
-        await this.getBrands();
-        await this.getTypes();
-        await this.getTree();
     },
     methods: {
         getCategories() {
@@ -101,24 +97,11 @@ export default {
                                 path: `/products?category_id=${category.id}&type_id=${type.id}`
                             }
                         })
-                    }]
+                    }],
                 }
             });
             });
         },
-        getBrands() {
-            axios.get('/api/brands').then(res => {
-                this.brands = res.data;
-            });
-        },
-        getTypes() {
-            axios.get('/api/types').then(res => {
-                this.types = res.data;
-            });
-        },
-        getTree() {
-            
-        }
     },
     
 }
@@ -160,6 +143,7 @@ export default {
     }
     .header-bottom {
         background-color: #ed1c24;
+        box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
     }
     .header-bottom .container ul {
         list-style-type: none;
@@ -181,5 +165,12 @@ export default {
     .header-bottom .container li>a:hover {
         background-color: rgba(0, 0, 0, .07)
     }
-   
+    .show-menu {
+        cursor: pointer;
+    }
+    .show-menu:hover {
+        color: #0d6efd;
+        cursor: pointer;
+        transition-duration: 0.3s;
+    }
 </style>

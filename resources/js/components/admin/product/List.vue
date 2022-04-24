@@ -11,7 +11,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title mt-3">
-                                    Bảng Loại Sản Phẩm
+                                    Bảng Sản Phẩm
                                 </h3>
                             </div>
                             <!-- /.card-header -->

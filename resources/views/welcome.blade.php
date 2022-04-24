@@ -52,6 +52,10 @@
             .fa-eye:hover {
                 color: #dda802;
             }
+            /* ép ảnh trong thông tin sản phẩm */
+            .info-product img {
+                width: 100%;    
+            }
         </style>
     </head>
     <body style="background-color: white" class="hold-transition sidebar-mini layout-fixed">

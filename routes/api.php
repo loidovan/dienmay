@@ -46,6 +46,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/products/upload_images', [ImageController::class, 'uploadImages'])->name('products.upload_images');
     Route::post('/products/delete_images', [ImageController::class, 'deleteImages'])->name('products.delete_images');
     Route::post('/posts/deleteImage', [PostController::class, 'deleteImage']);
+    Route::post('/products/filters', [ProductController::class, 'filterProducts']);
 
     Route::post('logout', [AuthController::class, 'logout']);
 });
