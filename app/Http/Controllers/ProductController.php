@@ -344,6 +344,21 @@ class ProductController extends Controller
         return \response()->json($products->get());
     }
 
+    public function searchProducts(Request $request) {
+        $products = Product::with('brand', 'category', 'type')
+            ->where('name', 'like', '%' . $request->keyword . '%')
+            ->orWhere( function($query) use ($request){
+                $query->whereHas('category', function($q) use ($request){
+                    $q->where('name', 'LIKE', '%' . $request->keyword . '%');
+                })->orWhereHas('brand', function($q) use ($request){
+                    $q->where('name', 'LIKE', '%' . $request->keyword . '%');
+                })->orWhereHas('type', function($q) use ($request){
+                    $q->where('name', 'LIKE', '%' . $request->keyword . '%');
+                });
+            })->orderBy('id', 'desc')->get();
+        return \response()->json($products);
+    }
+
     public function removeChar($str) {
         $res = str_ireplace('/storage', 'app/public', $str);
   

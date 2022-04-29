@@ -12,7 +12,8 @@ use App\Http\Controllers\ImageController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PostController;
-
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\Location\LocationController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -41,12 +42,20 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('colors', ColorController::class);
     Route::resource('products', ProductController::class);
     Route::resource('posts', PostController::class);
+    Route::resource('carts', CartController::class);
     Route::post('/upload', [ImageController::class, 'store'])->name('upload');
     Route::get('/media/{product}', [ImageController::class, 'getImages'])->name('product.images');
     Route::post('/products/upload_images', [ImageController::class, 'uploadImages'])->name('products.upload_images');
     Route::post('/products/delete_images', [ImageController::class, 'deleteImages'])->name('products.delete_images');
     Route::post('/posts/deleteImage', [PostController::class, 'deleteImage']);
     Route::post('/products/filters', [ProductController::class, 'filterProducts']);
-
+    Route::post('/products/search', [ProductController::class, 'searchProducts']);
+    Route::post('/getCart', [CartController::class, 'getCart']);
+    
+    Route::post('getProvinces', [LocationController::class, 'getProvinces']);
+    Route::post('getDistricts', [LocationController::class, 'getDistricts']);
+    Route::post('getWards', [LocationController::class, 'getWards']);
+    Route::post('order', [CartController::class, 'order']);
+    
     Route::post('logout', [AuthController::class, 'logout']);
 });

@@ -47,4 +47,9 @@ class Product extends Model
     {
         return $this->hasOne('App\Models\Post');
     }
+
+    public function carts()
+    {
+        return $this->hasMany('App\Models\Cart', 'product_id', 'id');
+    }
 }

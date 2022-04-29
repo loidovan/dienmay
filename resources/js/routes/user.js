@@ -20,6 +20,16 @@ const routes = [
                 path: "products/:id",
                 name: "user.products.details",
                 component: require("../components/user/products/Details.vue").default,
+            },
+            {
+                path: "cart",
+                name: "user.cart",
+                component: require("../components/user/products/Cart.vue").default,
+            },
+            {
+                path: "search",
+                name: "user.search",
+                component: require("../components/user/products/Search.vue").default,
             }
         ],
     },

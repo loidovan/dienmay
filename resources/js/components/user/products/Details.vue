@@ -113,7 +113,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn w-100 font-weight-bold mt-3" style="background-color: #fb6e2e;color: white;height: 46px;">MUA NGAY</button>
+                    <button class="btn w-100 font-weight-bold mt-3" style="background-color: #fb6e2e;color: white;height: 46px;" @click="setCookie()">MUA NGAY</button>
                     <h6 class="mt-3 text-center">Gọi đặt mua <a href="tel:12345678">1234.5678</a> (7:30 - 22:00)</h6>
                     <h5 style="font-size:20px" class="mt-5 mb-3 font-weight-bold">Thông số kỹ thuật {{ product.name }} {{ product.code }}</h5>
                     <div v-html="product.description"></div>
@@ -128,7 +128,7 @@
         <div class="container">
             <div class="row mt-5">
                 <div class="col-md-12">
-                    <h4 class="font-weight-bold mb-4">Xem thêm {{ product.category.name }}</h4>
+                    <h4 class="font-weight-bold mb-4"><router-link tag="span" :to="{name:'user.products', query:{category_id: product.category_id}}" class="view-more-products">Xem thêm {{ product.category.name }}</router-link></h4>
                     <vueper-slides
                 class="no-shadow"
                 :visible-slides="5"
@@ -201,6 +201,7 @@ export default {
     data() {
         return {
             product: {
+                category_id: '',
                 name: "",
                 code: "",
                 brand: {
@@ -233,8 +234,8 @@ export default {
         this.getOtherProducts();
     },
     methods: {
-        getCurrentProduct() {
-            axios.get("/api/products/" + this.$route.params.id).then((res) => {
+        async getCurrentProduct() {
+            await axios.get("/api/products/" + this.$route.params.id).then((res) => {
                 this.product = res.data;
                 this.showLoading = false;
             });
@@ -243,13 +244,72 @@ export default {
             let val = (value / 1).toFixed(0).replace(".", ",");
             return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         },
-        getOtherProducts() {
-            axios.get("/api/products").then((res) => {
+        async getOtherProducts() {
+            await axios.get("/api/products").then((res) => {
                 this.otherProducts = res.data.filter((item) => {
                     return item.category_id == this.product.category_id && item.id != this.product.id;
                 }).slice(0, 10);
             });
         },
+        setCookie() {
+            if (this.checkExistCookie()) {
+                axios.post("/api/carts", {
+                    product_id: this.product.id,
+                    cart_id: this.getCookie("DienMay_cart_id")
+                }).then((res) => {
+                    this.$router.push({
+                        name: "user.cart"
+                    });
+                });
+            } else {
+                const d = new Date();
+                d.setTime(d.getTime() + (365*24*60*60*1000)); // 365 ngày
+                let expires = "expires="+ d.toUTCString();
+                let randomId = this.makeid(16);
+                document.cookie = 'DienMay_cart_id' + "=" + randomId + ";" + expires + ";path=/";
+                axios.post("/api/carts", {
+                    product_id: this.product.id,
+                    cart_id: randomId
+                }).then((res) => {
+                    this.$router.push({
+                        name: "user.cart"
+                    });
+                });
+            }
+        },
+        makeid(length) {
+            var result           = '';
+            var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var charactersLength = characters.length;
+            for ( var i = 0; i < length; i++ ) {
+                result += characters.charAt(Math.floor(Math.random() * 
+            charactersLength));
+            }
+            return result;
+        },
+        checkExistCookie() {
+            let cart = this.getCookie("DienMay_cart_id");
+            if (cart != "") {
+                return true;
+            } else {
+                return false;
+            }
+        },
+        getCookie(cookieName) {
+            let name = cookieName + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i <ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
     },
     watch: {
         $route() {
@@ -318,5 +378,10 @@ ol li::before {
 .item-img {
     height: 189px;
     transition: 0.3s ease-in-out;
+}
+.view-more-products:hover {
+    color: #288ad6;
+    transition-duration: 0.2s;
+    cursor: pointer;
 }
 </style>

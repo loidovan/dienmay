@@ -24,15 +24,36 @@
                 </div>
                 <div class="col-md-5 d-flex align-items-center">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Nhập từ khóa tìm kiếm" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <input type="text" class="form-control" :class="{'border-bottom-left-radius': borderBottomRadius}" v-model="keyword" @keyup="resultSearch()" placeholder="Nhập từ khóa tìm kiếm" aria-label="Recipient's username" aria-describedby="basic-addon2">
                         <div class="input-group-append">
-                            <button class="btn" type="button"><i class="fas fa-search"> </i> </button>
+                            <router-link :to="{name: 'user.search', query:{q: keyword}}" @click.native="borderBottomRadius = !borderBottomRadius" tag="button" class="btn" style="border-top-right-radius: 25px;" :class="{'border-bottom-right-radius': borderBottomRadius}" type="button"><i class="fas fa-search"> </i> </router-link>
+                        </div>
+                        <div v-if="!borderBottomRadius" class="shadow-lg row rounded border border-bottom-right-radius border-bottom-left-radius" style="position:absolute; top:38px; width: 100.5%;background-color:white;z-index:3">
+                            <div class="col-md-12 py-2" v-if="result.length > 0" style="background-color:#f5f5f5">
+                                <h6 class="col-md-12 m-0">
+                                    Sản phẩm gợi ý
+                                </h6>
+                            </div>
+                            
+                            <div v-for="(item) in result.slice(0,5)" :key="item.id" class="col-md-12">
+                                <router-link :to="`/products/${item.id}`" class="text-dark">
+                                    <div class="row p-2 border-bottom item-result-search"  @click="keyword = ''; result = ''; borderBottomRadius = !borderBottomRadius">
+                                        <div class="col-md-3">
+                                            <img :src="item.image" width="100%">
+                                        </div>
+                                        <div class="col-md-9">
+                                            <h6 class="mt-3">{{item.name}} {{item.code}}</h6>
+                                            <p class="font-weight-bold text-danger">{{ formatPrice(item.price) }}₫</p>
+                                        </div>
+                                    </div>
+                                </router-link>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-1 d-flex align-items-center rou">
                     <span><i class="fas fa-user mr-2"></i></span>
-                    <span><i class="fas fa-shopping-cart"></i></span>
+                    <router-link tag="span" :to="{name: 'user.cart'}"><i class="fas fa-shopping-cart"></i></router-link>
                 </div>
             </div>
         </div>
@@ -65,6 +86,10 @@ export default {
             categories: [],
             tree: [],
             showMenuCate: false,
+            keyword: '',
+            result: '',
+            timer: null,
+            borderBottomRadius: true,
         }
     },
     async created() {
@@ -102,8 +127,35 @@ export default {
             });
             });
         },
+        resultSearch() {
+            if (this.keyword.trim() != '') {
+                if (this.timer) {
+                    clearTimeout(this.timer);
+                    this.timer = null;
+                }
+                this.timer = setTimeout(() => {
+                    axios.post('/api/products/search', {
+                                keyword: this.keyword
+                            }).then(res => {
+                                this.result = res.data;
+                                this.borderBottomRadius = false;
+                            });
+                }, 500);
+            } else {
+                this.result = '';
+                this.borderBottomRadius = true;
+            }
+        },
+        formatPrice(value) {
+            let val = (value / 1).toFixed(0).replace(".", ",");
+            return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        },
     },
-    
+    watch: {
+        $route() {
+            this.$route.name != 'user.search' ? this.keyword = '' : null;
+        }
+    }
 }
 </script>
 <style scoped>
@@ -122,11 +174,9 @@ export default {
     }
     .header-mid .col-md-5 input {
         border-top-left-radius: 25px;
-        border-bottom-left-radius: 25px;
     }
     .header-mid .col-md-5 button {
         border-top-right-radius: 25px;
-        border-bottom-right-radius: 25px;
         background-color: #ed1c24;
         color: white;
     }
@@ -172,5 +222,14 @@ export default {
         color: #0d6efd;
         cursor: pointer;
         transition-duration: 0.3s;
+    }
+    .border-bottom-right-radius {
+        border-bottom-right-radius: 25px;
+    }
+    .border-bottom-left-radius {
+        border-bottom-left-radius: 25px;
+    }
+    .item-result-search:hover {
+        background-color: #f8f9fac4 !important;
     }
 </style>

@@ -66,11 +66,11 @@
         <div class="container mt-5">
             <div class="row">
                 <div class="col-md-3">
-                    <h5 class="title-cate">TI VI</h5>
+                    <h5 class="title-cate">TIVI</h5>
                 </div>
                 <div class="col-md-6"></div>
                 <div class="col-md-3 text-danger text-right font-weight-bolder">
-                    <router-link :to="{ name: 'user.products', query: { category_id: this.slidesTV[0].category_id } }" tag="span" class="viewAll">Xem tất cả {{lengthTV}} Ti vi >
+                    <router-link :to="{ name: 'user.products', query: { category_id: this.slidesTV[0].category_id } }" tag="span" class="viewAll">Xem tất cả {{lengthTV}} Tivi >
                     </router-link>
                 </div>
             </div>
@@ -402,10 +402,10 @@ export default {
         getTV() {
             axios.get("/api/products").then((res) => {
                 this.lengthTV = res.data.filter((item) => {
-                    return item.category.name.toUpperCase() == 'TI VI';
+                    return item.category.name.toUpperCase() == 'TIVI';
                 }).length;
                 this.slidesTV = res.data.filter((item) => {
-                    return item.category.name.toUpperCase() == 'TI VI';
+                    return item.category.name.toUpperCase() == 'TIVI';
                 }).slice(0, 10);
             });
         },

@@ -776,7 +776,7 @@ export default {
                     this.showLoading = false;
                 }, 400);
             } 
-            var nextProducts = this.moreProducts.splice(0, 8);
+            var nextProducts = this.moreProducts.splice(0, 10);
             this.products.push(...nextProducts);
         },
         async getFilterProducts() {
@@ -785,7 +785,7 @@ export default {
                     if (res.data.length > 0) {
                         this.moreProducts = res.data;
                         this.totalProducts = this.moreProducts.length;
-                        this.products = this.moreProducts.splice(0, 8);
+                        this.products = this.moreProducts.splice(0, 10);
                         this.showLoading = false;
                     } else {
                         return this.$swal({
