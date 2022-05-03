@@ -37,6 +37,7 @@ php artisan migrate
 8. Seeder
 ````
 php artisan db:seed
+php artisan vietnam-map:install
 ````
 
 9. Install Node modules
