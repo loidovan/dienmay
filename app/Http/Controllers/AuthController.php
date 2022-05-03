@@ -93,4 +93,21 @@ class AuthController extends Controller
             "role" => $user->getRoleNames()[0]
         ], 200);
     }
+
+    public function changePassword(Request $request) {
+        $user = User::where('email', Auth::user()->email)->first();
+        if (password_verify($request->old_password, $user->password)) {
+            $user->password = bcrypt($request->new_password);
+            $user->save();
+            return \response()->json([
+                "message" => "Đổi mật khẩu thành công"
+            ], 200);
+        } else {
+            return \response()->json([
+                'errors' => [
+                    'Mật khẩu cũ không chính xác',
+                ],
+            ], 403);
+        }
+    }
 }

@@ -13,6 +13,9 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderDetailsController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Location\LocationController;
 /*
 |--------------------------------------------------------------------------
@@ -32,30 +35,39 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('register', [AuthController::class, 'register']);
 
+Route::resource('categories', CategoryController::class);
+Route::resource('types', TypeController::class);
+Route::resource('brands', BrandController::class);
+Route::resource('colors', ColorController::class);
+Route::resource('products', ProductController::class);
+Route::resource('posts', PostController::class);
+Route::resource('carts', CartController::class);
+Route::resource('orders', OrderController::class);
+Route::resource('orderdetails', OrderDetailsController::class);
+Route::resource('customers', CustomerController::class);
+
+Route::post('/products/filters', [ProductController::class, 'filterProducts']);
+Route::post('/products/search', [ProductController::class, 'searchProducts']);
+Route::post('/getCart', [CartController::class, 'getCart']);
+
+Route::post('getProvinces', [LocationController::class, 'getProvinces']);
+Route::post('getDistricts', [LocationController::class, 'getDistricts']);
+Route::post('getWards', [LocationController::class, 'getWards']);
+
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('accounts', AccountController::class);
     Route::resource('roles', RoleController::class);
     Route::post('change-password', [AuthController::class, 'changePasswordFirstLogin']);
-    Route::resource('categories', CategoryController::class);
-    Route::resource('types', TypeController::class);
-    Route::resource('brands', BrandController::class);
-    Route::resource('colors', ColorController::class);
-    Route::resource('products', ProductController::class);
-    Route::resource('posts', PostController::class);
-    Route::resource('carts', CartController::class);
+    Route::post('changePassword', [AuthController::class, 'changePassword']);
+    
     Route::post('/upload', [ImageController::class, 'store'])->name('upload');
     Route::get('/media/{product}', [ImageController::class, 'getImages'])->name('product.images');
     Route::post('/products/upload_images', [ImageController::class, 'uploadImages'])->name('products.upload_images');
     Route::post('/products/delete_images', [ImageController::class, 'deleteImages'])->name('products.delete_images');
     Route::post('/posts/deleteImage', [PostController::class, 'deleteImage']);
-    Route::post('/products/filters', [ProductController::class, 'filterProducts']);
-    Route::post('/products/search', [ProductController::class, 'searchProducts']);
-    Route::post('/getCart', [CartController::class, 'getCart']);
-    
-    Route::post('getProvinces', [LocationController::class, 'getProvinces']);
-    Route::post('getDistricts', [LocationController::class, 'getDistricts']);
-    Route::post('getWards', [LocationController::class, 'getWards']);
-    Route::post('order', [CartController::class, 'order']);
+  
+
+    Route::post('handleOrder', [OrderController::class, 'handleOrder']);
     
     Route::post('logout', [AuthController::class, 'logout']);
 });

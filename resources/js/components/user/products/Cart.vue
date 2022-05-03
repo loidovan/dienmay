@@ -63,6 +63,7 @@
                                         {{ item.product.name }}
                                         {{ item.product.code }}
                                     </h6>
+                                    <p style="color:black !important">Màu: {{ getColorByProductId(item.product.id) }}</p>
                                 </router-link>
                                 <div class="col-md-3 pr-0">
                                     <h6
@@ -287,7 +288,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <b-form-input
-                                                    v-model="address"
+                                                    v-model="form.address"
                                                     :disabled="disableAddress"
                                                     placeholder="Số nhà, tên đường"
                                                 ></b-form-input>
@@ -317,7 +318,7 @@
                                         <div class="form-check">
                                             <input
                                                 class="form-check-input"
-                                                v-model="otherPeopleReceive"
+                                                v-model="form.otherPeopleReceive"
                                                 type="checkbox"
                                                 value=""
                                                 id="flexCheckDefault"
@@ -333,7 +334,7 @@
                                     </div>
                                 </div>
                                 
-                                <div v-if="otherPeopleReceive == true" class="col-md-12 mt-2 bg-light border rounded px-3 py-2 pb-1">
+                                <div v-if="form.otherPeopleReceive == true" class="col-md-12 mt-2 bg-light border rounded px-3 py-2 pb-1">
                                     <div class="col-md-12">
                                 <input
                                     type="radio"
@@ -481,6 +482,7 @@
                                 </div>
                     </div>
                 </div>
+                
             </div>
         </div>
         <loading
@@ -501,6 +503,7 @@ export default {
         return {
             showLoading: true,
             carts: [],
+            colors: [],
             form: {
                 phone: "",
                 name: "",
@@ -510,6 +513,9 @@ export default {
                 otherPeopleGender: null,
                 wayReceive: null,
                 payment: null,
+                address: "",
+                otherPeopleReceive: false,
+                note: ""
             },
             selectedProvince: null,
             selectedDistrict: null,
@@ -517,11 +523,9 @@ export default {
             provinceOptions: [],
             districtOptions: [],
             wardOptions: [],
-            address: "",
             disableDistrict: true,
             disableWard: true,
             disableAddress: true,
-            otherPeopleReceive: false,
             errors: {
                 gender: false,
                 phone: false,
@@ -538,6 +542,7 @@ export default {
     created() {
         this.getCarts();
         this.getProvinces();
+        this.getColors();
     },
     methods: {
         getCarts() {
@@ -572,6 +577,20 @@ export default {
                     this.$router.push({ name: "user.home" });
                 });
             }
+        },
+        getColors() {
+            axios.get("/api/colors").then((res) => {
+                this.colors = res.data;
+            });
+        },
+        getColorByProductId(productId) {
+            let color = "";
+            this.colors.forEach((item) => {
+                if (item.products[0].id == productId) {
+                    color = item.name;
+                }
+            });
+            return color;
         },
         formatPrice(price) {
             return price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
@@ -662,15 +681,26 @@ export default {
                 });
         },
         order() {
-            // if (!this.validateForm()) {
-            //     return console.log('lỗi');
-            // }
-            axios.post("/api/order", {
+            if (!this.validateForm()) {
+                return console.log('lỗi');
+            }
+            axios.post("/api/orders", {
                 carts: this.carts,
                 form: this.form,
-                address: this.address,
+                province_id: this.selectedProvince,
+                district_id: this.selectedDistrict,
+                ward_id: this.selectedWard,
             }).then((res) => {
                 console.log(res.data);
+                this.$swal({
+                    title: "Đặt hàng thành công",
+                    text: "Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất",
+                    icon: "success",
+                    confirmButtonColor: "#3085d6",
+                    confirmButtonText: "Về trang chủ",
+                }).then((result) => {
+                    this.$router.push({ name: "user.home" });
+                });
             }).catch(err => {
                 console.log(err);
             });
@@ -701,13 +731,13 @@ export default {
             } else {
                 this.errors.wayReceive = false;
             }
-            if(!this.form.address) {
+            if(!this.form.address && this.form.wayReceive == "Giao tận nơi") {
                 this.errors.address = true;
                 i++;
             } else {
                 this.errors.address = false;
             }
-            if (this.otherPeopleReceive) {
+            if (this.form.otherPeopleReceive) {
                 if(!this.form.otherPeoplePhone) {
                     this.errors.otherPeoplePhone = true;
                     i++;

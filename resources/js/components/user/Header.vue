@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <div class="col-md-1 d-flex align-items-center rou">
-                    <span><i class="fas fa-user mr-2"></i></span>
+                    <router-link tag="span" :to="{name: 'user.orderHistory'}"><i class="fas fa-history mr-2"></i></router-link>
                     <router-link tag="span" :to="{name: 'user.cart'}"><i class="fas fa-shopping-cart"></i></router-link>
                 </div>
             </div>

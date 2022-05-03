@@ -25,6 +25,14 @@ const routes = [
                 },
             },
             {
+                path: "changePassword",
+                name: "changePassword",
+                component: require("../components/admin/login/ChangePasswordWithOldPass.vue").default,
+                meta: {
+                    title: "Đổi Mật Khẩu",
+                }
+            },
+            {
                 path: "accounts",  
                 name: "accounts",
                 component: require("../components/admin/account/List.vue").default,
@@ -242,6 +250,15 @@ const routes = [
                     },
                 },
             },
+            {
+                path: "orders",
+                name: "orders",
+                component: require("../components/admin/order/List.vue").default,
+                meta: {
+                    title: "Danh Sách Đơn Hàng",
+                    breadcrumb: "Đơn Hàng"
+                },
+            }
         ],
     },
     {

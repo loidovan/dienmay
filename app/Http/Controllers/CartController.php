@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cart;
-use Exception;
-use Twilio\Rest\Client;
+
 class CartController extends Controller
 {
     /**
@@ -113,26 +112,4 @@ class CartController extends Controller
         return response()->json($cart);
     }
 
-    public function order(Request $request)
-    {
-        // $receiverNumber = "+84948789582";
-        // $message = "Dien May Nhu Y chuc";
-  
-        // try {
-  
-        //     $account_sid = getenv("TWILIO_SID");
-        //     $auth_token = getenv("TWILIO_TOKEN");
-        //     $twilio_number = getenv("TWILIO_FROM");
-  
-        //     $client = new Client($account_sid, $auth_token);
-        //     $client->messages->create($receiverNumber, [
-        //         'from' => $twilio_number, 
-        //         'body' => $message]);
-  
-        //     return response()->json([('SMS Sent Successfully.')]);
-  
-        // } catch (Exception $e) {
-        //     return response()->json(["Error: ". $e->getMessage()]);
-        // }
-    }
 }

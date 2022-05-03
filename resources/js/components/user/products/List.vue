@@ -526,15 +526,13 @@
                 <li class="search-trend">
                     <img
                         width="39px"
-                        height="24px"
-                        src="/storage/images/brands/1647359699_samsung.png"
+                        src="https://cdn.tgdd.vn/Category/Quicklink/1942/2/060521-035300.png"
                     />
                 </li>
                 <li class="search-trend">
                     <img
                         width="39px"
-                        height="24px"
-                        src="/storage/images/brands/1649562455_tcl.png"
+                        src="https://cdn.tgdd.vn/Category/Quicklink/1942/2/060521-035255.png"
                     />
                 </li>
             </ul>

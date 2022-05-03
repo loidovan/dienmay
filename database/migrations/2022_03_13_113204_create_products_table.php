@@ -24,6 +24,7 @@ class CreateProductsTable extends Migration
             $table->string('image');
             $table->decimal('price',10,0);
             $table->integer('warranty');
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }
