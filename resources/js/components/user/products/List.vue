@@ -589,7 +589,7 @@
                     v-for="item in products"
                     :key="item.id"
                 >
-                    <router-link tag="span" :to="`/products/${item.id}`">
+                    <router-link tag="span" style="display:grid" :to="`/products/${item.id}`">
                         <div class="img-item">
                             <img width="100%" :src="item.image" />
                         </div>
