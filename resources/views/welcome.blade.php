@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="icon" href="{{ asset('storage/images/logo.png') }}">
         <title>Điện Máy Như Ý</title>
-
+        <title>Điện Máy Như Ý</title>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
