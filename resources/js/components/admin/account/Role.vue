@@ -10,9 +10,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title mt-3">
-                                    Bảng Vai Trò
-                                </h3>
+                                <h3 class="card-title mt-3">Bảng Vai Trò</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body" style="overflow-x: auto">
@@ -105,15 +103,18 @@
                                                 <label
                                                     for="exampleInputEmail1"
                                                     class="text-danger"
-                                                    >Quyền  <b-form-checkbox
-                                                            @change="toggleAll"
-                                                            v-model="allSelectedPermissions"
-                                                            switch
-                                                        >
-                                                            Chọn tất cả
-                                                        </b-form-checkbox></label
+                                                    >Quyền
+                                                    <b-form-checkbox
+                                                        @change="toggleAll"
+                                                        v-model="
+                                                            allSelectedPermissions
+                                                        "
+                                                        switch
+                                                    >
+                                                        Chọn tất cả
+                                                    </b-form-checkbox></label
                                                 >
-                                                <b-row >
+                                                <b-row>
                                                     <b-col class="md-6">
                                                         <label
                                                             for="exampleInputEmail1"
@@ -124,7 +125,9 @@
                                                             v-model="
                                                                 selected_permissions
                                                             "
-                                                            @change="selected_permission"
+                                                            @change="
+                                                                selected_permission
+                                                            "
                                                             value="create-category"
                                                             switch
                                                         >
@@ -134,7 +137,9 @@
                                                             v-model="
                                                                 selected_permissions
                                                             "
-                                                            @change="selected_permission"
+                                                            @change="
+                                                                selected_permission
+                                                            "
                                                             value="edit-category"
                                                             switch
                                                         >
@@ -144,7 +149,9 @@
                                                             v-model="
                                                                 selected_permissions
                                                             "
-                                                            @change="selected_permission"
+                                                            @change="
+                                                                selected_permission
+                                                            "
                                                             value="delete-category"
                                                             switch
                                                         >
@@ -160,7 +167,9 @@
                                                             v-model="
                                                                 selected_permissions
                                                             "
-                                                            @change="selected_permission"
+                                                            @change="
+                                                                selected_permission
+                                                            "
                                                             value="create-product"
                                                             switch
                                                         >
@@ -170,7 +179,9 @@
                                                             v-model="
                                                                 selected_permissions
                                                             "
-                                                            @change="selected_permission"
+                                                            @change="
+                                                                selected_permission
+                                                            "
                                                             value="edit-product"
                                                             switch
                                                         >
@@ -180,7 +191,9 @@
                                                             v-model="
                                                                 selected_permissions
                                                             "
-                                                            @change="selected_permission"
+                                                            @change="
+                                                                selected_permission
+                                                            "
                                                             value="delete-product"
                                                             switch
                                                         >
@@ -188,7 +201,7 @@
                                                         </b-form-checkbox>
                                                     </b-col>
                                                 </b-row>
-                                                    <b-row>
+                                                <b-row>
                                                     <b-col class="md-6">
                                                         <label
                                                             for="exampleInputEmail1"
@@ -198,7 +211,9 @@
                                                             v-model="
                                                                 selected_permissions
                                                             "
-                                                            @change="selected_permission"
+                                                            @change="
+                                                                selected_permission
+                                                            "
                                                             value="create-color"
                                                             switch
                                                         >
@@ -208,7 +223,9 @@
                                                             v-model="
                                                                 selected_permissions
                                                             "
-                                                            @change="selected_permission"
+                                                            @change="
+                                                                selected_permission
+                                                            "
                                                             value="edit-color"
                                                             switch
                                                         >
@@ -218,7 +235,9 @@
                                                             v-model="
                                                                 selected_permissions
                                                             "
-                                                            @change="selected_permission"
+                                                            @change="
+                                                                selected_permission
+                                                            "
                                                             value="delete-color"
                                                             switch
                                                         >
@@ -235,7 +254,9 @@
                                                             v-model="
                                                                 selected_permissions
                                                             "
-                                                            @change="selected_permission"
+                                                            @change="
+                                                                selected_permission
+                                                            "
                                                             value="create-type"
                                                             switch
                                                         >
@@ -245,7 +266,9 @@
                                                             v-model="
                                                                 selected_permissions
                                                             "
-                                                            @change="selected_permission"
+                                                            @change="
+                                                                selected_permission
+                                                            "
                                                             value="edit-type"
                                                             switch
                                                         >
@@ -255,15 +278,17 @@
                                                             v-model="
                                                                 selected_permissions
                                                             "
-                                                            @change="selected_permission"
+                                                            @change="
+                                                                selected_permission
+                                                            "
                                                             value="delete-type"
                                                             switch
                                                         >
                                                             Xóa loại
                                                         </b-form-checkbox>
                                                     </b-col>
-                                                    </b-row>
-                                                    <b-row>
+                                                </b-row>
+                                                <b-row>
                                                     <b-col class="md-6">
                                                         <label
                                                             for="exampleInputEmail1"
@@ -273,7 +298,9 @@
                                                             v-model="
                                                                 selected_permissions
                                                             "
-                                                            @change="selected_permission"
+                                                            @change="
+                                                                selected_permission
+                                                            "
                                                             value="create-brand"
                                                             switch
                                                         >
@@ -283,7 +310,9 @@
                                                             v-model="
                                                                 selected_permissions
                                                             "
-                                                            @change="selected_permission"
+                                                            @change="
+                                                                selected_permission
+                                                            "
                                                             value="edit-brand"
                                                             switch
                                                         >
@@ -293,7 +322,9 @@
                                                             v-model="
                                                                 selected_permissions
                                                             "
-                                                            @change="selected_permission"
+                                                            @change="
+                                                                selected_permission
+                                                            "
                                                             value="delete-brand"
                                                             switch
                                                         >
@@ -303,13 +334,15 @@
                                                     <b-col class="md-6">
                                                         <label
                                                             for="exampleInputEmail1"
-                                                            >Bài viết</label
+                                                            >Bài Viết</label
                                                         >
                                                         <b-form-checkbox
                                                             v-model="
                                                                 selected_permissions
                                                             "
-                                                            @change="selected_permission"
+                                                            @change="
+                                                                selected_permission
+                                                            "
                                                             value="create-post"
                                                             switch
                                                         >
@@ -319,7 +352,9 @@
                                                             v-model="
                                                                 selected_permissions
                                                             "
-                                                            @change="selected_permission"
+                                                            @change="
+                                                                selected_permission
+                                                            "
                                                             value="edit-post"
                                                             switch
                                                         >
@@ -329,7 +364,9 @@
                                                             v-model="
                                                                 selected_permissions
                                                             "
-                                                            @change="selected_permission"
+                                                            @change="
+                                                                selected_permission
+                                                            "
                                                             value="delete-post"
                                                             switch
                                                         >
@@ -341,50 +378,76 @@
                                                     <b-col class="md-6">
                                                         <label
                                                             for="exampleInputEmail1"
-                                                            >Bài viết</label
+                                                            >Đánh Giá</label
                                                         >
+
                                                         <b-form-checkbox
                                                             v-model="
                                                                 selected_permissions
                                                             "
-                                                            @change="selected_permission"
-                                                            value="create-post"
+                                                            @change="
+                                                                selected_permission
+                                                            "
+                                                            value="edit-review"
                                                             switch
                                                         >
-                                                            Thêm bài viết
+                                                            Sửa đánh giá
                                                         </b-form-checkbox>
                                                         <b-form-checkbox
                                                             v-model="
                                                                 selected_permissions
                                                             "
-                                                            @change="selected_permission"
-                                                            value="edit-post"
+                                                            @change="
+                                                                selected_permission
+                                                            "
+                                                            value="delete-review"
                                                             switch
                                                         >
-                                                            Sửa bài viết
+                                                            Xóa đánh giá
+                                                        </b-form-checkbox>
+                                                    </b-col>
+                                                    <b-col class="md-6">
+                                                        <label
+                                                            for="exampleInputEmail1"
+                                                            >Bình Luận</label
+                                                        >
+
+                                                        <b-form-checkbox
+                                                            v-model="
+                                                                selected_permissions
+                                                            "
+                                                            @change="
+                                                                selected_permission
+                                                            "
+                                                            value="edit-comment"
+                                                            switch
+                                                        >
+                                                            Sửa bình luận
                                                         </b-form-checkbox>
                                                         <b-form-checkbox
                                                             v-model="
                                                                 selected_permissions
                                                             "
-                                                            @change="selected_permission"
-                                                            value="delete-post"
+                                                            @change="
+                                                                selected_permission
+                                                            "
+                                                            value="delete-comment"
                                                             switch
                                                         >
-                                                            Xóa bài viết
+                                                            Xóa bình luận
                                                         </b-form-checkbox>
                                                     </b-col>
                                                 </b-row>
-                                                 <div
-                                        v-if="errors.permissions"
-                                        style="
-                                            color: #dc3545;
-                                            font-size: 12.6px;
-                                            margin-top: 3px;
-                                        "
-                                    >
-                                        {{ errors.permissions[0] }}
-                                    </div>
+                                                <div
+                                                    v-if="errors.permissions"
+                                                    style="
+                                                        color: #dc3545;
+                                                        font-size: 12.6px;
+                                                        margin-top: 3px;
+                                                    "
+                                                >
+                                                    {{ errors.permissions[0] }}
+                                                </div>
                                             </div>
                                             <template
                                                 #modal-footer="{ cancel }"
@@ -392,8 +455,12 @@
                                                 <div>
                                                     <b-button
                                                         variant="primary"
-                                                        @click.prevent=" form.id ? submitEditRole(form.id) :
-                                                            submitAddRole()
+                                                        @click.prevent="
+                                                            form.id
+                                                                ? submitEditRole(
+                                                                      form.id
+                                                                  )
+                                                                : submitAddRole()
                                                         "
                                                     >
                                                         Xác nhận
@@ -493,7 +560,6 @@
             <!-- /.container-fluid -->
         </section>
         <!-- /.content -->
-       
     </div>
     <!-- /.content-wrapper -->
 </template>
@@ -511,7 +577,33 @@ export default {
             roles: [],
             selected: [],
             selected_permissions: [],
-            all_selected_permissions: ["create-product", "delete-category", "create-type", "edit-type", "delete-type", "create-post", "edit-post", "delete-post", "delete-brand", "edit-brand", "create-brand", "delete-color", "edit-color", "create-color", "edit-category", "create-category", "edit-product", "delete-product", "create-order", "edit-order", "delete-order"],
+            all_selected_permissions: [
+                "create-product",
+                "delete-category",
+                "create-type",
+                "edit-type",
+                "delete-type",
+                "create-post",
+                "edit-post",
+                "delete-post",
+                "delete-brand",
+                "edit-brand",
+                "create-brand",
+                "delete-color",
+                "edit-color",
+                "create-color",
+                "edit-category",
+                "create-category",
+                "edit-product",
+                "delete-product",
+                "create-order",
+                "edit-order",
+                "delete-order",
+                "edit-review",
+                "delete-review",
+                "edit-comment",
+                "delete-comment",
+            ],
             allSelected: false,
             allSelectedPermissions: false,
             totalRows: 1,
@@ -581,10 +673,14 @@ export default {
         getCurrentRole(id) {
             axios.get("/api/roles/" + id).then((res) => {
                 this.form = res.data;
-                this.selected_permissions = res.data.permissions.map((permission) => {
-                    return permission.name;
-                });
-                this.allSelectedPermissions = this.selected_permissions.length === this.all_selected_permissions.length;
+                this.selected_permissions = res.data.permissions.map(
+                    (permission) => {
+                        return permission.name;
+                    }
+                );
+                this.allSelectedPermissions =
+                    this.selected_permissions.length ===
+                    this.all_selected_permissions.length;
             });
         },
         deleteRole(id) {
@@ -787,7 +883,9 @@ export default {
                 : [];
         },
         selected_permission() {
-            this.allSelectedPermissions = this.selected_permissions.length === this.all_selected_permissions.length;
+            this.allSelectedPermissions =
+                this.selected_permissions.length ===
+                this.all_selected_permissions.length;
         },
         submitAddRole() {
             axios
@@ -841,5 +939,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

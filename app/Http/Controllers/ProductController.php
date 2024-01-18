@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Color;
 use Illuminate\Support\Facades\File;
 use App\Models\Post;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -17,13 +18,14 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('brand', 'category', 'type', 'colors', 'images')->orderBy('id', 'desc')->get();
+        $products = Product::with('brand', 'category', 'type', 'colors', 'images', 'reviews')->orderBy('id', 'desc')->get();
         $i = 1;
         foreach ($products as $product) {
             $product['stt'] = $i;
+            $product['rating'] = $product->reviews->avg('rating') ?? 5;
             $i++;
         }
-        
+
         return response()->json($products);
     }
 
@@ -44,7 +46,7 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {
         if (auth()->user()->can('create-product')) {
             $request->validate(
                 [
@@ -118,7 +120,7 @@ class ProductController extends Controller
                         'name' => $image,
                     ]);
                 }
-            
+
                 File::cleanDirectory(public_path('/tmp/uploads'));
 
                 $post = new Post();
@@ -157,9 +159,7 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-
-    }
+    { }
 
     /**
      * Update the specified resource in storage.
@@ -201,7 +201,8 @@ class ProductController extends Controller
                         'warranty.required' => 'Bảo hành sản phẩm không được để trống',
                         'info_product.required' => 'Thông tin sản phẩm không được để trống',
                         'clip.required' => 'Clip không được để trống',
-                    ]);
+                    ]
+                );
             } else {
                 $request->validate(
                     [
@@ -229,7 +230,8 @@ class ProductController extends Controller
                         'warranty.required' => 'Bảo hành sản phẩm không được để trống',
                         'info_product.required' => 'Thông tin sản phẩm không được để trống',
                         'clip.required' => 'Clip không được để trống',
-                    ]);
+                    ]
+                );
             }
 
             $product = Product::find($id);
@@ -325,9 +327,10 @@ class ProductController extends Controller
         ], 401);
     }
 
-    public function filterProducts(Request $request) {
+    public function filterProducts(Request $request)
+    {
         if ($request->category_id) {
-            $products = Product::with('category')->where('category_id', $request->category_id)->orderBy('id', 'desc');
+            $products = Product::with(['category', 'reviews'])->where('category_id', $request->category_id)->orderBy('id', 'desc');
             if ($request->brand_id) {
                 $products = $products->whereIn('brand_id', explode(',', $request->brand_id));
             }
@@ -341,27 +344,35 @@ class ProductController extends Controller
                 $products = $products->whereIn('warranty', explode(',', $request->warranty));
             }
         }
-        return \response()->json($products->get());
+
+        $calRating = $products->get();
+        foreach ($calRating as $product) {
+            $product['rating'] = $product->reviews->avg('rating') ?? 5;
+        }
+        return \response()->json($calRating);
     }
 
-    public function searchProducts(Request $request) {
+    public function searchProducts(Request $request)
+    {
         $products = Product::with('brand', 'category', 'type')
             ->where('name', 'like', '%' . $request->keyword . '%')
-            ->orWhere( function($query) use ($request){
-                $query->whereHas('category', function($q) use ($request){
+            ->orWhere('price', 'like', '%' . $request->keyword . '%')
+            ->orWhere(function ($query) use ($request) {
+                $query->whereHas('category', function ($q) use ($request) {
                     $q->where('name', 'LIKE', '%' . $request->keyword . '%');
-                })->orWhereHas('brand', function($q) use ($request){
+                })->orWhereHas('brand', function ($q) use ($request) {
                     $q->where('name', 'LIKE', '%' . $request->keyword . '%');
-                })->orWhereHas('type', function($q) use ($request){
+                })->orWhereHas('type', function ($q) use ($request) {
                     $q->where('name', 'LIKE', '%' . $request->keyword . '%');
                 });
             })->orderBy('id', 'desc')->get();
         return \response()->json($products);
     }
 
-    public function removeChar($str) {
+    public function removeChar($str)
+    {
         $res = str_ireplace('/storage', 'app/public', $str);
-  
+
         // returning the result 
         return $res;
     }

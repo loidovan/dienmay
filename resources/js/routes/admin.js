@@ -4,8 +4,8 @@ const routes = [
         component: require("../components/admin/Index.vue").default,
         meta: {
             requiresAuth: true,
-            requiresRole: 'admin',
-            breadcrumb: 'Tổng Quan'
+            requiresRole: "admin",
+            breadcrumb: "Tổng Quan",
         },
         children: [
             {
@@ -14,12 +14,14 @@ const routes = [
                 component: require("../components/admin/Dashboard.vue").default,
                 meta: {
                     title: "Trang Quản Trị",
-                }
+                },
             },
             {
                 path: "change-password",
                 name: "change-password",
-                component: require("../components/admin/login/ChangePassword.vue").default,
+                component:
+                    require("../components/admin/login/ChangePassword.vue")
+                        .default,
                 meta: {
                     title: "Mật Khẩu Mới",
                 },
@@ -27,27 +29,31 @@ const routes = [
             {
                 path: "changePassword",
                 name: "changePassword",
-                component: require("../components/admin/login/ChangePasswordWithOldPass.vue").default,
+                component:
+                    require("../components/admin/login/ChangePasswordWithOldPass.vue")
+                        .default,
                 meta: {
                     title: "Đổi Mật Khẩu",
-                }
-            },
-            {
-                path: "accounts",  
-                name: "accounts",
-                component: require("../components/admin/account/List.vue").default,
-                meta: {
-                    title: "Tài Khoản",
-                    breadcrumb: 'Tài Khoản'
                 },
             },
             {
-                path: "roles",  
+                path: "accounts",
+                name: "accounts",
+                component: require("../components/admin/account/List.vue")
+                    .default,
+                meta: {
+                    title: "Tài Khoản",
+                    breadcrumb: "Tài Khoản",
+                },
+            },
+            {
+                path: "roles",
                 name: "roles",
-                component: require("../components/admin/account/Role.vue").default,
+                component: require("../components/admin/account/Role.vue")
+                    .default,
                 meta: {
                     title: "Vai Trò",
-                    breadcrumb: 'Vai Trò'
+                    breadcrumb: "Vai Trò",
                 },
             },
             {
@@ -57,7 +63,7 @@ const routes = [
                     .default,
                 meta: {
                     title: "Danh Mục Sản Phẩm",
-                    breadcrumb: "Sản Phẩm"
+                    breadcrumb: "Danh Mục",
                 },
             },
             {
@@ -71,7 +77,7 @@ const routes = [
                         return {
                             label: this.$route.meta.title,
                             parent: "categories",
-                        }
+                        };
                     },
                 },
             },
@@ -86,18 +92,17 @@ const routes = [
                         return {
                             label: this.$route.meta.title,
                             parent: "categories",
-                        }
+                        };
                     },
                 },
             },
             {
                 path: "types",
                 name: "types",
-                component: require("../components/admin/type/List.vue")
-                    .default,
+                component: require("../components/admin/type/List.vue").default,
                 meta: {
                     title: "Danh Sách Loại Sản Phẩm",
-                    breadcrumb: "Loại Sản Phẩm"
+                    breadcrumb: "Loại Sản Phẩm",
                 },
             },
             {
@@ -111,22 +116,21 @@ const routes = [
                         return {
                             label: this.$route.meta.title,
                             parent: "types",
-                        }
+                        };
                     },
                 },
             },
             {
                 path: "types/edit/:id",
                 name: "types.edit",
-                component: require("../components/admin/type/Edit.vue")
-                    .default,
+                component: require("../components/admin/type/Edit.vue").default,
                 meta: {
                     title: "Chỉnh Sửa",
                     breadcrumb() {
                         return {
                             label: this.$route.meta.title,
                             parent: "types",
-                        }
+                        };
                     },
                 },
             },
@@ -137,7 +141,7 @@ const routes = [
                     .default,
                 meta: {
                     title: "Danh Sách Thương Hiệu",
-                    breadcrumb: "Thương Hiệu"
+                    breadcrumb: "Thương Hiệu",
                 },
             },
             {
@@ -151,7 +155,7 @@ const routes = [
                         return {
                             label: this.$route.meta.title,
                             parent: "brands",
-                        }
+                        };
                     },
                 },
             },
@@ -166,7 +170,7 @@ const routes = [
                         return {
                             label: this.$route.meta.title,
                             parent: "brands",
-                        }
+                        };
                     },
                 },
             },
@@ -177,7 +181,7 @@ const routes = [
                     .default,
                 meta: {
                     title: "Danh Sách Màu Sắc",
-                    breadcrumb: "Màu Sắc"
+                    breadcrumb: "Màu Sắc",
                 },
             },
             {
@@ -191,7 +195,7 @@ const routes = [
                         return {
                             label: this.$route.meta.title,
                             parent: "colors",
-                        }
+                        };
                     },
                 },
             },
@@ -206,7 +210,7 @@ const routes = [
                         return {
                             label: this.$route.meta.title,
                             parent: "colors",
-                        }
+                        };
                     },
                 },
             },
@@ -217,7 +221,7 @@ const routes = [
                     .default,
                 meta: {
                     title: "Danh Sách Sản Phẩm",
-                    breadcrumb: "Sản Phẩm"
+                    breadcrumb: "Sản Phẩm",
                 },
             },
             {
@@ -231,7 +235,7 @@ const routes = [
                         return {
                             label: this.$route.meta.title,
                             parent: "products",
-                        }
+                        };
                     },
                 },
             },
@@ -246,19 +250,67 @@ const routes = [
                         return {
                             label: this.$route.meta.title,
                             parent: "products",
-                        }
+                        };
                     },
                 },
             },
             {
                 path: "orders",
                 name: "orders",
-                component: require("../components/admin/order/List.vue").default,
+                component: require("../components/admin/order/List.vue")
+                    .default,
                 meta: {
                     title: "Danh Sách Đơn Hàng",
-                    breadcrumb: "Đơn Hàng"
+                    breadcrumb: "Đơn Hàng",
                 },
-            }
+            },
+            {
+                path: "reviews",
+                name: "reviews",
+                component: require("../components/admin/review/List.vue")
+                    .default,
+                meta: {
+                    title: "Danh Sách Đánh Giá",
+                    breadcrumb: "Đánh Giá",
+                },
+            },
+            {
+                path: "comments",
+                name: "comments",
+                component: require("../components/admin/comment/List.vue")
+                    .default,
+                meta: {
+                    title: "Danh Sách Bình Luận",
+                    breadcrumb: "Bình Luận",
+                },
+            },
+            {
+                path: "import-products",
+                name: "import-products",
+                component:
+                    require("../components/admin/import-product/List.vue")
+                        .default,
+                meta: {
+                    title: "Danh Sách Nhập Hàng",
+                    breadcrumb: "Nhập Hàng",
+                },
+            },
+            {
+                path: "import-products/create",
+                name: "import-products.create",
+                component:
+                    require("../components/admin/import-product/Create.vue")
+                        .default,
+                meta: {
+                    title: "Thêm Mới",
+                    breadcrumb() {
+                        return {
+                            label: this.$route.meta.title,
+                            parent: "import-products",
+                        };
+                    },
+                },
+            },
         ],
     },
     {
@@ -270,19 +322,23 @@ const routes = [
             requiresAuth: false,
         },
         beforeEnter: (to, from, next) => {
-            if (localStorage.getItem("token") || sessionStorage.getItem("token")) {
-                if (localStorage.getItem("role") !== "user" || localStorage.getItem("role") !== "user") {
+            if (
+                localStorage.getItem("token") ||
+                sessionStorage.getItem("token")
+            ) {
+                if (
+                    localStorage.getItem("role") !== "user" ||
+                    localStorage.getItem("role") !== "user"
+                ) {
                     next({
                         path: "/admin",
                     });
-                }
-                else {
+                } else {
                     next({
                         path: "/",
                     });
                 }
-            }
-            else {
+            } else {
                 next();
             }
         },

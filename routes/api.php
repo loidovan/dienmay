@@ -13,10 +13,15 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CommentDetailsController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailsController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ImportProductController;
 use App\Http\Controllers\Location\LocationController;
+use App\Http\Controllers\ReviewController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -40,34 +45,37 @@ Route::resource('types', TypeController::class);
 Route::resource('brands', BrandController::class);
 Route::resource('colors', ColorController::class);
 Route::resource('products', ProductController::class);
+Route::resource('import-products', ImportProductController::class);
+Route::get('getInventory', [ImportProductController::class, 'getInventory']);
 Route::resource('posts', PostController::class);
 Route::resource('carts', CartController::class);
 Route::resource('orders', OrderController::class);
 Route::resource('orderdetails', OrderDetailsController::class);
 Route::resource('customers', CustomerController::class);
-
+Route::resource('reviews', ReviewController::class);
+Route::resource('comments', CommentController::class);
+Route::resource('commentDetails', CommentDetailsController::class);
+Route::resource('reviews', ReviewController::class);
 Route::post('/products/filters', [ProductController::class, 'filterProducts']);
 Route::post('/products/search', [ProductController::class, 'searchProducts']);
 Route::post('/getCart', [CartController::class, 'getCart']);
-
 Route::post('getProvinces', [LocationController::class, 'getProvinces']);
 Route::post('getDistricts', [LocationController::class, 'getDistricts']);
 Route::post('getWards', [LocationController::class, 'getWards']);
+Route::post('handleOrder', [OrderController::class, 'handleOrder']);
+Route::post("/vnpay", [OrderController::class, 'checkout']);
+
+Route::post('logout', [AuthController::class, 'logout']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('accounts', AccountController::class);
     Route::resource('roles', RoleController::class);
     Route::post('change-password', [AuthController::class, 'changePasswordFirstLogin']);
     Route::post('changePassword', [AuthController::class, 'changePassword']);
-    
+
     Route::post('/upload', [ImageController::class, 'store'])->name('upload');
     Route::get('/media/{product}', [ImageController::class, 'getImages'])->name('product.images');
     Route::post('/products/upload_images', [ImageController::class, 'uploadImages'])->name('products.upload_images');
     Route::post('/products/delete_images', [ImageController::class, 'deleteImages'])->name('products.delete_images');
     Route::post('/posts/deleteImage', [PostController::class, 'deleteImage']);
-  
-
-    Route::post('handleOrder', [OrderController::class, 'handleOrder']);
-    
-    Route::post('logout', [AuthController::class, 'logout']);
 });

@@ -51,20 +51,22 @@ class AccountController extends Controller
     public function store(Request $request)
     {
         if (auth()->user()->can('create-user')) {
-            $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:users',
-                'role_selected' => 'required',
-            ],
-            [
-                'name.required' => 'Tên không được để trống',
-                'name.max' => 'Tên không được quá 255 ký tự',
-                'email.required' => 'Email không được để trống',
-                'email.email' => 'Email không đúng định dạng',
-                'email.max' => 'Email không được quá 255 ký tự',
-                'email.unique' => 'Email đã tồn tại',
-                'role_selected.required' => 'Vui lòng chọn vai trò',
-            ]);
+            $request->validate(
+                [
+                    'name' => 'required|string|max:255',
+                    'email' => 'required|string|email|max:255|unique:users',
+                    'role_selected' => 'required',
+                ],
+                [
+                    'name.required' => 'Tên không được để trống',
+                    'name.max' => 'Tên không được quá 255 ký tự',
+                    'email.required' => 'Email không được để trống',
+                    'email.email' => 'Email không đúng định dạng',
+                    'email.max' => 'Email không được quá 255 ký tự',
+                    'email.unique' => 'Email đã tồn tại',
+                    'role_selected.required' => 'Vui lòng chọn vai trò',
+                ]
+            );
             $acc = new User();
             $acc->name = $request->name;
             $acc->created_at = date('Y-m-d H:i:s');
@@ -127,13 +129,15 @@ class AccountController extends Controller
     public function update(Request $request, $id)
     {
         if (auth()->user()->can('edit-user')) {
-            $request->validate([
-                'name' => 'required|string|max:255',
-            ],
-            [
-                'name.required' => 'Tên không được để trống',
-                'name.max' => 'Tên không được quá 255 ký tự',
-            ]);
+            $request->validate(
+                [
+                    'name' => 'required|string|max:255',
+                ],
+                [
+                    'name.required' => 'Tên không được để trống',
+                    'name.max' => 'Tên không được quá 255 ký tự',
+                ]
+            );
             $acc = User::find($id);
             $acc->name = $request->name;
             $acc->updated_at = date('Y-m-d H:i:s');

@@ -10,10 +10,7 @@
                     <!-- left column -->
                     <div class="col-md-12">
                         <!-- jquery validation -->
-                        <div
-                            class="card card-primary"
-                            style="overflow-x: auto"
-                        >
+                        <div class="card card-primary" style="overflow-x: auto">
                             <div class="card-header">
                                 <h3 class="card-title mt-2">Thêm Mới</h3>
                             </div>
@@ -216,10 +213,10 @@
                                         :options="colors"
                                         :option-height="54"
                                         :show-labels="false"
-                                        :multiple="true"
+                                        :multiple="false"
                                         :class="{
-                                                'input-error': errors.color_ids,
-                                            }"
+                                            'input-error': errors.color_ids,
+                                        }"
                                     >
                                         <template
                                             slot="singleLabel"
@@ -263,23 +260,23 @@
                                         </template>
                                     </multiselect>
                                     <div
-                                            v-if="errors.color_ids"
-                                            style="
-                                                color: #dc3545;
-                                                font-size: 12.6px;
-                                                margin-top: 3px;
-                                            "
-                                        >
-                                            {{ errors.color_ids[0] }}
-                                        </div>
+                                        v-if="errors.color_ids"
+                                        style="
+                                            color: #dc3545;
+                                            font-size: 12.6px;
+                                            margin-top: 3px;
+                                        "
+                                    >
+                                        {{ errors.color_ids[0] }}
+                                    </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Thông số kỹ thuật</label>
 
                                     <ckeditor
-                                    :editor="editor"
-                                    :config="editorConfig"
+                                        :editor="editor"
+                                        :config="editorConfig"
                                         v-model="form.description"
                                         :class="{
                                             'input-error': errors.description,
@@ -422,7 +419,8 @@
                                     <label for="exampleInputEmail1"
                                         >Thông tin sản phẩm</label
                                     >
-                                    <vue-editor v-model="info_product"
+                                    <vue-editor
+                                        v-model="info_product"
                                         :editorOptions="info_product_option"
                                         :class="{
                                             'input-error': errors.info_product,
@@ -432,7 +430,7 @@
                                         @image-removed="handleImageRemoved"
                                     >
                                     </vue-editor>
-                                   <div
+                                    <div
                                         v-if="errors.info_product"
                                         style="
                                             color: #dc3545;
@@ -443,17 +441,19 @@
                                         {{ errors.info_product[0] }}
                                     </div>
                                 </div>
-                                 <div class="form-group">
+                                <div class="form-group">
                                     <label for="exampleInputEmail1"
                                         >Clip đánh giá</label
                                     >
-                                    <input type="text" 
+                                    <input
+                                        type="text"
                                         :class="{
                                             'input-error': errors.clip,
-                                        }" 
-                                        v-model="clip" 
-                                        placeholder="Nhập đường dẫn" 
-                                        class="form-control mb-3">
+                                        }"
+                                        v-model="clip"
+                                        placeholder="Nhập đường dẫn"
+                                        class="form-control mb-3"
+                                    />
                                     <div
                                         v-if="errors.clip"
                                         style="
@@ -498,10 +498,10 @@
 <script>
 import Multiselect from "vue-multiselect";
 import { UploadMedia, UpdateMedia } from "vue-media-upload";
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { VueEditor,Quill } from 'vue2-editor'
-import  ImageResize  from 'quill-image-resize-vue'
-Quill.register('modules/imageResize', ImageResize)
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { VueEditor, Quill } from "vue2-editor";
+import ImageResize from "quill-image-resize-vue";
+Quill.register("modules/imageResize", ImageResize);
 import { LazyYoutube } from "vue-lazytube";
 export default {
     data() {
@@ -549,16 +549,14 @@ export default {
                 },
             ],
             editor: ClassicEditor,
-            editorConfig: {
-                
-            },
-            info_product: '',
+            editorConfig: {},
+            info_product: "",
             info_product_option: {
                 modules: {
-                    imageResize: {}, 
+                    imageResize: {},
                 },
             },
-            clip: '',
+            clip: "",
         };
     },
     async created() {
@@ -618,9 +616,10 @@ export default {
             );
             formData.append(
                 "color_ids",
-                this.color_options.map((color) => {
-                    return color.id;
-                })
+                // this.color_options.map((color) => {
+                //     return color.id;
+                // })
+                [this.color_options.id]
             );
             formData.append("image", this.form.image);
             formData.append("images", this.form.images);
@@ -663,28 +662,39 @@ export default {
         onEditorChange(e) {
             console.log(this.content);
         },
-        handleImageAdded: function(file, Editor, cursorLocation, resetUploader) {
+        handleImageAdded: function (
+            file,
+            Editor,
+            cursorLocation,
+            resetUploader
+        ) {
             var formData = new FormData();
             formData.append("image", file);
 
-            axios.post('/api/posts', formData)
-                .then(result => {
-                const url = result.data.url; // Get url from response
-                Editor.insertEmbed(cursorLocation, "image", url);
-                resetUploader();
+            axios
+                .post("/api/posts", formData)
+                .then((result) => {
+                    const url = result.data.url; // Get url from response
+                    Editor.insertEmbed(cursorLocation, "image", url);
+                    resetUploader();
                 })
-                .catch(err => {
-                console.log(err);
+                .catch((err) => {
+                    console.log(err);
                 });
         },
-        handleImageRemoved: function(file, Editor, cursorLocation, resetUploader) {
-            axios.post('/api/posts/deleteImage', {image: file})
-                .then(result => {
-                })
-                .catch(err => {
-                console.log(err);
+        handleImageRemoved: function (
+            file,
+            Editor,
+            cursorLocation,
+            resetUploader
+        ) {
+            axios
+                .post("/api/posts/deleteImage", { image: file })
+                .then((result) => {})
+                .catch((err) => {
+                    console.log(err);
                 });
-            }
+        },
     },
     components: {
         Multiselect,

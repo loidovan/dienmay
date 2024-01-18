@@ -39,7 +39,7 @@ class AuthController extends Controller
     }
 
     public function logout() {
-        Auth::user()->tokens()->delete();
+        Auth::user()?->tokens()?->delete();
     }
 
     public function register(Request $request) {

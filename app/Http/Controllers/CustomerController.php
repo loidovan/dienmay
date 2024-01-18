@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use Exception;
 use Twilio\Rest\Client;
+
 class CustomerController extends Controller
 {
     /**
@@ -47,20 +48,20 @@ class CustomerController extends Controller
             $customer->password = $password;
             $customer->save();
             try {
-    
+
                 $account_sid = getenv("TWILIO_SID");
                 $auth_token = getenv("TWILIO_TOKEN");
                 $twilio_number = getenv("TWILIO_FROM");
-    
+
                 $client = new Client($account_sid, $auth_token);
                 $client->messages->create($receiverNumber, [
-                    'from' => $twilio_number, 
-                    'body' => $message]);
-    
+                    'from' => $twilio_number,
+                    'body' => $message
+                ]);
+
                 return response()->json([('SMS Sent Successfully.')]);
-    
             } catch (Exception $e) {
-                return response()->json(["Error: ". $e->getMessage()]);
+                return response()->json(["Error: " . $e->getMessage()]);
             }
         } else if (!$customer && !$request->otp) {
             return response()->json(['Error: Khong ton tai khach hang'], 404);
@@ -74,7 +75,6 @@ class CustomerController extends Controller
                 return response()->json(['error' => 'Sai mã xác nhận'], 404);
             }
         }
-        
     }
 
     /**
@@ -84,9 +84,7 @@ class CustomerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-          
-    }
+    { }
 
     /**
      * Show the form for editing the specified resource.
@@ -122,7 +120,8 @@ class CustomerController extends Controller
         //
     }
 
-    function generateRandomString($length) {
+    function generateRandomString($length)
+    {
         $characters = '0123456789';
         $charactersLength = strlen($characters);
         $randomString = '';

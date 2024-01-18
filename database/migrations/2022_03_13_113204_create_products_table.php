@@ -22,7 +22,7 @@ class CreateProductsTable extends Migration
             $table->bigInteger("type_id")->unsigned();
             $table->text('description');
             $table->string('image');
-            $table->decimal('price',10,0);
+            $table->decimal('price', 10, 0);
             $table->integer('warranty');
             $table->integer('status')->default(1);
             $table->timestamps();

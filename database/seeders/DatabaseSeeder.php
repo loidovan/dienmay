@@ -17,11 +17,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $role1 = Role::create(['name' => 'superadmin']);
+        $role1 = Role::firstOrCreate(['name' => 'superadmin']);
 
-        $role2 = Role::create(['name' => 'admin']);
+        $role2 = Role::firstOrCreate(['name' => 'admin']);
 
-        $role3 = Role::create(['name' => 'user']);
+        $role3 = Role::firstOrCreate(['name' => 'user']);
         // gets all permissions via Gate::before rule; see AuthServiceProvider
 
         // create demo users
@@ -88,7 +88,7 @@ class DatabaseSeeder extends Seeder
         $permission = Permission::create(['name' => 'delete-color']);
         $role1->givePermissionTo($permission);
         $role2->givePermissionTo($permission);
-        
+
         $permission = Permission::create(['name' => 'create-type']);
         $role1->givePermissionTo($permission);
         $role2->givePermissionTo($permission);
@@ -98,7 +98,7 @@ class DatabaseSeeder extends Seeder
         $permission = Permission::create(['name' => 'delete-type']);
         $role1->givePermissionTo($permission);
         $role2->givePermissionTo($permission);
-        
+
         $permission = Permission::create(['name' => 'create-brand']);
         $role1->givePermissionTo($permission);
         $role2->givePermissionTo($permission);
@@ -140,5 +140,24 @@ class DatabaseSeeder extends Seeder
         $role1->givePermissionTo($permission);
         $role2->givePermissionTo($permission);
 
+        $permission = Permission::create(['name' => 'create-review']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'edit-review']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'delete-review']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+
+        $permission = Permission::create(['name' => 'create-comment']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'edit-comment']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'delete-comment']);
+        $role1->givePermissionTo($permission);
+        $role2->givePermissionTo($permission);
     }
 }

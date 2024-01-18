@@ -44,19 +44,21 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         if (auth()->user()->can('create-role')) {
-            $request->validate([
-                'name' => 'required|string|max:255|unique:categories',
-                'permissions' => 'required',
-            ],
-            [
-                'name.required' => 'Tên không được để trống',
-                'name.max' => 'Tên không được quá 255 ký tự',
-                'name.unique' => 'Tên đã tồn tại',
-                'permissions.required' => 'Quyền không được để trống',
-            ]);
+            $request->validate(
+                [
+                    'name' => 'required|string|max:255|unique:categories',
+                    'permissions' => 'required',
+                ],
+                [
+                    'name.required' => 'Tên không được để trống',
+                    'name.max' => 'Tên không được quá 255 ký tự',
+                    'name.unique' => 'Tên đã tồn tại',
+                    'permissions.required' => 'Quyền không được để trống',
+                ]
+            );
             $role = Role::create(['name' => $request->name, 'guard_name' => 'web']);
             $role->syncPermissions($request->permissions);
-        
+
             return response()->json([
                 'message' => 'Thêm thành công',
             ], 200);
@@ -98,17 +100,19 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if(auth()->user()->can('edit-role')) {
-            $request->validate([
-                'name' => 'required|string|max:255|unique:categories',
-                'permissions' => 'required',
-            ],
-            [
-                'name.required' => 'Tên không được để trống',
-                'name.max' => 'Tên không được quá 255 ký tự',
-                'name.unique' => 'Tên đã tồn tại',
-                'permissions.required' => 'Quyền không được để trống',
-            ]);
+        if (auth()->user()->can('edit-role')) {
+            $request->validate(
+                [
+                    'name' => 'required|string|max:255|unique:categories',
+                    'permissions' => 'required',
+                ],
+                [
+                    'name.required' => 'Tên không được để trống',
+                    'name.max' => 'Tên không được quá 255 ký tự',
+                    'name.unique' => 'Tên đã tồn tại',
+                    'permissions.required' => 'Quyền không được để trống',
+                ]
+            );
             $role = Role::find($id);
             $role->name = $request->name;
             $role->save();

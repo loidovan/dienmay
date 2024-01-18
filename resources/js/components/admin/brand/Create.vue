@@ -98,7 +98,7 @@
                                                     margin-top: 6px;
                                                     max-width: 200px;
                                                     max-height: 200px;
-                                                    "
+                                                "
                                             />
                                         </b-col>
                                     </b-row>
@@ -212,8 +212,8 @@ export default {
 </script>
 
 <style scoped>
-    .input-error {
-        border: 1px solid #dc3545;
-        border-radius: 4px;
-    }
+.input-error {
+    border: 1px solid #dc3545;
+    border-radius: 4px;
+}
 </style>

@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="container">
             <ul>
                 <!-- Bộ Lọc ALL -->
@@ -111,10 +111,14 @@
                                     >
                                         [
                                         {{
-                                            formatPrice(filters.rangePrice[0] * 100000)
+                                            formatPrice(
+                                                filters.rangePrice[0] * 100000
+                                            )
                                         }}₫ -
                                         {{
-                                            formatPrice(filters.rangePrice[1] * 100000)
+                                            formatPrice(
+                                                filters.rangePrice[1] * 100000
+                                            )
                                         }}₫ ]
                                     </h6>
                                     <vue-range-slider
@@ -142,7 +146,9 @@
                                             >
                                                 <input
                                                     type="checkbox"
-                                                    v-model="filters.selectedTypes"
+                                                    v-model="
+                                                        filters.selectedTypes
+                                                    "
                                                     :id="'type' + key"
                                                     :value="item.id"
                                                     hidden
@@ -175,7 +181,9 @@
                                             >
                                                 <input
                                                     type="checkbox"
-                                                    v-model="filters.selectedWarranties"
+                                                    v-model="
+                                                        filters.selectedWarranties
+                                                    "
                                                     :id="'warranty' + key"
                                                     :value="item.id"
                                                     hidden
@@ -195,10 +203,22 @@
                                 <hr class="m-0 my-2" />
                                 <div class="row">
                                     <div class="col text-center">
-                                        <button class="btn btn-outline-danger" @click="filters.selectedBrands=[];filters.selectedTypes=[];filters.selectedWarranties=[];filters.rangePrice=[0,1000];passAllFilters()">
+                                        <button
+                                            class="btn btn-outline-danger"
+                                            @click="
+                                                filters.selectedBrands = [];
+                                                filters.selectedTypes = [];
+                                                filters.selectedWarranties = [];
+                                                filters.rangePrice = [0, 1000];
+                                                passAllFilters();
+                                            "
+                                        >
                                             Bỏ chọn
                                         </button>
-                                        <button class="btn btn-primary" @click="passAllFilters()">
+                                        <button
+                                            class="btn btn-primary"
+                                            @click="passAllFilters()"
+                                        >
                                             Xem kết quả
                                         </button>
                                     </div>
@@ -277,10 +297,19 @@
                                 <hr class="m-0 my-2" />
                                 <div class="row">
                                     <div class="col text-center">
-                                        <button class="btn btn-outline-danger" @click="filters.selectedBrands=[];passAllFilters()">
+                                        <button
+                                            class="btn btn-outline-danger"
+                                            @click="
+                                                filters.selectedBrands = [];
+                                                passAllFilters();
+                                            "
+                                        >
                                             Bỏ chọn
                                         </button>
-                                        <button class="btn btn-primary" @click="passAllFilters()">
+                                        <button
+                                            class="btn btn-primary"
+                                            @click="passAllFilters()"
+                                        >
                                             Xem kết quả
                                         </button>
                                     </div>
@@ -331,10 +360,14 @@
                                     >
                                         [
                                         {{
-                                            formatPrice(filters.rangePrice[0] * 100000)
+                                            formatPrice(
+                                                filters.rangePrice[0] * 100000
+                                            )
                                         }}₫ -
                                         {{
-                                            formatPrice(filters.rangePrice[1] * 100000)
+                                            formatPrice(
+                                                filters.rangePrice[1] * 100000
+                                            )
                                         }}₫ ]
                                     </h6>
                                     <vue-range-slider
@@ -349,10 +382,19 @@
                                 <hr class="m-0 my-2" />
                                 <div class="row">
                                     <div class="col text-center">
-                                        <button class="btn btn-outline-danger" @click="filters.rangePrice=[0,1000];passAllFilters()">
+                                        <button
+                                            class="btn btn-outline-danger"
+                                            @click="
+                                                filters.rangePrice = [0, 1000];
+                                                passAllFilters();
+                                            "
+                                        >
                                             Bỏ chọn
                                         </button>
-                                        <button class="btn btn-primary" @click="passAllFilters()">
+                                        <button
+                                            class="btn btn-primary"
+                                            @click="passAllFilters()"
+                                        >
                                             Xem kết quả
                                         </button>
                                     </div>
@@ -427,10 +469,19 @@
                                 <hr class="m-0 my-2" />
                                 <div class="row">
                                     <div class="col text-center">
-                                        <button class="btn btn-outline-danger" @click="filters.selectedTypes=[];passAllFilters()">
+                                        <button
+                                            class="btn btn-outline-danger"
+                                            @click="
+                                                filters.selectedTypes = [];
+                                                passAllFilters();
+                                            "
+                                        >
                                             Bỏ chọn
                                         </button>
-                                        <button class="btn btn-primary" @click="passAllFilters()">
+                                        <button
+                                            class="btn btn-primary"
+                                            @click="passAllFilters()"
+                                        >
                                             Xem kết quả
                                         </button>
                                     </div>
@@ -485,7 +536,9 @@
                                         >
                                             <input
                                                 type="checkbox"
-                                                v-model="filters.selectedWarranties"
+                                                v-model="
+                                                    filters.selectedWarranties
+                                                "
                                                 :id="'warranty' + key"
                                                 :value="item.id"
                                                 hidden
@@ -505,10 +558,19 @@
                                 <hr class="m-0 my-2" />
                                 <div class="row">
                                     <div class="col text-center">
-                                        <button class="btn btn-outline-danger" @click="filters.selectedWarranties = [];passAllFilters()">
+                                        <button
+                                            class="btn btn-outline-danger"
+                                            @click="
+                                                filters.selectedWarranties = [];
+                                                passAllFilters();
+                                            "
+                                        >
                                             Bỏ chọn
                                         </button>
-                                        <button class="btn btn-primary" @click="passAllFilters()">
+                                        <button
+                                            class="btn btn-primary"
+                                            @click="passAllFilters()"
+                                        >
                                             Xem kết quả
                                         </button>
                                     </div>
@@ -589,7 +651,11 @@
                     v-for="item in products"
                     :key="item.id"
                 >
-                    <router-link tag="span" style="display:grid" :to="`/products/${item.id}`">
+                    <router-link
+                        tag="span"
+                        style="display: grid"
+                        :to="`/products/${item.id}`"
+                    >
                         <div class="img-item">
                             <img width="100%" :src="item.image" />
                         </div>
@@ -606,14 +672,20 @@
                                 :star-size="13"
                                 active-color="#FF8C00"
                                 :show-rating="false"
-                                v-model="rating"
+                                v-model="item.rating"
                             ></star-rating>
                         </div>
                     </router-link>
                 </div>
             </div>
             <div class="row">
-                <div class="col text-center pb-5 pt-3 mt-2 mb-4"><span @click="loadMore()" class="btn-loadmore noselect">Xem thêm {{moreProducts.length}} {{ products[0].category.name }} <i class="fas fa-caret-down"></i></span></div>
+                <div class="col text-center pb-5 pt-3 mt-2 mb-4">
+                    <span @click="loadMore()" class="btn-loadmore noselect"
+                        >Xem thêm {{ moreProducts.length }}
+                        {{ products[0].category.name }}
+                        <i class="fas fa-caret-down"></i
+                    ></span>
+                </div>
             </div>
         </div>
         <loading
@@ -630,8 +702,8 @@ import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 import "vue-range-component/dist/vue-range-slider.css";
 import VueRangeSlider from "vue-range-component";
-import { addBackToTop } from 'vanilla-back-to-top'
-addBackToTop({ backgroundColor: '#ed1c24',})
+import { addBackToTop } from "vanilla-back-to-top";
+addBackToTop({ backgroundColor: "#ed1c24" });
 export default {
     components: { VueperSlides, VueperSlide, Loading, VueRangeSlider },
     data() {
@@ -710,7 +782,7 @@ export default {
         };
     },
     created() {
-         if (!this.$route.query.category_id) {
+        if (!this.$route.query.category_id) {
             return this.$swal({
                 title: "Không có sản phẩm",
                 text: "Vui lòng chọn lại",
@@ -773,12 +845,13 @@ export default {
                 setTimeout(() => {
                     this.showLoading = false;
                 }, 400);
-            } 
+            }
             var nextProducts = this.moreProducts.splice(0, 10);
             this.products.push(...nextProducts);
         },
         async getFilterProducts() {
-            await axios.post('/api/products/filters', this.$route.query)
+            await axios
+                .post("/api/products/filters", this.$route.query)
                 .then((res) => {
                     if (res.data.length > 0) {
                         this.moreProducts = res.data;
@@ -798,40 +871,83 @@ export default {
                             this.showLoading = false;
                         });
                     }
-                   
-                    this.$route.query.brand_id ? this.filters.selectedBrands = this.$route.query.brand_id.split(',').map(item => parseInt(item)) : null;
-                    this.$route.query.type_id ? this.filters.selectedTypes = this.$route.query.type_id.split(',').map(item => parseInt(item)) : null;
-                    this.$route.query.warranty ? this.filters.selectedWarranties = this.$route.query.warranty.split(',').map(item => parseInt(item)) : null;
-                    this.$route.query.rangeprice ? this.filters.rangePrice = this.$route.query.rangeprice.split(',').map(item => parseInt(item) / 100000) : null;
-                    this.brands.filter((item) => {
-                        return this.filters.selectedBrands.includes(item.id);
-                    }).map((item) => {
-                        item.isActive = true;
-                    });
-                    this.types.filter((item) => {
-                        return this.filters.selectedTypes.includes(item.id);
-                    }).map((item) => {
-                        item.isActive = true;
-                    });
-                    this.warranties.filter((item) => {
-                        return this.filters.selectedWarranties.includes(item.id);
-                    }).map((item) => {
-                        item.isActive = true;
-                    });
+
+                    this.$route.query.brand_id
+                        ? (this.filters.selectedBrands =
+                              this.$route.query.brand_id
+                                  .split(",")
+                                  .map((item) => parseInt(item)))
+                        : null;
+                    this.$route.query.type_id
+                        ? (this.filters.selectedTypes =
+                              this.$route.query.type_id
+                                  .split(",")
+                                  .map((item) => parseInt(item)))
+                        : null;
+                    this.$route.query.warranty
+                        ? (this.filters.selectedWarranties =
+                              this.$route.query.warranty
+                                  .split(",")
+                                  .map((item) => parseInt(item)))
+                        : null;
+                    this.$route.query.rangeprice
+                        ? (this.filters.rangePrice =
+                              this.$route.query.rangeprice
+                                  .split(",")
+                                  .map((item) => parseInt(item) / 100000))
+                        : null;
+                    this.brands
+                        .filter((item) => {
+                            return this.filters.selectedBrands.includes(
+                                item.id
+                            );
+                        })
+                        .map((item) => {
+                            item.isActive = true;
+                        });
+                    this.types
+                        .filter((item) => {
+                            return this.filters.selectedTypes.includes(item.id);
+                        })
+                        .map((item) => {
+                            item.isActive = true;
+                        });
+                    this.warranties
+                        .filter((item) => {
+                            return this.filters.selectedWarranties.includes(
+                                item.id
+                            );
+                        })
+                        .map((item) => {
+                            item.isActive = true;
+                        });
                 });
         },
         passAllFilters() {
             var params = {};
             params.category_id = this.$route.query.category_id;
-            this.filters.selectedBrands.length > 0 ? params.brand_id = this.filters.selectedBrands.toString() : null;
-            this.filters.selectedTypes.length > 0 ? params.type_id = this.filters.selectedTypes.toString() : null,
-            this.filters.selectedWarranties.length > 0 ? params.warranty = this.filters.selectedWarranties.toString() : null,
-            this.filters.rangePrice.length > 0 ? params.rangeprice = this.filters.rangePrice.map(item => item * 100000).toString() : null,
-            this.$router.push({
-                name: "user.products",
-                query: params,
-            }).catch(()=>{});
-        }
+            this.filters.selectedBrands.length > 0
+                ? (params.brand_id = this.filters.selectedBrands.toString())
+                : null;
+            this.filters.selectedTypes.length > 0
+                ? (params.type_id = this.filters.selectedTypes.toString())
+                : null,
+                this.filters.selectedWarranties.length > 0
+                    ? (params.warranty =
+                          this.filters.selectedWarranties.toString())
+                    : null,
+                this.filters.rangePrice.length > 0
+                    ? (params.rangeprice = this.filters.rangePrice
+                          .map((item) => item * 100000)
+                          .toString())
+                    : null,
+                this.$router
+                    .push({
+                        name: "user.products",
+                        query: params,
+                    })
+                    .catch(() => {});
+        },
     },
     watch: {
         $route() {
@@ -976,5 +1092,4 @@ li > label {
     transition-duration: 0.2s;
     border-radius: 5px;
 }
-
 </style>

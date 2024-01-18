@@ -63,7 +63,12 @@
                                         {{ item.product.name }}
                                         {{ item.product.code }}
                                     </h6>
-                                    <p style="color:black !important">Màu: {{ getColorByProductId(item.product.id) }}</p>
+                                    <p style="color: black !important">
+                                        Màu:
+                                        {{
+                                            getColorByProductId(item.product.id)
+                                        }}
+                                    </p>
                                 </router-link>
                                 <div class="col-md-3 pr-0">
                                     <h6
@@ -142,7 +147,11 @@
                                     for="woman"
                                     >Chị</label
                                 >
-                                <span v-if="errors.gender == true" class="text-danger">Vui lòng chọn danh xưng</span>
+                                <span
+                                    v-if="errors.gender == true"
+                                    class="text-danger"
+                                    >Vui lòng chọn danh xưng</span
+                                >
                             </div>
                             <div class="col-md-12">
                                 <div class="form-row mt-2">
@@ -167,7 +176,9 @@
                                             v-model="form.phone"
                                             class="form-control"
                                             id="inputPassword4"
-                                            @keyup="validatePhoneNumber('phone')"
+                                            @keyup="
+                                                validatePhoneNumber('phone')
+                                            "
                                             maxlength="10"
                                             placeholder="Số điện thoại"
                                         />
@@ -182,7 +193,11 @@
                                         </h6>
                                         <h6
                                             class="text-danger m-0 mt-2 pl-2"
-                                            v-else-if="errors.phone == true && form.phone.toString().length == 0"
+                                            v-else-if="
+                                                errors.phone == true &&
+                                                form.phone.toString().length ==
+                                                    0
+                                            "
                                         >
                                             Vui lòng nhập số điện thoại
                                         </h6>
@@ -218,7 +233,11 @@
                                     for="receive2"
                                     >Nhận tại siêu thị</label
                                 >
-                                <span v-if="errors.wayReceive == true" class="text-danger">Vui lòng chọn cách thức nhận hàng</span>
+                                <span
+                                    v-if="errors.wayReceive == true"
+                                    class="text-danger"
+                                    >Vui lòng chọn cách thức nhận hàng</span
+                                >
                                 <div
                                     v-if="form.wayReceive == 'Giao tận nơi'"
                                     class="mt-2"
@@ -297,11 +316,11 @@
                                     </div>
                                 </div>
                                 <h6
-                                            class="text-danger m-0 mt-2 pl-2"
-                                            v-if="errors.address == true"
-                                        >
-                                            Vui lòng nhập địa chỉ nhận hàng
-                                        </h6>
+                                    class="text-danger m-0 mt-2 pl-2"
+                                    v-if="errors.address == true"
+                                >
+                                    Vui lòng nhập địa chỉ nhận hàng
+                                </h6>
                                 <div class="row">
                                     <div class="col-md-12 mt-3">
                                         <input
@@ -318,7 +337,9 @@
                                         <div class="form-check">
                                             <input
                                                 class="form-check-input"
-                                                v-model="form.otherPeopleReceive"
+                                                v-model="
+                                                    form.otherPeopleReceive
+                                                "
                                                 type="checkbox"
                                                 value=""
                                                 id="flexCheckDefault"
@@ -333,85 +354,116 @@
                                         </div>
                                     </div>
                                 </div>
-                                
-                                <div v-if="form.otherPeopleReceive == true" class="col-md-12 mt-2 bg-light border rounded px-3 py-2 pb-1">
+
+                                <div
+                                    v-if="form.otherPeopleReceive == true"
+                                    class="col-md-12 mt-2 bg-light border rounded px-3 py-2 pb-1"
+                                >
                                     <div class="col-md-12">
-                                <input
-                                    type="radio"
-                                    class="noselect radio-input"
-                                    id="man2"
-                                    v-model="form.otherPeopleGender"
-                                    value="Anh"
-                                />
-                                <label
-                                    class="m-0 noselect radio-label"
-                                    style="margin-right: 16px !important"
-                                    for="man2"
-                                    >Anh</label
-                                >
-                                <input
-                                    type="radio"
-                                    class="noselect radio-input"
-                                    id="woman2"
-                                    v-model="form.otherPeopleGender"
-                                    value="Chị"
-                                />
-                                <label
-                                    class="m-0 noselect radio-label"
-                                    style="margin-right: 16px !important"
-                                    for="woman2"
-                                    >Chị</label
-                                >
-                                <span v-if="errors.otherPeopleGender == true" class="text-danger">Vui lòng chọn danh dưng người nhận</span>
-                            </div>
-                                    <div class="form-row mt-2">
-                                    <div class="form-group col-md-6">
                                         <input
-                                            type="text"
-                                            v-model="form.otherPeopleName"
-                                            class="form-control"
-                                            id="inputEmail4"
-                                            placeholder="Họ và tên người nhận"
+                                            type="radio"
+                                            class="noselect radio-input"
+                                            id="man2"
+                                            v-model="form.otherPeopleGender"
+                                            value="Anh"
                                         />
-                                        <h6
-                                            class="text-danger m-0 mt-2 pl-2"
-                                           v-if="errors.otherPeopleName == true"
-                                        >
-                                            Vui lòng nhập họ và tên người nhận
-                                        </h6>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <input
-                                            type="text"
-                                            v-model="form.otherPeoplePhone"
-                                            class="form-control"
-                                            id="inputPassword4"
-                                            @keyup="validatePhoneNumber('otherPeoplePhone')"
-                                            maxlength="10"
-                                            placeholder="Số điện thoại người nhận"
-                                        />
-                                        <h6
-                                            class="text-danger m-0 mt-2 pl-2"
-                                            v-if="
-                                                !validatePhoneNumber('otherPeoplePhone') &&
-                                                form.otherPeoplePhone.toString().length > 0
+                                        <label
+                                            class="m-0 noselect radio-label"
+                                            style="
+                                                margin-right: 16px !important;
                                             "
+                                            for="man2"
+                                            >Anh</label
                                         >
-                                            Số điện thoại không hợp lệ
-                                        </h6>
-                                        <h6
-                                            class="text-danger m-0 mt-2 pl-2"
-                                            v-else-if="errors.otherPeoplePhone == true && form.otherPeoplePhone.toString().length == 0"
+                                        <input
+                                            type="radio"
+                                            class="noselect radio-input"
+                                            id="woman2"
+                                            v-model="form.otherPeopleGender"
+                                            value="Chị"
+                                        />
+                                        <label
+                                            class="m-0 noselect radio-label"
+                                            style="
+                                                margin-right: 16px !important;
+                                            "
+                                            for="woman2"
+                                            >Chị</label
                                         >
-                                            Vui lòng nhập số điện thoại người nhận
-                                        </h6>
+                                        <span
+                                            v-if="
+                                                errors.otherPeopleGender == true
+                                            "
+                                            class="text-danger"
+                                            >Vui lòng chọn danh dưng người
+                                            nhận</span
+                                        >
                                     </div>
-                                </div>
+                                    <div class="form-row mt-2">
+                                        <div class="form-group col-md-6">
+                                            <input
+                                                type="text"
+                                                v-model="form.otherPeopleName"
+                                                class="form-control"
+                                                id="inputEmail4"
+                                                placeholder="Họ và tên người nhận"
+                                            />
+                                            <h6
+                                                class="text-danger m-0 mt-2 pl-2"
+                                                v-if="
+                                                    errors.otherPeopleName ==
+                                                    true
+                                                "
+                                            >
+                                                Vui lòng nhập họ và tên người
+                                                nhận
+                                            </h6>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <input
+                                                type="text"
+                                                v-model="form.otherPeoplePhone"
+                                                class="form-control"
+                                                id="inputPassword4"
+                                                @keyup="
+                                                    validatePhoneNumber(
+                                                        'otherPeoplePhone'
+                                                    )
+                                                "
+                                                maxlength="10"
+                                                placeholder="Số điện thoại người nhận"
+                                            />
+                                            <h6
+                                                class="text-danger m-0 mt-2 pl-2"
+                                                v-if="
+                                                    !validatePhoneNumber(
+                                                        'otherPeoplePhone'
+                                                    ) &&
+                                                    form.otherPeoplePhone.toString()
+                                                        .length > 0
+                                                "
+                                            >
+                                                Số điện thoại không hợp lệ
+                                            </h6>
+                                            <h6
+                                                class="text-danger m-0 mt-2 pl-2"
+                                                v-else-if="
+                                                    errors.otherPeoplePhone ==
+                                                        true &&
+                                                    form.otherPeoplePhone.toString()
+                                                        .length == 0
+                                                "
+                                            >
+                                                Vui lòng nhập số điện thoại
+                                                người nhận
+                                            </h6>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
                             <h6 class="mt-3">CHỌN HÌNH THỨC THANH TOÁN</h6>
-                             <div class="col-md-12">
+                            <div class="col-md-12">
                                 <input
                                     type="radio"
                                     class="noselect radio-input"
@@ -438,6 +490,7 @@
                                     for="wopayment"
                                     >Điện tử</label
                                 >
+                                <!--
                                 <input
                                     type="radio"
                                     class="noselect radio-input"
@@ -450,39 +503,54 @@
                                     style="margin-right: 16px !important"
                                     for="opayment"
                                     >Trả góp</label
+                                > -->
+                                <span
+                                    v-if="errors.payment == true"
+                                    class="text-danger"
+                                    >Vui lòng chọn hình thức thanh toán</span
                                 >
-                                <span v-if="errors.payment == true" class="text-danger">Vui lòng chọn hình thức thanh toán</span>
                             </div>
                         </div>
                         <div class="col-md-12 py-3">
-                                <div class="row">
+                            <div class="row">
                                 <div class="col-md-6 font-weight-bold">
-                                    Tổng tiền: 
+                                    Tổng tiền:
                                 </div>
                                 <div class="col-md-6">
-                                    <h6 class="text-danger text-right font-weight-bold">
-                                         {{
-                                        formatPrice(
-                                            carts.reduce(
-                                                (accumulator, current) =>
-                                                    accumulator +
-                                                    current.product.price *
-                                                        current.quantity,
-                                                0
+                                    <h6
+                                        class="text-danger text-right font-weight-bold"
+                                    >
+                                        {{
+                                            formatPrice(
+                                                carts.reduce(
+                                                    (accumulator, current) =>
+                                                        accumulator +
+                                                        current.product.price *
+                                                            current.quantity,
+                                                    0
+                                                )
                                             )
-                                        )
-                                    }}₫
+                                        }}₫
                                     </h6>
                                 </div>
                             </div>
-                            </div>
-                            
-                            <div class="col-md-12 mb-3">
-                                    <button class="btn w-100 text-white" @click="order()" style="font-weight:600;padding: 12px 12px;background: linear-gradient(180deg,#f79429,#f7712e);">ĐẶT HÀNG</button>
-                                </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <button
+                                class="btn w-100 text-white"
+                                @click="order()"
+                                style="
+                                    font-weight: 600;
+                                    padding: 12px 12px;
+                                    background-color: #ed1c24;
+                                "
+                            >
+                                ĐẶT HÀNG
+                            </button>
+                        </div>
                     </div>
                 </div>
-                
             </div>
         </div>
         <loading
@@ -515,7 +583,7 @@ export default {
                 payment: null,
                 address: "",
                 otherPeopleReceive: false,
-                note: ""
+                note: "",
             },
             selectedProvince: null,
             selectedDistrict: null,
@@ -536,7 +604,7 @@ export default {
                 wayReceive: false,
                 payment: false,
                 address: false,
-            }
+            },
         };
     },
     created() {
@@ -586,7 +654,7 @@ export default {
         getColorByProductId(productId) {
             let color = "";
             this.colors.forEach((item) => {
-                if (item.products[0].id == productId) {
+                if (item.products[0]?.id == productId) {
                     color = item.name;
                 }
             });
@@ -617,6 +685,15 @@ export default {
                 .then((response) => {
                     this.getCarts();
                     this.showLoading = false;
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.$swal({
+                        icon: "error",
+                        title: "Lỗi",
+                        text: "Sản phẩm hết hàng hoặc không đủ số lượng!",
+                    });
+                    this.showLoading = false;
                 });
         },
         plusQuantity(id) {
@@ -625,6 +702,15 @@ export default {
                 .put(`/api/carts/${id}`, { quantity: "+1" })
                 .then((response) => {
                     this.getCarts();
+                    this.showLoading = false;
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.$swal({
+                        icon: "error",
+                        title: "Lỗi",
+                        text: "Sản phẩm hết hàng hoặc không đủ số lượng!",
+                    });
                     this.showLoading = false;
                 });
         },
@@ -682,44 +768,61 @@ export default {
         },
         order() {
             if (!this.validateForm()) {
-                return console.log('lỗi');
+                return console.log("lỗi");
             }
-            axios.post("/api/orders", {
-                carts: this.carts,
-                form: this.form,
-                province_id: this.selectedProvince,
-                district_id: this.selectedDistrict,
-                ward_id: this.selectedWard,
-            }).then((res) => {
-                console.log(res.data);
-                this.$swal({
-                    title: "Đặt hàng thành công",
-                    text: "Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất",
-                    icon: "success",
-                    confirmButtonColor: "#3085d6",
-                    confirmButtonText: "Về trang chủ",
-                }).then((result) => {
-                    this.$router.push({ name: "user.home" });
+            axios
+                .post("/api/orders", {
+                    carts: this.carts,
+                    form: this.form,
+                    province_id: this.selectedProvince,
+                    district_id: this.selectedDistrict,
+                    ward_id: this.selectedWard,
+                    hostName: location.protocol + "//" + location.host,
+                    totalPrice: this.carts.reduce(
+                        (accumulator, current) =>
+                            accumulator +
+                            current.product.price * current.quantity,
+                        0
+                    ),
+                })
+                .then((res) => {
+                    if (res?.data?.url) {
+                        return window.location.replace(res.data.url);
+                    }
+                    this.$swal({
+                        title: "Đặt hàng thành công",
+                        text: "Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất",
+                        icon: "success",
+                        confirmButtonColor: "#3085d6",
+                        confirmButtonText: "Về trang chủ",
+                    }).then((result) => {
+                        this.$router.push({ name: "user.home" });
+                    });
+                })
+                .catch((error) => {
+                    console.log({ error });
+                    this.$swal({
+                        icon: "error",
+                        title: "Lỗi",
+                        text: error?.response?.data?.message || "",
+                    });
                 });
-            }).catch(err => {
-                console.log(err);
-            });
         },
         validateForm() {
             var i = 0;
-            if(!this.form.name) {
+            if (!this.form.name) {
                 this.errors.name = true;
                 i++;
             } else {
                 this.errors.name = false;
             }
-            if(!this.form.phone) {
+            if (!this.form.phone) {
                 this.errors.phone = true;
                 i++;
             } else {
                 this.errors.phone = false;
             }
-            if(!this.form.gender) {
+            if (!this.form.gender) {
                 this.errors.gender = true;
                 i++;
             } else {
@@ -731,32 +834,32 @@ export default {
             } else {
                 this.errors.wayReceive = false;
             }
-            if(!this.form.address && this.form.wayReceive == "Giao tận nơi") {
+            if (!this.form.address && this.form.wayReceive == "Giao tận nơi") {
                 this.errors.address = true;
                 i++;
             } else {
                 this.errors.address = false;
             }
             if (this.form.otherPeopleReceive) {
-                if(!this.form.otherPeoplePhone) {
+                if (!this.form.otherPeoplePhone) {
                     this.errors.otherPeoplePhone = true;
                     i++;
                 } else {
                     this.errors.otherPeoplePhone = false;
                 }
-                if(!this.form.otherPeopleName) {
+                if (!this.form.otherPeopleName) {
                     this.errors.otherPeopleName = true;
                     i++;
                 } else {
                     this.errors.otherPeopleName = false;
                 }
-                if(!this.form.otherPeopleGender) {
+                if (!this.form.otherPeopleGender) {
                     this.errors.otherPeopleGender = true;
                     i++;
                 } else {
                     this.errors.otherPeopleGender = false;
                 }
-            } 
+            }
             if (!this.form.payment) {
                 this.errors.payment = true;
                 i++;
@@ -767,7 +870,7 @@ export default {
                 return false;
             }
             return true;
-        }
+        },
     },
 };
 </script>

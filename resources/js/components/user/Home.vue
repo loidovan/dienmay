@@ -1,6 +1,6 @@
 <template>
     <div style="background-color: white">
-          <!-- Slider -->
+        <!-- Slider -->
         <b-carousel
             id="carousel-fade"
             style="text-shadow: 0px 0px 2px #000"
@@ -20,7 +20,6 @@
             <b-carousel-slide
                 img-src="/storage/images/banner/banner_dienmay3.png"
             ></b-carousel-slide>
-            
         </b-carousel>
         <!-- END Slider -->
         <div
@@ -70,7 +69,16 @@
                 </div>
                 <div class="col-md-6"></div>
                 <div class="col-md-3 text-danger text-right font-weight-bolder">
-                    <router-link :to="{ name: 'user.products', query: { category_id: this.slidesTV[0].category_id } }" tag="span" class="viewAll">Xem tất cả {{lengthTV}} Tivi >
+                    <router-link
+                        :to="{
+                            name: 'user.products',
+                            query: {
+                                category_id: this.slidesTV[0].category_id,
+                            },
+                        }"
+                        tag="span"
+                        class="viewAll"
+                        >Xem tất cả {{ lengthTV }} Tivi >
                     </router-link>
                 </div>
             </div>
@@ -94,8 +102,12 @@
                                     <img :src="slide.image" width="100%" />
                                 </div>
                                 <div>
-                                    <h6 style="font-weight: 500">{{ slide.name }} {{ slide.code }}</h6>
-                                    <h5 style="font-weight: bolder">{{ formatPrice(slide.price) }}₫</h5>
+                                    <h6 style="font-weight: 500">
+                                        {{ slide.name }} {{ slide.code }}
+                                    </h6>
+                                    <h5 style="font-weight: bolder">
+                                        {{ formatPrice(slide.price) }}₫
+                                    </h5>
                                     <star-rating
                                         :read-only="true"
                                         :increment="0.01"
@@ -111,8 +123,12 @@
                                     <img :src="slide.image" width="100%" />
                                 </div>
                                 <div>
-                                    <h6 style="font-weight: 500">{{ slide.name }} {{ slide.code }}</h6>
-                                    <h5 style="font-weight: bolder">{{ formatPrice(slide.price) }}₫</h5>
+                                    <h6 style="font-weight: 500">
+                                        {{ slide.name }} {{ slide.code }}
+                                    </h6>
+                                    <h5 style="font-weight: bolder">
+                                        {{ formatPrice(slide.price) }}₫
+                                    </h5>
                                     <star-rating
                                         :read-only="true"
                                         :increment="0.01"
@@ -136,7 +152,16 @@
                 </div>
                 <div class="col-md-6"></div>
                 <div class="col-md-3 text-danger text-right font-weight-bolder">
-                    <router-link :to="{ name: 'user.products', query: { category_id: this.slidesTuLanh[0].category_id } }" tag="span" class="viewAll">Xem tất cả {{lengthTuLanh}} Tủ lạnh >
+                    <router-link
+                        :to="{
+                            name: 'user.products',
+                            query: {
+                                category_id: this.slidesTuLanh[0].category_id,
+                            },
+                        }"
+                        tag="span"
+                        class="viewAll"
+                        >Xem tất cả {{ lengthTuLanh }} Tủ lạnh >
                     </router-link>
                 </div>
             </div>
@@ -149,7 +174,10 @@
                 :touchable="false"
                 fixedHeight="444px"
             >
-                <vueper-slide v-for="(slide, i) in slidesTuLanh" :key="slide.id">
+                <vueper-slide
+                    v-for="(slide, i) in slidesTuLanh"
+                    :key="slide.id"
+                >
                     <template v-slot:content>
                         <router-link tag="span" :to="`/products/${slide.id}`">
                             <div
@@ -160,8 +188,12 @@
                                     <img :src="slide.image" width="100%" />
                                 </div>
                                 <div>
-                                    <h6 style="font-weight: 500">{{ slide.name }} {{ slide.code }}</h6>
-                                    <h5 style="font-weight: bolder">{{ formatPrice(slide.price) }}₫</h5>
+                                    <h6 style="font-weight: 500">
+                                        {{ slide.name }} {{ slide.code }}
+                                    </h6>
+                                    <h5 style="font-weight: bolder">
+                                        {{ formatPrice(slide.price) }}₫
+                                    </h5>
                                     <star-rating
                                         :read-only="true"
                                         :increment="0.01"
@@ -177,8 +209,12 @@
                                     <img :src="slide.image" width="100%" />
                                 </div>
                                 <div>
-                                    <h6 style="font-weight: 500">{{ slide.name }} {{ slide.code }}</h6>
-                                    <h5 style="font-weight: bolder">{{ formatPrice(slide.price) }}₫</h5>
+                                    <h6 style="font-weight: 500">
+                                        {{ slide.name }} {{ slide.code }}
+                                    </h6>
+                                    <h5 style="font-weight: bolder">
+                                        {{ formatPrice(slide.price) }}₫
+                                    </h5>
                                     <star-rating
                                         :read-only="true"
                                         :increment="0.01"
@@ -202,7 +238,16 @@
                 </div>
                 <div class="col-md-6"></div>
                 <div class="col-md-3 text-danger text-right font-weight-bolder">
-                    <router-link :to="{ name: 'user.products', query: { category_id: this.slidesMayGiat[0].category_id } }" tag="span" class="viewAll">Xem tất cả {{lengthMayGiat}} Máy giặt >
+                    <router-link
+                        :to="{
+                            name: 'user.products',
+                            query: {
+                                category_id: this.slidesMayGiat[0].category_id,
+                            },
+                        }"
+                        tag="span"
+                        class="viewAll"
+                        >Xem tất cả {{ lengthMayGiat }} Máy giặt >
                     </router-link>
                 </div>
             </div>
@@ -215,7 +260,10 @@
                 :touchable="false"
                 fixedHeight="444px"
             >
-                <vueper-slide v-for="(slide, i) in slidesMayGiat" :key="slide.id">
+                <vueper-slide
+                    v-for="(slide, i) in slidesMayGiat"
+                    :key="slide.id"
+                >
                     <template v-slot:content>
                         <router-link tag="span" :to="`/products/${slide.id}`">
                             <div
@@ -226,8 +274,12 @@
                                     <img :src="slide.image" width="100%" />
                                 </div>
                                 <div>
-                                    <h6 style="font-weight: 500">{{ slide.name }} {{ slide.code }}</h6>
-                                    <h5 style="font-weight: bolder">{{ formatPrice(slide.price) }}₫</h5>
+                                    <h6 style="font-weight: 500">
+                                        {{ slide.name }} {{ slide.code }}
+                                    </h6>
+                                    <h5 style="font-weight: bolder">
+                                        {{ formatPrice(slide.price) }}₫
+                                    </h5>
                                     <star-rating
                                         :read-only="true"
                                         :increment="0.01"
@@ -243,8 +295,12 @@
                                     <img :src="slide.image" width="100%" />
                                 </div>
                                 <div>
-                                    <h6 style="font-weight: 500">{{ slide.name }} {{ slide.code }}</h6>
-                                    <h5 style="font-weight: bolder">{{ formatPrice(slide.price) }}₫</h5>
+                                    <h6 style="font-weight: 500">
+                                        {{ slide.name }} {{ slide.code }}
+                                    </h6>
+                                    <h5 style="font-weight: bolder">
+                                        {{ formatPrice(slide.price) }}₫
+                                    </h5>
                                     <star-rating
                                         :read-only="true"
                                         :increment="0.01"
@@ -268,7 +324,17 @@
                 </div>
                 <div class="col-md-6"></div>
                 <div class="col-md-3 text-danger text-right font-weight-bolder">
-                    <router-link :to="{ name: 'user.products', query: { category_id: this.slidesMayLocNuoc[0].category_id } }" tag="span" class="viewAll">Xem tất cả {{lengthMayLocNuoc}} Máy lọc nước >
+                    <router-link
+                        :to="{
+                            name: 'user.products',
+                            query: {
+                                category_id:
+                                    this.slidesMayLocNuoc[0].category_id,
+                            },
+                        }"
+                        tag="span"
+                        class="viewAll"
+                        >Xem tất cả {{ lengthMayLocNuoc }} Máy lọc nước >
                     </router-link>
                 </div>
             </div>
@@ -281,7 +347,10 @@
                 :touchable="false"
                 fixedHeight="444px"
             >
-                <vueper-slide v-for="(slide, i) in slidesMayLocNuoc" :key="slide.id">
+                <vueper-slide
+                    v-for="(slide, i) in slidesMayLocNuoc"
+                    :key="slide.id"
+                >
                     <template v-slot:content>
                         <router-link tag="span" :to="`/products/${slide.id}`">
                             <div
@@ -292,8 +361,12 @@
                                     <img :src="slide.image" width="100%" />
                                 </div>
                                 <div>
-                                    <h6 style="font-weight: 500">{{ slide.name }} {{ slide.code }}</h6>
-                                    <h5 style="font-weight: bolder">{{ formatPrice(slide.price) }}₫</h5>
+                                    <h6 style="font-weight: 500">
+                                        {{ slide.name }} {{ slide.code }}
+                                    </h6>
+                                    <h5 style="font-weight: bolder">
+                                        {{ formatPrice(slide.price) }}₫
+                                    </h5>
                                     <star-rating
                                         :read-only="true"
                                         :increment="0.01"
@@ -309,8 +382,12 @@
                                     <img :src="slide.image" width="100%" />
                                 </div>
                                 <div>
-                                    <h6 style="font-weight: 500">{{ slide.name }} {{ slide.code }}</h6>
-                                    <h5 style="font-weight: bolder">{{ formatPrice(slide.price) }}₫</h5>
+                                    <h6 style="font-weight: 500">
+                                        {{ slide.name }} {{ slide.code }}
+                                    </h6>
+                                    <h5 style="font-weight: bolder">
+                                        {{ formatPrice(slide.price) }}₫
+                                    </h5>
                                     <star-rating
                                         :read-only="true"
                                         :increment="0.01"
@@ -360,31 +437,31 @@ export default {
             rating: 3.5,
             slidesTV: [
                 {
-                    name: 'Tivi',
-                    price: '0',
-                    category_id: 0
-                }
+                    name: "Tivi",
+                    price: "0",
+                    category_id: 0,
+                },
             ],
             slidesTuLanh: [
                 {
-                    name: 'Tủ lạnh',
-                    price: '0',
-                    category_id: 0
-                }
+                    name: "Tủ lạnh",
+                    price: "0",
+                    category_id: 0,
+                },
             ],
             slidesMayGiat: [
                 {
-                    name: 'Máy giặt',
-                    price: '0',
-                    category_id: 0
-                }
+                    name: "Máy giặt",
+                    price: "0",
+                    category_id: 0,
+                },
             ],
             slidesMayLocNuoc: [
                 {
-                    name: 'Máy lọc nước',
-                    price: '0',
-                    category_id: 0
-                }
+                    name: "Máy lọc nước",
+                    price: "0",
+                    category_id: 0,
+                },
             ],
             lengthTV: 0,
             lengthTuLanh: 0,
@@ -402,41 +479,51 @@ export default {
         getTV() {
             axios.get("/api/products").then((res) => {
                 this.lengthTV = res.data.filter((item) => {
-                    return item.category.name.toUpperCase() == 'TIVI';
+                    return item.category.name.toUpperCase() == "TIVI";
                 }).length;
-                this.slidesTV = res.data.filter((item) => {
-                    return item.category.name.toUpperCase() == 'TIVI';
-                }).slice(0, 10);
+                this.slidesTV = res.data
+                    .filter((item) => {
+                        return item.category.name.toUpperCase() == "TIVI";
+                    })
+                    .slice(0, 10);
             });
         },
         getTuLanh() {
             axios.get("/api/products").then((res) => {
                 this.lengthTuLanh = res.data.filter((item) => {
-                    return item.category.name.toUpperCase() == 'TỦ LẠNH';
+                    return item.category.name.toUpperCase() == "TỦ LẠNH";
                 }).length;
-                this.slidesTuLanh = res.data.filter((item) => {
-                    return item.category.name.toUpperCase() == 'TỦ LẠNH';
-                }).slice(0, 10);
+                this.slidesTuLanh = res.data
+                    .filter((item) => {
+                        return item.category.name.toUpperCase() == "TỦ LẠNH";
+                    })
+                    .slice(0, 10);
             });
         },
         getMayGiat() {
             axios.get("/api/products").then((res) => {
                 this.lengthMayGiat = res.data.filter((item) => {
-                    return item.category.name.toUpperCase() == 'MÁY GIẶT';
+                    return item.category.name.toUpperCase() == "MÁY GIẶT";
                 }).length;
-                this.slidesMayGiat = res.data.filter((item) => {
-                    return item.category.name.toUpperCase() == 'MÁY GIẶT';
-                }).slice(0, 10);
+                this.slidesMayGiat = res.data
+                    .filter((item) => {
+                        return item.category.name.toUpperCase() == "MÁY GIẶT";
+                    })
+                    .slice(0, 10);
             });
         },
         getMayLocNuoc() {
             axios.get("/api/products").then((res) => {
                 this.lengthMayLocNuoc = res.data.filter((item) => {
-                    return item.category.name.toUpperCase() == 'MÁY LỌC NƯỚC';
+                    return item.category.name.toUpperCase() == "MÁY LỌC NƯỚC";
                 }).length;
-                this.slidesMayLocNuoc = res.data.filter((item) => {
-                    return item.category.name.toUpperCase() == 'MÁY LỌC NƯỚC';
-                }).slice(0, 10);
+                this.slidesMayLocNuoc = res.data
+                    .filter((item) => {
+                        return (
+                            item.category.name.toUpperCase() == "MÁY LỌC NƯỚC"
+                        );
+                    })
+                    .slice(0, 10);
             });
         },
         formatPrice(value) {
@@ -471,6 +558,6 @@ export default {
     font-weight: bold;
 }
 .viewAll {
-    cursor: pointer
+    cursor: pointer;
 }
 </style>

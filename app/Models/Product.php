@@ -43,7 +43,7 @@ class Product extends Model
         return $this->hasMany('App\Models\Image', 'product_id', 'id');
     }
 
-    public function post() 
+    public function post()
     {
         return $this->hasOne('App\Models\Post');
     }
@@ -51,5 +51,10 @@ class Product extends Model
     public function carts()
     {
         return $this->hasMany('App\Models\Cart', 'product_id', 'id');
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany('App\Models\Review', 'product_id', 'id');
     }
 }

@@ -15,7 +15,7 @@
                                 </h3>
                             </div>
                             <!-- /.card-header -->
-                            <div class="card-body" style="overflow-x: auto;">
+                            <div class="card-body" style="overflow-x: auto">
                                 <b-row>
                                     <b-col>
                                         <b-form-select
@@ -64,34 +64,37 @@
                                         </button>
                                         <div class="mt-3">
                                             <button
-                                            @click="handleStatus(2)"
-                                            class="btn-success btn"
-                                            v-b-tooltip.hover.v-secondary="
-                                                'Đã hoàn thành'
-                                            "
-                                        >
-                                            <i class="fas fa-check-circle"></i>
-                                        </button>
-                                        <button
-                                            @click="handleStatus(1)"
-                                            class="btn-warning btn"
-                                            v-b-tooltip.hover.v-secondary="
-                                                'Đã xử lý'
-                                            "
-                                        >
-                                            <i class="fas fa-vote-yea text-white"></i>
-                                        </button>
-                                        <button
-                                            @click="handleStatus(0)"
-                                            class="btn-danger btn"
-                                            v-b-tooltip.hover.v-secondary="
-                                                'Chờ xử lý'
-                                            "
-                                        >
-                                            <i class="fas fa-spinner"></i>
-                                        </button>
+                                                @click="handleStatus(2)"
+                                                class="btn-success btn"
+                                                v-b-tooltip.hover.v-secondary="
+                                                    'Đã hoàn thành'
+                                                "
+                                            >
+                                                <i
+                                                    class="fas fa-check-circle"
+                                                ></i>
+                                            </button>
+                                            <button
+                                                @click="handleStatus(1)"
+                                                class="btn-warning btn"
+                                                v-b-tooltip.hover.v-secondary="
+                                                    'Đã xử lý'
+                                                "
+                                            >
+                                                <i
+                                                    class="fas fa-vote-yea text-white"
+                                                ></i>
+                                            </button>
+                                            <button
+                                                @click="handleStatus(0)"
+                                                class="btn-danger btn"
+                                                v-b-tooltip.hover.v-secondary="
+                                                    'Chờ xử lý'
+                                                "
+                                            >
+                                                <i class="fas fa-spinner"></i>
+                                            </button>
                                         </div>
-
                                     </b-col>
                                     <b-col md="4" class="my-1">
                                         <b-form-group>
@@ -105,22 +108,51 @@
                                             </b-input-group>
                                         </b-form-group>
                                         <div class="float-right">
-                                            
-  <input class="form-check-input" type="checkbox" id="check1" v-model="selectedFilter" @change="filterData()" value="0">
-  <label class="form-check-label mr-4" for="check1">Chờ xử lý</label>
+                                            <input
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                id="check1"
+                                                v-model="selectedFilter"
+                                                @change="filterData()"
+                                                value="0"
+                                            />
+                                            <label
+                                                class="form-check-label mr-4"
+                                                for="check1"
+                                                >Chờ xử lý</label
+                                            >
 
+                                            <input
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                id="check2"
+                                                v-model="selectedFilter"
+                                                @change="filterData()"
+                                                value="1"
+                                            />
+                                            <label
+                                                class="form-check-label mr-4"
+                                                for="check2"
+                                                >Đã xử lý</label
+                                            >
 
-  <input class="form-check-input" type="checkbox" id="check2" v-model="selectedFilter" @change="filterData()" value="1">
-  <label class="form-check-label mr-4" for="check2">Đã xử lý</label>
-
-
-  <input class="form-check-input" type="checkbox" id="check3" v-model="selectedFilter" @change="filterData()" value="2">
-  <label class="form-check-label" for="check3">Đã hoàn thành</label>
-
+                                            <input
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                id="check3"
+                                                v-model="selectedFilter"
+                                                @change="filterData()"
+                                                value="2"
+                                            />
+                                            <label
+                                                class="form-check-label"
+                                                for="check3"
+                                                >Đã hoàn thành</label
+                                            >
                                         </div>
                                     </b-col>
                                 </b-row>
-                               
+
                                 <b-table
                                     :items="orders"
                                     :fields="fields"
@@ -164,7 +196,7 @@
                                         </span>
                                     </template>
                                     <template #cell(action)="row">
-                                         <span @click="row.toggleDetails">
+                                        <span @click="row.toggleDetails">
                                             <i
                                                 class="fas fa-eye fa-lg"
                                                 v-b-tooltip.hover.v-secondary="
@@ -184,44 +216,175 @@
                                         </span>
                                     </template>
                                     <template #row-details="row">
-                                        <b-card>
-                                            <ul>
+                                        <b-card :id="'invoice' + row.item.id">
+                                            <div>
+                                                <h2 class="text-center">
+                                                    ĐIỆN MÁY NHƯ Ý
+                                                </h2>
+                                                <div
+                                                    class="d-flex justify-content-center align-items-center flex-column mb-3"
+                                                >
+                                                    <div>MST: 0123456789</div>
+                                                    <div>
+                                                        Địa chỉ: SN 14 tổ 6,
+                                                        Kiến Hưng, Hà Đông, Hà
+                                                        Nội
+                                                    </div>
+                                                    <div>
+                                                        Điện thoại: 0388975124
+                                                    </div>
+                                                </div>
+                                                <h3
+                                                    class="text-center text-danger mb-5 fw-bold"
+                                                >
+                                                    HÓA ĐƠN BÁN HÀNG
+                                                </h3>
+                                                <div
+                                                    style="
+                                                        float: right;
+                                                        margin-right: 30px;
+                                                    "
+                                                >
+                                                    Mẫu số: 08GT12939
+                                                </div>
+                                            </div>
+
+                                            <div class="ml-5 pl-3">
+                                                <h6>
+                                                    Họ tên người mua hàng:
+                                                    {{ row.item.customer.name }}
+                                                </h6>
+                                                <h6>
+                                                    Số điện thoại:
+                                                    {{
+                                                        row.item.customer.phone
+                                                    }}
+                                                </h6>
+                                                <h6>
+                                                    Địa chỉ:
+                                                    {{ row.item.address }}
+                                                </h6>
+                                                <h6>
+                                                    Hình thức thanh toán:
+                                                    {{ row.item.way_receive }}
+                                                </h6>
+                                            </div>
+
+                                            <ul class="ml-5 my-4">
                                                 <li>
                                                     Yêu cầu khác:
-                                                    {{row.item.note}}
+                                                    {{ row.item.note }}
                                                 </li>
                                                 <li>
                                                     Người nhận hộ:
-                                                    {{row.item.otherpeople_gender}} {{row.item.otherpeople_name}}
+                                                    {{
+                                                        row.item
+                                                            .otherpeople_gender
+                                                    }}
+                                                    {{
+                                                        row.item
+                                                            .otherpeople_name
+                                                    }}
                                                 </li>
                                                 <li>
-                                                    SĐT người nhận: 
-                                                    {{row.item.otherpeople_phone}}
+                                                    SĐT người nhận:
+                                                    {{
+                                                        row.item
+                                                            .otherpeople_phone
+                                                    }}
                                                 </li>
+                                                <br />
                                                 <li>
                                                     Chi tiết đơn hàng:
                                                     <table>
                                                         <tr>
                                                             <th>Mã sản phẩm</th>
-                                                            <th>Tên sản phẩm</th>
+                                                            <th>
+                                                                Tên sản phẩm
+                                                            </th>
                                                             <th>Số lượng</th>
                                                             <th>Đơn giá</th>
                                                         </tr>
-                                                        <tr v-for="item in getOrderDetails(row.item.id)" :key="item.id">
-                                                            <td>{{item.product.code}}</td>
-                                                            <td>{{item.product.name}}</td>
-                                                            <td>{{item.quantity}}</td>
-                                                            <td>{{ formatPrice(item.product.price)}}₫</td>
+                                                        <tr
+                                                            v-for="item in getOrderDetails(
+                                                                row.item.id
+                                                            )"
+                                                            :key="item.id"
+                                                        >
+                                                            <td>
+                                                                {{
+                                                                    item.product
+                                                                        .code
+                                                                }}
+                                                            </td>
+                                                            <td>
+                                                                {{
+                                                                    item.product
+                                                                        .name
+                                                                }}
+                                                            </td>
+                                                            <td>
+                                                                {{
+                                                                    item.quantity
+                                                                }}
+                                                            </td>
+                                                            <td>
+                                                                {{
+                                                                    formatPrice(
+                                                                        item
+                                                                            .product
+                                                                            .price
+                                                                    )
+                                                                }}₫
+                                                            </td>
                                                         </tr>
                                                         <tr>
-                                                            <td colspan="3">Tổng tiền:</td>
-                                                            <td class="font-weight-bold">{{ formatPrice(getTotalPrice(row.item.id))}}₫</td>
+                                                            <td colspan="3">
+                                                                Tổng tiền:
+                                                            </td>
+                                                            <td
+                                                                class="font-weight-bold"
+                                                            >
+                                                                {{
+                                                                    formatPrice(
+                                                                        getTotalPrice(
+                                                                            row
+                                                                                .item
+                                                                                .id
+                                                                        )
+                                                                    )
+                                                                }}₫
+                                                            </td>
                                                         </tr>
                                                     </table>
                                                 </li>
-                                               
                                             </ul>
+
+                                            <div
+                                                class="mt-5 d-flex justify-content-between px-5 mx-5"
+                                            >
+                                                <div>Người mua hàng</div>
+                                                <div>Người bán hàng</div>
+                                            </div>
                                         </b-card>
+                                        <span
+                                            style="
+                                                float: right;
+                                                cursor: pointer;
+                                            "
+                                            @click="
+                                                exportInvoice(
+                                                    'invoice' + row.item.id
+                                                )
+                                            "
+                                        >
+                                            <i
+                                                class="fas fa-file-export fa-lg"
+                                                v-b-tooltip.hover.v-secondary="
+                                                    'In hóa đơn'
+                                                "
+                                            ></i>
+                                        </span>
                                     </template>
                                 </b-table>
                                 <b-row class="mt-3">
@@ -255,6 +418,7 @@
 <script>
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts.js";
+import html2PDF from "jspdf-html2canvas";
 export default {
     data() {
         return {
@@ -345,7 +509,7 @@ export default {
                 ],
             ],
             pdf_data: [],
-            selectedFilter: ["0","1","2"],
+            selectedFilter: ["0", "1", "2"],
             optionsFilter: [
                 {
                     text: "Chờ xử lý",
@@ -360,7 +524,7 @@ export default {
                     value: 2,
                 },
             ],
-            allOrders: []
+            allOrders: [],
         };
     },
     created() {
@@ -396,7 +560,7 @@ export default {
                         axios
                             .delete("/api/orders/" + id)
                             .then((response) => {
-                                this.getCategorys();
+                                this.getOrders();
                             })
                             .catch((error) => {
                                 console.log(error);
@@ -432,15 +596,13 @@ export default {
                 });
         },
         selectAll(checked) {
-            this.selected = checked
-                ? this.orders.map((item) => item.id)
-                : [];
+            this.selected = checked ? this.orders.map((item) => item.id) : [];
             this.json_data = checked
                 ? this.orders.map((item, index) => {
                       return {
                           STT: index + 1,
                           "Họ tên": item.customer.name,
-                          "SĐT": item.customer.phone,
+                          SĐT: item.customer.phone,
                           "Địa chỉ": item.address,
                           "Thanh toán": item.payment,
                           "Ngày đặt": item.created_at,
@@ -468,26 +630,26 @@ export default {
                     .filter((item) => this.selected.includes(item.id))
                     .map((item, index) => {
                         return {
-                          STT: index + 1,
-                          "Họ tên": item.customer.name,
-                          "SĐT": item.customer.phone,
-                          "Địa chỉ": item.address,
-                          "Thanh toán": item.payment,
-                          "Ngày đặt": item.created_at,
-                          "Trạng thái": item.status,
+                            STT: index + 1,
+                            "Họ tên": item.customer.name,
+                            SĐT: item.customer.phone,
+                            "Địa chỉ": item.address,
+                            "Thanh toán": item.payment,
+                            "Ngày đặt": item.created_at,
+                            "Trạng thái": item.status,
                         };
                     });
                 this.pdf_data = this.orders
                     .filter((item) => this.selected.includes(item.id))
                     .map((item, index) => {
                         return [
-                          index + 1,
-                          item.customer.name,
-                          item.customer.phone,
-                          item.address,
-                          item.payment,
-                          item.created_at,
-                          item.status,
+                            index + 1,
+                            item.customer.name,
+                            item.customer.phone,
+                            item.address,
+                            item.payment,
+                            item.created_at,
+                            item.status,
                         ];
                     });
             }
@@ -510,7 +672,7 @@ export default {
                         axios
                             .delete("/api/orders/" + this.selected)
                             .then((response) => {
-                                this.getCategorys();
+                                this.getOrders();
                             })
                             .catch((error) => {
                                 console.log(error);
@@ -637,31 +799,49 @@ export default {
                     }
                     break;
                 case 2:
-                    if (this.selectedFilter[0] == 0 && this.selectedFilter[1] == 1) {
+                    if (
+                        this.selectedFilter[0] == 0 &&
+                        this.selectedFilter[1] == 1
+                    ) {
                         this.orders = this.orders.filter(
                             (item) => item.status == 0 || item.status == 1
                         );
-                    } else if (this.selectedFilter[0] == 0 && this.selectedFilter[1] == 2) {
+                    } else if (
+                        this.selectedFilter[0] == 0 &&
+                        this.selectedFilter[1] == 2
+                    ) {
                         this.orders = this.orders.filter(
                             (item) => item.status == 0 || item.status == 2
                         );
-                    } else if (this.selectedFilter[0] == 1 && this.selectedFilter[1] == 0) {
+                    } else if (
+                        this.selectedFilter[0] == 1 &&
+                        this.selectedFilter[1] == 0
+                    ) {
                         this.orders = this.orders.filter(
                             (item) => item.status == 1 || item.status == 0
                         );
-                    } else if (this.selectedFilter[0] == 1 && this.selectedFilter[1] == 2) {
+                    } else if (
+                        this.selectedFilter[0] == 1 &&
+                        this.selectedFilter[1] == 2
+                    ) {
                         this.orders = this.orders.filter(
                             (item) => item.status == 1 || item.status == 2
                         );
-                    } else if (this.selectedFilter[0] == 2 && this.selectedFilter[1] == 0) {
+                    } else if (
+                        this.selectedFilter[0] == 2 &&
+                        this.selectedFilter[1] == 0
+                    ) {
                         this.orders = this.orders.filter(
                             (item) => item.status == 2 || item.status == 0
                         );
-                    } else if (this.selectedFilter[0] == 2 && this.selectedFilter[1] == 1) {
+                    } else if (
+                        this.selectedFilter[0] == 2 &&
+                        this.selectedFilter[1] == 1
+                    ) {
                         this.orders = this.orders.filter(
                             (item) => item.status == 2 || item.status == 1
                         );
-                    } 
+                    }
                     break;
                 case 0:
                     this.orders = [];
@@ -672,15 +852,19 @@ export default {
             }
         },
         handleStatus(status) {
-            axios.post("/api/handleOrder", {
-                ids: this.selected,
-                status: status,
-            }).then((response) => {
-                this.getOrders();
-            });
+            axios
+                .post("/api/handleOrder", {
+                    ids: this.selected,
+                    status: status,
+                })
+                .then((response) => {
+                    this.getOrders();
+                });
         },
         getOrderDetails(order_id) {
-            return this.orderDetails.filter((item) => item.order_id == order_id);
+            return this.orderDetails.filter(
+                (item) => item.order_id == order_id
+            );
         },
         formatPrice(value) {
             let val = (value / 1).toFixed(0).replace(".", ",");
@@ -695,12 +879,22 @@ export default {
             });
             return total;
         },
+        exportInvoice(invoiceItem) {
+            let page = document.getElementById(invoiceItem);
+            html2PDF(page, {
+                jsPDF: {
+                    format: "a4",
+                },
+                imageType: "image/jpeg",
+                output: "Invoice.pdf",
+            });
+        },
     },
     mounted() {
-        axios.get('/api/orderdetails').then((response) => {
+        axios.get("/api/orderdetails").then((response) => {
             this.orderDetails = response.data;
         });
-    }
+    },
 };
 </script>
 
